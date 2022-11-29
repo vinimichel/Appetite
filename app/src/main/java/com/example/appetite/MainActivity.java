@@ -19,6 +19,10 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(this, SettingsActivity.class);
         startActivity(i);
     }
+    public void launchRegister(View v) {
+        Intent i = new Intent(this, RegisterActivity.class);
+        startActivity(i);
+    }
 
     public void launchMap(View v) {
         Intent i = new Intent(this, MapActivity.class);
