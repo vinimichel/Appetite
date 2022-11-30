@@ -16,7 +16,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.JsonObject;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.api.geocoding.v5.models.CarmenFeature;
@@ -36,7 +35,6 @@ import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
 import java.util.List;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mapbox.mapboxsdk.plugins.places.autocomplete.model.PlaceOptions;
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
@@ -46,8 +44,6 @@ import com.mapbox.mapboxsdk.plugins.places.autocomplete.PlaceAutocomplete;
 public class MapActivity extends AppCompatActivity implements
         OnMapReadyCallback, PermissionsListener {
 
-    private CarmenFeature home;
-    private CarmenFeature work;
     private MapboxMap mapboxMap;     // Schnittstelle zur Map
     private MapView mapView; // Zugriff auf Android Mapbox SDK Methoden
     Style style;     // Mapstyle
@@ -128,8 +124,7 @@ public class MapActivity extends AppCompatActivity implements
                     13.0 /*zoom*/,
                     null /*bearing, use current/determine based on the tracking mode*/,
                     45.0 /*tilt*/,
-                    null /*transitio
-                    n listener*/);
+                    null /*transition listener*/);
 
             // Kompass als Standortsymbol
             locationComponent.setRenderMode(RenderMode.COMPASS);
