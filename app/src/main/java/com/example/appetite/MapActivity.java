@@ -1,14 +1,25 @@
 package com.example.appetite;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
+import android.graphics.PointF;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.JsonElement;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
+import com.mapbox.geojson.Feature;
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.location.LocationComponent;
 import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions;
 import com.mapbox.mapboxsdk.location.modes.CameraMode;
@@ -18,10 +29,11 @@ import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
 import java.util.List;
+import java.util.Map;
 
 
 public class MapActivity extends AppCompatActivity implements
-        OnMapReadyCallback, PermissionsListener {
+        OnMapReadyCallback, PermissionsListener, MapboxMap.OnMapClickListener {
 
 
     private MapboxMap mapboxMap;     // Schnittstelle zur Map
@@ -61,6 +73,7 @@ public class MapActivity extends AppCompatActivity implements
 
     // wird aufgerufen wenn Style geladen ist
     private void onStyleLoaded(Style style) {
+        mapboxMap.addOnMapClickListener(MapActivity.this);
         this.style = style;
         enableLocationComponent(style);
     }
@@ -129,6 +142,46 @@ public class MapActivity extends AppCompatActivity implements
             Toast.makeText(this, "kjkjlkjlk", Toast.LENGTH_LONG).show();
             finish();
         }
+    }
+
+    @Override
+    public boolean onMapClick(@NonNull LatLng point) {
+
+        // Convert LatLng coordinates to screen pixel and only query the rendered features.
+        final PointF pixel = mapboxMap.getProjection().toScreenLocation(point);
+
+        List<Feature> features = mapboxMap.queryRenderedFeatures(pixel);
+
+        boolean isRestaurant = false;
+        // Get the first feature within the list if one exist
+        if (features.size() > 0) {
+            Feature feature = features.get(0);
+
+        // Ensure the feature has properties defined
+            if (feature.properties() != null) {
+                for (Map.Entry<String, JsonElement> entry : feature.properties().entrySet()) {
+        // Log all the properties
+                    if (entry.getKey().toString().equals("title")) {
+                        TextView texter = (TextView)findViewById(R.id.restaurant_name);
+                        texter.setText(entry.getValue().toString());
+                        Log.d(TAG, String.format("%s = %s", entry.getKey(), entry.getValue()));
+                        isRestaurant = true;
+                    } else if (entry.getKey().toString().equals("description")) {
+                        TextView texter = (TextView)findViewById(R.id.restaurant_description);
+                        texter.setText(entry.getValue().toString());
+                        Log.d(TAG, String.format("%s = %s", entry.getKey(), entry.getValue()));
+                    }
+                }
+            }
+        }
+        RelativeLayout layout = (RelativeLayout) findViewById(R.id.place_info_layout);
+        if (isRestaurant) {
+            layout.setVisibility(View.VISIBLE);
+        }
+        else {
+            layout.setVisibility(View.GONE);
+        }
+        return true;
     }
 
 
