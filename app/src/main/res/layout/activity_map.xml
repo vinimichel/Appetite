@@ -30,31 +30,31 @@
                 android:layout_marginRight="14dp"
                 android:layout_marginBottom="10dp"
                 android:onClick="recenterLocation"
-                app:srcCompat="@drawable/gps"
+                app:srcCompat="@drawable/recenter_location"
                 app:backgroundTint="@color/mapbox_blue"
                 />
+
             <RelativeLayout
                 android:id="@+id/place_info_layout"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
-                android:background="@color/black"
-                android:layout_marginBottom="5dp"
                 android:layout_below="@id/back_to_camera_tracking_mode"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/location_description_background"
                 android:onClick="launchReservation"
-                android:visibility="gone"
-                >
+                android:visibility="gone">
+
                 <TextView
                     android:id="@+id/restaurant_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/white"
                     android:ems="13"
-                    android:textSize="23dp"
                     android:inputType="textPersonName"
                     android:text="PLZ"
-                    />
+                    android:textColor="@color/white"
+                    android:textSize="23dp" />
 
                 <TextView
                     android:id="@+id/restaurant_description"
@@ -67,8 +67,6 @@
                     android:inputType="textPersonName"
                     android:text="Platzhalter 123"
                     android:textColor="@color/white" />
-
-
 
 
             </RelativeLayout>

@@ -139,7 +139,7 @@ public class MapActivity extends AppCompatActivity implements
                 }
             });
         } else {
-            Toast.makeText(this, "kjkjlkjlk", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Permissions wurden nicht gewährt", Toast.LENGTH_LONG).show();
             finish();
         }
     }
@@ -150,37 +150,30 @@ public class MapActivity extends AppCompatActivity implements
         // Convert LatLng coordinates to screen pixel and only query the rendered features.
         final PointF pixel = mapboxMap.getProjection().toScreenLocation(point);
 
-        List<Feature> features = mapboxMap.queryRenderedFeatures(pixel);
-
-        boolean isRestaurant = false;
+        List<Feature> features = mapboxMap.queryRenderedFeatures(pixel, "fulda-restaurants");
+        RelativeLayout layout = (RelativeLayout) findViewById(R.id.place_info_layout);
         // Get the first feature within the list if one exist
         if (features.size() > 0) {
             Feature feature = features.get(0);
 
         // Ensure the feature has properties defined
             if (feature.properties() != null) {
-                for (Map.Entry<String, JsonElement> entry : feature.properties().entrySet()) {
-        // Log all the properties
-                    if (entry.getKey().toString().equals("title")) {
-                        TextView texter = (TextView)findViewById(R.id.restaurant_name);
-                        texter.setText(entry.getValue().toString());
-                        Log.d(TAG, String.format("%s = %s", entry.getKey(), entry.getValue()));
-                        isRestaurant = true;
-                    } else if (entry.getKey().toString().equals("description")) {
-                        TextView texter = (TextView)findViewById(R.id.restaurant_description);
-                        texter.setText(entry.getValue().toString());
-                        Log.d(TAG, String.format("%s = %s", entry.getKey(), entry.getValue()));
-                    }
-                }
+                TextView restaurantNameField = findViewById(R.id.restaurant_name);
+                restaurantNameField.setText(feature.getProperty("title").getAsString());
+                Log.d(TAG, String.format("restaurant title = %s", feature.getProperty("title").getAsString()));
+
+                TextView restaurantDescriptionField = findViewById(R.id.restaurant_description);
+                restaurantDescriptionField.setText(feature.getProperty("description").getAsString());
+                Log.d(TAG, String.format("restaurant_ description = %s", feature.getProperty("description").getAsString()));
+                layout.setVisibility(View.VISIBLE);
+
+            } else {
+                Log.d(TAG, String.format("Achtung das Restaurant hat keine abrufbaren Eigenschaften!"));
             }
-        }
-        RelativeLayout layout = (RelativeLayout) findViewById(R.id.place_info_layout);
-        if (isRestaurant) {
-            layout.setVisibility(View.VISIBLE);
-        }
-        else {
+        } else {
             layout.setVisibility(View.GONE);
         }
+
         return true;
     }
 
