@@ -13,8 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.gson.JsonElement;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.geojson.Feature;
@@ -29,7 +27,6 @@ import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
 import java.util.List;
-import java.util.Map;
 
 
 public class MapActivity extends AppCompatActivity implements
@@ -126,18 +123,13 @@ public class MapActivity extends AppCompatActivity implements
 
     @Override
     public void onExplanationNeeded(List<String> permissionsToExplain) {
-        Toast.makeText(this, "blad", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onPermissionResult(boolean granted) {
         if (granted) {
-            mapboxMap.getStyle(new Style.OnStyleLoaded() {
-                @Override
-                public void onStyleLoaded(@NonNull Style style) {
-                    enableLocationComponent(style);
-                }
-            });
+            mapboxMap.getStyle(style -> enableLocationComponent(style));
         } else {
             Toast.makeText(this, "Permissions wurden nicht gewährt", Toast.LENGTH_LONG).show();
             finish();
@@ -147,33 +139,42 @@ public class MapActivity extends AppCompatActivity implements
     @Override
     public boolean onMapClick(@NonNull LatLng point) {
 
-        // Convert LatLng coordinates to screen pixel and only query the rendered features.
+        // LatLng in Bilschirmpixel umwandeln und nur  coordinates to screen pixel and only query the rendered features.
         final PointF pixel = mapboxMap.getProjection().toScreenLocation(point);
 
+        // gerenderte Features auf Pixel abfragen (nur Features von "fulda-restaurants"-layer
         List<Feature> features = mapboxMap.queryRenderedFeatures(pixel, "fulda-restaurants");
-        RelativeLayout layout = (RelativeLayout) findViewById(R.id.place_info_layout);
-        // Get the first feature within the list if one exist
+        // Restaurant info Popup Layout herausgreifen
+        RelativeLayout popupLayout = findViewById(R.id.place_info_layout);
+
+        // prüfen ob Restaurants an Punkt gefunden wurden
         if (features.size() > 0) {
+            // Erstes Feature aus Feature Liste herausgreifen
+            // Im Idealfall befindet sich auf einem Punkt nur ein Restaurant/Feature
             Feature feature = features.get(0);
 
-        // Ensure the feature has properties defined
+            // Versichern das Feature/Restaurant Eigenschaften hat
             if (feature.properties() != null) {
+                // Textfeld auf dem Namen des Restaurants zu finden ist herausgreifen
                 TextView restaurantNameField = findViewById(R.id.restaurant_name);
+                // json Eintrag mit Namen in String konvertieren und in Feld darstellen
                 restaurantNameField.setText(feature.getProperty("title").getAsString());
                 Log.d(TAG, String.format("restaurant title = %s", feature.getProperty("title").getAsString()));
 
+                // Textfeld mit Bescreibung wählen und json Daten auf Feld ausgeben
                 TextView restaurantDescriptionField = findViewById(R.id.restaurant_description);
                 restaurantDescriptionField.setText(feature.getProperty("description").getAsString());
                 Log.d(TAG, String.format("restaurant_ description = %s", feature.getProperty("description").getAsString()));
-                layout.setVisibility(View.VISIBLE);
-
+                
+                // falls Popup mit Informationen sichtbar machen
+                popupLayout.setVisibility(View.VISIBLE);
             } else {
-                Log.d(TAG, String.format("Achtung das Restaurant hat keine abrufbaren Eigenschaften!"));
+                Log.d(TAG, "Achtung das Restaurant hat keine abrufbaren Eigenschaften!");
             }
         } else {
-            layout.setVisibility(View.GONE);
+            // falls kein Restaurant an Pixel gefunden -> Popup mit Infos verschwindent
+            popupLayout.setVisibility(View.GONE);
         }
-
         return true;
     }
 
@@ -206,7 +207,7 @@ public class MapActivity extends AppCompatActivity implements
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
     }
