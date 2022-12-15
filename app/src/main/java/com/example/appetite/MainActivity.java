@@ -1,20 +1,27 @@
 package com.example.appetite;
 
+import static android.content.ContentValues.TAG;
+
+import static com.mapbox.turf.TurfConstants.UNIT_KILOMETERS;
+import static java.lang.Math.round;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 
+import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.Point;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.appetite.adapter.NearbyViewAdapter;
 import com.example.appetite.dataModels.NearbyRestaurants;
 import com.mapbox.api.tilequery.MapboxTilequery;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
+import com.mapbox.turf.TurfMeasurement;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,19 +35,17 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView nearbyRecycler;
     NearbyViewAdapter nearbyAdapter;
-    private MapboxMap mapboxMap;     // Schnittstelle zur Map
+    private final static String MAPBOX_TOKEN = "pk.eyJ1IjoidmluaW1pY2hlbCIsImEiOiJjbGFqdWNvYmkwZmZhM3JuMzIxYzl2Z3h4In0.bmACrWyEcA6772uD758XPw";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
         setTitle("Home");
-        List<NearbyRestaurants> restaurantsDataList = new ArrayList<>();
-        // Platzhalterdaten hinzufügen
-        restaurantsDataList.add(new NearbyRestaurants("Goldene Gans", "Fulda", 9.2, R.drawable.placeholder_img1));
-        restaurantsDataList.add(new NearbyRestaurants("Bennos Bierbude", "Gersfeld", 9.2, R.drawable.placeholder_img2));
-        restaurantsDataList.add(new NearbyRestaurants("Helgas Hexenhütte", "Fulda", 9.2, R.drawable.placeholder_img3));
-        setRecyclerView(restaurantsDataList);
+        initRecyclerView();
+        Point testPoint = Point.fromLngLat(9.685242, 50.550657);
+        buildTilequeryRequest(testPoint);
+
     }
 
     public void launchSettings(View v) {
@@ -58,43 +63,47 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void setRecyclerView(List<NearbyRestaurants> nearbyRecyclerList) {
-        // Initialisierung des recycler der Daten über Restaurants in der nähe bereitstellt
+    private void initRecyclerView() {
         nearbyRecycler = findViewById(R.id.nearby_recycler);
-        // Recycler soll horizontal angeordnet sein
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
-        // layout Manager zuweisen
         nearbyRecycler.setLayoutManager(layoutManager);
-        // Durch Adapter werden Restaurant Daten an Views gebunden
-        nearbyAdapter = new NearbyViewAdapter(this, nearbyRecyclerList);
-        // Recycler ruft Methoden des Adapters auf
-        nearbyRecycler.setAdapter(nearbyAdapter);
+    }
 
+    private void setRecyclerViewData(List<Feature> features, Point deviceLocationPoint) {
+        List<NearbyRestaurants> restaurantsDataList = new ArrayList<>();
+        // Platzhalterdaten
+        for (Feature feature : features) {
+            Point restaurantLngLat = (Point)feature.geometry();
+            double distanceBetweenDeviceAndTarget = TurfMeasurement.distance(deviceLocationPoint,
+                    Point.fromLngLat(restaurantLngLat.longitude(), restaurantLngLat.latitude()), UNIT_KILOMETERS);
+            restaurantsDataList.add(new NearbyRestaurants(feature.getProperty("title").getAsString(), "Fulda", round(distanceBetweenDeviceAndTarget*100.0)/100.0, R.drawable.placeholder_img1));
+        }
+        nearbyAdapter = new NearbyViewAdapter(this, restaurantsDataList);
+        nearbyRecycler.setAdapter(nearbyAdapter);
     }
 
     private void buildTilequeryRequest(Point position) {
         MapboxTilequery tilequery = MapboxTilequery.builder()
-                //.accessToken(getString(R.string.access_token))
-                .tilesetIds("mapbox.mapbox-streets-v7")
+                .accessToken(MAPBOX_TOKEN)
+                .tilesetIds("vinimichel.clap8mndw0p0m27qlcnqkd1c6-3kiyv")
                 .query(Point.fromLngLat(position.longitude(), position.latitude()))
-                .radius(50)
+                .radius(10000)
                 .limit(10)
-                .geometry("polygon")
-                .dedupe(true)
-                .layers("building")
                 .build();
         tilequery.enqueueCall(new Callback<FeatureCollection>() {
             @Override
             public void onResponse(Call<FeatureCollection> call, Response<FeatureCollection> response) {
+
                 if (response.body() != null) {
                     FeatureCollection responseFeatureCollection = response.body();
-                    responseFeatureCollection.features();
+                    List<Feature> features  = responseFeatureCollection.features();
+                    setRecyclerViewData(features, position);
+                    Log.d(TAG, "Tilequering " + features.toString());
                 }
             }
-
             @Override
             public void onFailure(Call<FeatureCollection> call, Throwable throwable) {
-                Toast.makeText(MainActivity.this, "Could not retrieve data from api", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, " Tilequering: Could not retrieve data from api");
             }
         });
     }
