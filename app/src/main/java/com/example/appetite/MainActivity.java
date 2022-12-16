@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setTitle("Home");
         List<NearbyRestaurants> restaurantsDataList = new ArrayList<>();
-        // Platzhalterdaten
+        // Platzhalterdaten hinzufügen
         restaurantsDataList.add(new NearbyRestaurants("Goldene Gans", "Fulda", 9.2, R.drawable.placeholder_img1));
         restaurantsDataList.add(new NearbyRestaurants("Bennos Bierbude", "Gersfeld", 9.2, R.drawable.placeholder_img2));
         restaurantsDataList.add(new NearbyRestaurants("Helgas Hexenhütte", "Fulda", 9.2, R.drawable.placeholder_img3));
@@ -43,10 +43,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setRecyclerView(List<NearbyRestaurants> nearbyRecyclerList) {
+        // Initialisierung des recycler der Daten über Restaurants in der nähe bereitstellt
         nearbyRecycler = findViewById(R.id.nearby_recycler);
+        // Recycler soll horizontal angeordnet sein
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
+        // layout Manager zuweisen
         nearbyRecycler.setLayoutManager(layoutManager);
+        // Durch Adapter werden Restaurant Daten an Views gebunden
         nearbyAdapter = new NearbyViewAdapter(this, nearbyRecyclerList);
+        // Recycler ruft Methoden des Adapters auf
         nearbyRecycler.setAdapter(nearbyAdapter);
 
     }
