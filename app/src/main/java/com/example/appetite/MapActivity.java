@@ -10,11 +10,11 @@ import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconImage;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconOffset;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,14 +24,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.navigation.NavigationBarView;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.geojson.Feature;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.api.geocoding.v5.models.CarmenFeature;
+import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.Point;
+import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
@@ -72,11 +73,9 @@ public class MapActivity extends AppCompatActivity implements
         Mapbox.getInstance(this, MAPBOX_TOKEN); // Konfiguration des Mapbox Tokens
         setContentView(R.layout.activity_map);
         Intent i = getIntent();
-        setBottomNavigationItem();
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this); // Callback Objekt wenn die Map geladen hat ist dieses Objekt
-
     }
 
     public void launchReservation(View v) {
@@ -94,31 +93,6 @@ public class MapActivity extends AppCompatActivity implements
 
         // erzeugen und setzen eines Mapstyles mit URL
         mapboxMap.setStyle(new Style.Builder().fromUri("mapbox://styles/vinimichel/clap8w2r0002614ktc3lxzitn"), style -> onStyleLoaded(style));
-    }
-
-    private void setBottomNavigationItem() {
-        NavigationBarView bottomNavigationView = (NavigationBarView)findViewById(R.id.bottom_navigator);
-        bottomNavigationView.setSelectedItemId(R.id.find_restaurant);
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.user:
-                        return true;
-                    case R.id.find_restaurant:
-                        return true;
-                    case R.id.settings_tab:
-                        startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.home:
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                }
-                return false;
-            }
-        });
     }
 
     // wird aufgerufen wenn Style geladen ist

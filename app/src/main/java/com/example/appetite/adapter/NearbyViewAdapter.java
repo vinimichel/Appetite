@@ -1,6 +1,7 @@
 package com.example.appetite.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appetite.R;
+import com.example.appetite.RestaurantDescription;
 import com.example.appetite.dataModels.NearbyRestaurants;
 
 import java.util.List;
@@ -51,6 +53,13 @@ public class NearbyViewAdapter extends RecyclerView.Adapter<NearbyViewAdapter.Ne
         holder.restaurantName.setText(nearbyRestaurantList.get(position).getRestaurantName());
         holder.cityName.setText(nearbyRestaurantList.get(position).getCityName());
         holder.restaurantImage.setImageResource(nearbyRestaurantList.get(position).getImageUrl());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent descriptionIntent = new Intent(context, RestaurantDescription.class);
+                context.startActivity(descriptionIntent);
+            }
+        });
     }
 
 

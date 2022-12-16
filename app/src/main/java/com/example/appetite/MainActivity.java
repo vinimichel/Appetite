@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         // Initialisierung des recycler der Daten über Restaurants in der nähe bereitstellt
         nearbyRecycler = findViewById(R.id.nearby_recycler);
         // Recycler soll horizontal angeordnet sein
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         // layout Manager zuweisen
         nearbyRecycler.setLayoutManager(layoutManager);
         // Durch Adapter werden Restaurant Daten an Views gebunden

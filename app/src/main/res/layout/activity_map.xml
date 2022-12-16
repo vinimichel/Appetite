@@ -16,10 +16,12 @@
 
         <EditText
             android:id="@+id/PLZTextfield"
-            android:layout_width="360dp"
+            android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
             android:background="@drawable/search_bg"
             android:drawableLeft="@drawable/ic_baseline_search_24"
             android:drawablePadding="16dp"
@@ -28,8 +30,7 @@
             android:inputType="textPersonName"
             android:padding="16dp"
             android:text="Restaurant finden"
-            android:textColor="#62878F"
-            app:layout_constraintHorizontal_bias="0.0" />
+            android:textColor="#62878F" />
 
         <RelativeLayout
             android:layout_width="380dp"
