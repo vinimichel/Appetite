@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MapActivity">
+
     <com.mapbox.mapboxsdk.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
@@ -12,19 +13,64 @@
         tools:layout_editor_absoluteX="32dp"
         tools:layout_editor_absoluteY="0dp">
 
-    </com.mapbox.mapboxsdk.maps.MapView>
-    <EditText
-        android:id="@+id/PLZTextfield"
-        android:focusable="false"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="PLZ"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="380dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="10dp"
+            >
+
+
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/back_to_camera_tracking_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="14dp"
+                android:layout_marginBottom="10dp"
+                android:onClick="recenterLocation"
+                app:srcCompat="@drawable/recenter_location"
+                app:backgroundTint="@color/mapbox_blue"
+                />
+
+            <RelativeLayout
+                android:id="@+id/place_info_layout"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_below="@id/back_to_camera_tracking_mode"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/location_description_background"
+                android:onClick="launchReservation"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/restaurant_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:ems="13"
+                    android:inputType="textPersonName"
+                    android:text="PLZ"
+                    android:textColor="@color/white"
+                    android:textSize="23dp" />
+
+                <TextView
+                    android:id="@+id/restaurant_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/restaurant_name"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:ems="21"
+                    android:inputType="textPersonName"
+                    android:text="Platzhalter 123"
+                    android:textColor="@color/white" />
+
+
+            </RelativeLayout>
+        </RelativeLayout>
 
     <Button
         android:id="@+id/testButton"
@@ -38,16 +84,9 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="170dp"
-        android:layout_marginTop="650dp"
-        android:onClick="recenterLocation"
-        app:icon="@drawable/mapbox_compass_icon"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    </com.mapbox.mapboxsdk.maps.MapView>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,11 @@
 package com.example.appetite;
 
+
+import static android.content.ContentValues.TAG;
+
+import android.content.Intent;
+import android.graphics.PointF;
+
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconImage;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconOffset;
 
@@ -8,16 +14,20 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.widget.RelativeLayout;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
+import com.mapbox.geojson.Feature;
+import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.api.geocoding.v5.models.CarmenFeature;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
@@ -42,7 +52,7 @@ import com.mapbox.mapboxsdk.plugins.places.autocomplete.PlaceAutocomplete;
 
 
 public class MapActivity extends AppCompatActivity implements
-        OnMapReadyCallback, PermissionsListener {
+        OnMapReadyCallback, PermissionsListener, MapboxMap.OnMapClickListener {
 
     private MapboxMap mapboxMap;     // Schnittstelle zur Map
     private MapView mapView; // Zugriff auf Android Mapbox SDK Methoden
@@ -87,6 +97,7 @@ public class MapActivity extends AppCompatActivity implements
 
     // wird aufgerufen wenn Style geladen ist
     private void onStyleLoaded(Style style) {
+        mapboxMap.addOnMapClickListener(MapActivity.this);
         this.style = style;
         initSearchFab();
 
@@ -150,17 +161,60 @@ public class MapActivity extends AppCompatActivity implements
 
     @Override
     public void onExplanationNeeded(List<String> permissionsToExplain) {
-        Toast.makeText(this, "blad", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onPermissionResult(boolean granted) {
         if (granted) {
+
             mapboxMap.getStyle(style -> onStyleLoaded(style));
         } else {
             Toast.makeText(this, "Could not grant permissions", Toast.LENGTH_LONG).show();
             finish();
         }
+    }
+
+    @Override
+    public boolean onMapClick(@NonNull LatLng point) {
+
+        // LatLng in Bilschirmpixel umwandeln und nur  coordinates to screen pixel and only query the rendered features.
+        final PointF pixel = mapboxMap.getProjection().toScreenLocation(point);
+
+        // gerenderte Features auf Pixel abfragen (nur Features von "fulda-restaurants"-layer
+        List<Feature> features = mapboxMap.queryRenderedFeatures(pixel, "fulda-restaurants");
+        // Restaurant info Popup Layout herausgreifen
+        RelativeLayout popupLayout = findViewById(R.id.place_info_layout);
+
+        // prüfen ob Restaurants an Punkt gefunden wurden
+        if (features.size() > 0) {
+            // Erstes Feature aus Feature Liste herausgreifen
+            // Im Idealfall befindet sich auf einem Punkt nur ein Restaurant/Feature
+            Feature feature = features.get(0);
+
+            // Versichern das Feature/Restaurant Eigenschaften hat
+            if (feature.properties() != null) {
+                // Textfeld auf dem Namen des Restaurants zu finden ist herausgreifen
+                TextView restaurantNameField = findViewById(R.id.restaurant_name);
+                // json Eintrag mit Namen in String konvertieren und in Feld darstellen
+                restaurantNameField.setText(feature.getProperty("title").getAsString());
+                Log.d(TAG, String.format("restaurant title = %s", feature.getProperty("title").getAsString()));
+
+                // Textfeld mit Bescreibung wählen und json Daten auf Feld ausgeben
+                TextView restaurantDescriptionField = findViewById(R.id.restaurant_description);
+                restaurantDescriptionField.setText(feature.getProperty("description").getAsString());
+                Log.d(TAG, String.format("restaurant_ description = %s", feature.getProperty("description").getAsString()));
+                
+                // falls Popup mit Informationen sichtbar machen
+                popupLayout.setVisibility(View.VISIBLE);
+            } else {
+                Log.d(TAG, "Achtung das Restaurant hat keine abrufbaren Eigenschaften!");
+            }
+        } else {
+            // falls kein Restaurant an Pixel gefunden -> Popup mit Infos verschwindent
+            popupLayout.setVisibility(View.GONE);
+        }
+        return true;
     }
 
 
@@ -261,7 +315,7 @@ public class MapActivity extends AppCompatActivity implements
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
     }
