@@ -9,17 +9,33 @@
     <com.mapbox.mapboxsdk.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="32dp"
-        tools:layout_editor_absoluteY="0dp">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigator"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="32dp">
+
+        <EditText
+            android:id="@+id/PLZTextfield"
+            android:layout_width="360dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/search_bg"
+            android:drawableLeft="@drawable/ic_baseline_search_24"
+            android:drawablePadding="16dp"
+            android:ems="10"
+            android:focusable="false"
+            android:inputType="textPersonName"
+            android:padding="16dp"
+            android:text="Restaurant finden"
+            android:textColor="#62878F"
+            app:layout_constraintHorizontal_bias="0.0" />
 
         <RelativeLayout
-            android:layout_height="wrap_content"
             android:layout_width="380dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="10dp"
-            >
-
+            android:layout_marginBottom="10dp">
 
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -30,9 +46,8 @@
                 android:layout_marginRight="14dp"
                 android:layout_marginBottom="10dp"
                 android:onClick="recenterLocation"
-                app:srcCompat="@drawable/recenter_location"
                 app:backgroundTint="@color/mapbox_blue"
-                />
+                app:srcCompat="@drawable/recenter_location" />
 
             <RelativeLayout
                 android:id="@+id/place_info_layout"
@@ -72,19 +87,29 @@
             </RelativeLayout>
         </RelativeLayout>
 
-    <Button
-        android:id="@+id/testButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="launchReservation"
-        android:text="(Vorstellen, hier wurde auf ein Restaurant geklickt)"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/testButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="launchReservation"
+            android:text="(Vorstellen, hier wurde auf ein Restaurant geklickt)"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </com.mapbox.mapboxsdk.maps.MapView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorButtonNormal"
+        app:itemIconTint="@drawable/menu_selector"
+        app:itemTextColor="@drawable/menu_selector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/menu"></com.google.android.material.bottomnavigation.BottomNavigationView>
 
 
 
