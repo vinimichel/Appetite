@@ -43,7 +43,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setTitle("Home");
         initRecyclerView();
+        // Platzhalter Startposition
         Point testPoint = Point.fromLngLat(9.685242, 50.550657);
+        // tilequery bauen
         buildTilequeryRequest(testPoint);
 
     }
@@ -70,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setRecyclerViewData(List<Feature> features, Point deviceLocationPoint) {
+        // Nearby Restaurant Daten Felder initialisieren
         List<NearbyRestaurants> restaurantsDataList = new ArrayList<>();
         // Platzhalterdaten
         for (Feature feature : features) {
@@ -79,24 +82,33 @@ public class MainActivity extends AppCompatActivity {
             restaurantsDataList.add(new NearbyRestaurants(feature.getProperty("title").getAsString(), "Fulda", round(distanceBetweenDeviceAndTarget*100.0)/100.0, R.drawable.placeholder_img1));
         }
         nearbyAdapter = new NearbyViewAdapter(this, restaurantsDataList);
+        // Adapter auf die Daten setzen
         nearbyRecycler.setAdapter(nearbyAdapter);
     }
 
     private void buildTilequeryRequest(Point position) {
+        // tilequery mit tilequery api bauen
         MapboxTilequery tilequery = MapboxTilequery.builder()
+                // Zugangstoken
                 .accessToken(MAPBOX_TOKEN)
+                // Id des Restaurant-Tileset
                 .tilesetIds("vinimichel.clap8mndw0p0m27qlcnqkd1c6-3kiyv")
+                // Punkt von dem Abgefragt werden soll
                 .query(Point.fromLngLat(position.longitude(), position.latitude()))
+                // Wie groß darf der Radius der Restaurants maximal sein
                 .radius(10000)
+                // wie viele Ergebnisse/Restaurants sollen angezeigt werden
                 .limit(10)
                 .build();
+        // Callback bei eintreffen der Ergebnisse festlegen
         tilequery.enqueueCall(new Callback<FeatureCollection>() {
             @Override
             public void onResponse(Call<FeatureCollection> call, Response<FeatureCollection> response) {
-
                 if (response.body() != null) {
+                    // wenn Ergebnisse gefunden setzen wir FeatureCollection
                     FeatureCollection responseFeatureCollection = response.body();
                     List<Feature> features  = responseFeatureCollection.features();
+                    // recyclerView mit Daten logen
                     setRecyclerViewData(features, position);
                     Log.d(TAG, "Tilequering " + features.toString());
                 }
