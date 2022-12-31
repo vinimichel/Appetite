@@ -13,7 +13,5 @@ app.use(express.json())
 
 const kundenRouter = require('./routes/kunden')
 app.use('/kunden', kundenRouter)
-const restaurantRouter = require('./routes/restaurants')
-app.use('/restaurants', restaurantRouter)
 
 app.listen(3000, () => console.log("server started"))

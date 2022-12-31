@@ -1,45 +1,8 @@
 GET http://localhost:3000/kunden
 
-
 ###
-GET http://localhost:3000/kunden/6382755baf6620ec622955ca
 
+GET http://localhost:3000/kunden/vorname=Edidiong&name=John&
+###
 
-#######
-POST http://localhost:3000/kunden
-Content-Type: application/json
-
-{
-    "vorname" : "Edidiong",
-    "name" : "John",
-    "address" : "Albinstrasse 22",
-    "PLZ" : "36039"
-}
-
-####
-DELETE  http://localhost:3000/kunden/6382755baf6620ec622955ca
-
-
-######
-PATCH   http://localhost:3000/kunden/63826b92186d9e109ea2fdce
-Content-Type: application/json
-
-{
-    "PLZ" : "36039"
-}
-
-/////////////////////////////////////////////
-#####
-
-GET http://localhost:3000/restaurants
-
-######
-POST http://localhost:3000/restaurants
-Content-Type: application/json
-
-{
-    "name" : "Aiko Sushi",
-    "address" : "Rabanusstrasse 5",
-    "PLZ" : "36039",
-    "location" : ["-73.856077", "40.848447"]
-}
+GET http://localhost:3000/kunden/12
