@@ -28,12 +28,13 @@ public class NearbyViewAdapter extends RecyclerView.Adapter<NearbyViewAdapter.Ne
     // View holder definiert die Eigenschaften der Items im Adapter
     public static final class NearbyViewHolder extends RecyclerView.ViewHolder {
         ImageView restaurantImage;
-        TextView restaurantName, cityName;
+        TextView restaurantName, cityName, distanceField;
         public NearbyViewHolder(@NonNull View itemView) {
             super(itemView);
             restaurantImage = itemView.findViewById(R.id.restaurant_image);
             restaurantName = itemView.findViewById(R.id.restaurant_name);
             cityName = itemView.findViewById(R.id.city_of_restaurant);
+            distanceField = itemView.findViewById(R.id.distanceField);
         }
     }
 
@@ -50,6 +51,7 @@ public class NearbyViewAdapter extends RecyclerView.Adapter<NearbyViewAdapter.Ne
         // Ausprägungen der Werte im View Holder definieren
         holder.restaurantName.setText(nearbyRestaurantList.get(position).getRestaurantName());
         holder.cityName.setText(nearbyRestaurantList.get(position).getCityName());
+        holder.distanceField.setText(String.valueOf(nearbyRestaurantList.get(position).getDistance()));
         holder.restaurantImage.setImageResource(nearbyRestaurantList.get(position).getImageUrl());
     }
 

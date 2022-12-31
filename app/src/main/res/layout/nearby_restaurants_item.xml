@@ -53,4 +53,14 @@
         app:layout_constraintStart_toStartOf="@+id/city_of_restaurant"
         app:layout_constraintTop_toBottomOf="@+id/city_of_restaurant" />
 
+    <TextView
+        android:id="@+id/distanceField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:text="0"
+        app:layout_constraintBottom_toTopOf="@+id/table_availability"
+        app:layout_constraintStart_toEndOf="@+id/city_of_restaurant"
+        app:layout_constraintTop_toBottomOf="@+id/restaurant_name" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
