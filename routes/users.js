@@ -1,7 +1,6 @@
 const express = require('express')
 const users = require('../models/users')
 const router = express.Router()
-const bcrypt = require('bcrypt');
 
 //get all users
 router.get('/', async (req, res)  => {
@@ -17,35 +16,7 @@ router.get('/:id', getUser, (req, res)  => {
     res.json(res.user)
 })
 
-//create one user
-router.post('/auth/register', async (req, res)  => {
-    const salt = await bcrypt.genSalt(12)
-        const hashedPassword = await bcrypt.hash(req.body.password, salt)
-        const newPassword = hashedPassword
-    const user = new users({
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        email: req.body.email,
-        password: newPassword,
-        address: req.body.address,
-        PLZ: req.body.PLZ,
-    })
 
-    try{
-        const newUser = await user.save()
-        res.status(201).json(newUser)
-
-    } catch(err) {
-        res.status(400).json({message: err.message})
-    }
-    
-})
-
-//user login 
-router.post("/auth/login", async(req, res) => {
-
-
-})
 
 //update one user
 router.patch('/:id',getUser, async (req, res)  => {
