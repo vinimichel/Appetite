@@ -11,7 +11,16 @@ db.once('open', () => console.log("connected to database"))
 
 app.use(express.json())
 
-const kundenRouter = require('./routes/kunden')
-app.use('/kunden', kundenRouter)
+const usersRouter = require('./routes/users')
+app.use('/users', usersRouter)
+const restaurantsRouter = require('./routes/restaurants')
+app.use('/restaurants', restaurantsRouter)
+const reservationsRouter = require('./routes/reservations')
+app.use('/reservations', reservationsRouter)
+const menusRouter = require('./routes/menus')
+app.use('/menus', menusRouter)
+const tablesRouter = require('./routes/tables')
+app.use('/tables', tablesRouter)
+
 
 app.listen(3000, () => console.log("server started"))
