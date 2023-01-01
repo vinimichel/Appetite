@@ -1,10 +1,9 @@
 package com.example.appetite;
 
+import androidx.annotation.NonNull;
 import static android.content.ContentValues.TAG;
-
 import static com.mapbox.turf.TurfConstants.UNIT_KILOMETERS;
 import static java.lang.Math.round;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,11 +13,12 @@ import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.Point;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.util.Log;
 import android.view.View;
-
 import com.example.appetite.adapter.NearbyViewAdapter;
 import com.example.appetite.dataModels.NearbyRestaurants;
+import com.google.android.material.navigation.NavigationBarView;
 import com.mapbox.api.tilequery.MapboxTilequery;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.turf.TurfMeasurement;
@@ -26,7 +26,6 @@ import com.mapbox.turf.TurfMeasurement;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +61,31 @@ public class MainActivity extends AppCompatActivity {
     public void launchMap(View v) {
         Intent i = new Intent(this, MapActivity.class);
         startActivity(i);
+    }
+
+    private void setBottomNavigationItem() {
+        NavigationBarView bottomNavigationView = (NavigationBarView)findViewById(R.id.bottom_navigator);
+        bottomNavigationView.setSelectedItemId(R.id.home);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.user:
+                        return true;
+                    case R.id.find_restaurant:
+                        startActivity(new Intent(getApplicationContext(), MapActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.settings_tab:
+                        startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.home:
+                        return true;
+                }
+                return false;
+            }
+        });
     }
 
 
