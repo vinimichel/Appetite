@@ -1,9 +1,10 @@
 package com.example.appetite;
 
-import androidx.annotation.NonNull;
+
 import static android.content.ContentValues.TAG;
 import static com.mapbox.turf.TurfConstants.UNIT_KILOMETERS;
 import static java.lang.Math.round;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,26 +19,24 @@ import com.mapbox.geojson.Point;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.appetite.adapter.NearbyViewAdapter;
 import com.example.appetite.dataModels.NearbyRestaurants;
-import com.google.android.material.navigation.NavigationBarView;
 import com.mapbox.api.tilequery.MapboxTilequery;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.plugins.places.autocomplete.PlaceAutocomplete;
 import com.mapbox.mapboxsdk.plugins.places.autocomplete.model.PlaceOptions;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 import com.mapbox.turf.TurfMeasurement;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
+import com.google.android.material.navigation.NavigationBarView;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,6 +100,18 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void setRecyclerView(List<NearbyRestaurants> nearbyRecyclerList) {
+        // Initialisierung des recycler der Daten über Restaurants in der nähe bereitstellt
+        nearbyRecycler = findViewById(R.id.nearby_recycler);
+        // Recycler soll horizontal angeordnet sein
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
+        // layout Manager zuweisen
+        nearbyRecycler.setLayoutManager(layoutManager);
+        // Durch Adapter werden Restaurant Daten an Views gebunden
+        nearbyAdapter = new NearbyViewAdapter(this, nearbyRecyclerList);
+        // Recycler ruft Methoden des Adapters auf
+        nearbyRecycler.setAdapter(nearbyAdapter);
+    }
 
     private void initRecyclerView() {
         nearbyRecycler = findViewById(R.id.nearby_recycler);
@@ -156,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     // onClick Listener für Suchfeld aktivieren
     private void initSearchFab() {
         Mapbox.getInstance(this, MAPBOX_TOKEN); // Konfiguration des Mapbox Tokens
