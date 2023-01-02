@@ -1,11 +1,32 @@
+http://localhost:3000
+
+###Login Route
+POST http://localhost:3000/auth/login
+
+###Register Route
+POST http://localhost:3000/auth/register
+
+###Refresh token Route
+POST http://localhost:3000/auth/refresh-token
+
+###Logout Route
+DELETE http://localhost:3000/auth/logout
+
+
+
+#####################
 GET http://localhost:3000/users
 
+
+####
+//testing our error handling
+GET http://localhost:3000/k
 ###
 GET http://localhost:3000/users/63a78a580ea068ea093ce746
 
 
 #######
-POST http://localhost:3000/users/auth/register
+POST http://localhost:3000/auth/register
 Content-Type: application/json
 
 {
