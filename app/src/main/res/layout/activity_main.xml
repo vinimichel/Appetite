@@ -38,7 +38,7 @@
 
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/restaurant_search_field"
         android:layout_width="0dp"
         android:layout_height="55dp"
         android:layout_marginTop="14dp"
@@ -46,10 +46,11 @@
         android:background="@drawable/search_bg"
         android:drawableLeft="@drawable/ic_baseline_search_24"
         android:drawablePadding="16dp"
+        android:focusable="false"
         android:fontFamily="@font/poppins_regular"
         android:inputType="textPersonName"
         android:padding="16dp"
-        android:text="Restaurant finden"
+        android:text="Restaurant oder Ort eingeben"
         android:textColor="#919191"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/imageView8"
@@ -64,8 +65,9 @@
         android:layout_marginTop="15dp"
         app:layout_constraintEnd_toEndOf="@+id/imageView8"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName">
+        app:layout_constraintStart_toStartOf="@+id/restaurant_search_field"
+        app:layout_constraintTop_toBottomOf="@+id/restaurant_search_field">
+
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -160,9 +162,9 @@
         android:layout_marginEnd="16dp"
         android:background="@drawable/filter_bg"
         android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName"
+        app:layout_constraintBottom_toBottomOf="@+id/restaurant_search_field"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName"
+        app:layout_constraintTop_toTopOf="@+id/restaurant_search_field"
         app:srcCompat="@drawable/filter" />
 
     <TextView

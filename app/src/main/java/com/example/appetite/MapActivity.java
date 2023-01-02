@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.widget.RelativeLayout;
 import android.widget.EditText;
@@ -29,10 +30,8 @@ import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.geojson.Feature;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.api.geocoding.v5.models.CarmenFeature;
-import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.Point;
-import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
@@ -184,7 +183,7 @@ public class MapActivity extends AppCompatActivity implements
         // gerenderte Features auf Pixel abfragen (nur Features von "fulda-restaurants"-layer
         List<Feature> features = mapboxMap.queryRenderedFeatures(pixel, "fulda-restaurants");
         // Restaurant info Popup Layout herausgreifen
-        RelativeLayout popupLayout = findViewById(R.id.place_info_layout);
+        ConstraintLayout popupLayout = findViewById(R.id.place_info_layout);
 
         // prüfen ob Restaurants an Punkt gefunden wurden
         if (features.size() > 0) {

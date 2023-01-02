@@ -8,19 +8,30 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.app.Activity;
 import android.content.Intent;
 
+import com.mapbox.api.geocoding.v5.models.CarmenFeature;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.Point;
+
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+
 import com.example.appetite.adapter.NearbyViewAdapter;
 import com.example.appetite.dataModels.NearbyRestaurants;
 import com.mapbox.api.tilequery.MapboxTilequery;
-import com.mapbox.mapboxsdk.maps.MapboxMap;
+import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.plugins.places.autocomplete.PlaceAutocomplete;
+import com.mapbox.mapboxsdk.plugins.places.autocomplete.model.PlaceOptions;
+import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 import com.mapbox.turf.TurfMeasurement;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView nearbyRecycler;
     NearbyViewAdapter nearbyAdapter;
     private final static String MAPBOX_TOKEN = "pk.eyJ1IjoidmluaW1pY2hlbCIsImEiOiJjbGFqdWNvYmkwZmZhM3JuMzIxYzl2Z3h4In0.bmACrWyEcA6772uD758XPw";
+    private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
         Point testPoint = Point.fromLngLat(9.685242, 50.550657);
         // tilequery bauen
         buildTilequeryRequest(testPoint);
-
+        setBottomNavigationItem();
+        initSearchFab();
     }
 
     public void launchSettings(View v) {
@@ -114,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
             Point restaurantLngLat = (Point)feature.geometry();
             double distanceBetweenDeviceAndTarget = TurfMeasurement.distance(deviceLocationPoint,
                     Point.fromLngLat(restaurantLngLat.longitude(), restaurantLngLat.latitude()), UNIT_KILOMETERS);
-            restaurantsDataList.add(new NearbyRestaurants(feature.getProperty("title").getAsString(), "Fulda", round(distanceBetweenDeviceAndTarget*100.0)/100.0, R.drawable.placeholder_img1));
+            restaurantsDataList.add(new NearbyRestaurants(feature.getProperty("title").getAsString(), feature.getProperty("city").getAsString(), round(distanceBetweenDeviceAndTarget*100.0)/100.0, R.drawable.placeholder_img1));
         }
         nearbyAdapter = new NearbyViewAdapter(this, restaurantsDataList);
         // Adapter auf die Daten setzen
@@ -127,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                 // Zugangstoken
                 .accessToken(MAPBOX_TOKEN)
                 // Id des Restaurant-Tileset
-                .tilesetIds("vinimichel.clap8mndw0p0m27qlcnqkd1c6-3kiyv")
+                .tilesetIds("vinimichel.clcevvkko01bw23qh5gmszly4-9cpxg")
                 // Punkt von dem Abgefragt werden soll
                 .query(Point.fromLngLat(position.longitude(), position.latitude()))
                 // Wie groß darf der Radius der Restaurants maximal sein
@@ -153,5 +166,35 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, " Tilequering: Could not retrieve data from api");
             }
         });
+    }
+
+    // onClick Listener für Suchfeld aktivieren
+    private void initSearchFab() {
+        Mapbox.getInstance(this, MAPBOX_TOKEN); // Konfiguration des Mapbox Tokens
+        findViewById(R.id.restaurant_search_field).setOnClickListener(new View.OnClickListener() {
+            // neue Suchaktivität öffnen wenn Button gedrückt
+            @Override
+            public void onClick(View view) {
+                Intent intent = new PlaceAutocomplete.IntentBuilder()
+                        .accessToken(Mapbox.getAccessToken() != null ? Mapbox.getAccessToken() : MAPBOX_TOKEN)
+                        .placeOptions(PlaceOptions.builder()
+                                .backgroundColor(Color.parseColor("#FFFFFF"))
+                                .limit(10)
+                                .build(PlaceOptions.MODE_CARDS))
+                        .build(MainActivity.this);
+                // Activity öffnen von der man nach dem öffnen ein Resultat wünscht welches mit onActivityResult behandelt wird
+                startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_AUTOCOMPLETE) {
+
+            // CarmenFeature der ausgewählten Location wählen
+            CarmenFeature selectedCarmenFeature = PlaceAutocomplete.getPlace(data);
+        }
     }
 }

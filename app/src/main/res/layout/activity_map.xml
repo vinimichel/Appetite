@@ -18,6 +18,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <EditText
                 android:id="@+id/PLZTextfield"
                 android:layout_width="0dp"
@@ -30,7 +31,6 @@
                 android:background="@drawable/search_bg"
                 android:drawableLeft="@drawable/ic_baseline_search_24"
                 android:drawablePadding="16dp"
-                android:ems="10"
                 android:focusable="false"
                 android:inputType="textPersonName"
                 android:padding="16dp"
