@@ -1,34 +1,47 @@
-GET http://localhost:3000/kunden
-
+GET http://localhost:3000/users
 
 ###
-GET http://localhost:3000/kunden/6382755baf6620ec622955ca
+GET http://localhost:3000/users/63a78a580ea068ea093ce746
 
 
 #######
-POST http://localhost:3000/kunden
+POST http://localhost:3000/users/auth/register
 Content-Type: application/json
 
 {
-    "vorname" : "Edidiong",
-    "name" : "John",
-    "address" : "Albinstrasse 22",
+    "firstname" : "Rajesh",
+    "lastname" : "Koothrapali",
+    "email": "rajeshK@gmail.com",
+    "address" : "Fictionstrasse 12",
+    "password" : "raj23484@@",
     "PLZ" : "36039"
 }
 
+
 ####
-DELETE  http://localhost:3000/kunden/6382755baf6620ec622955ca
+POST http://localhost:3000/users/auth/login
+Content-Type: application/json
+
+{
+    "email" : "rajeshK@gmail.com",
+    "password" : "raj23484@@"
+}
+
+
+####
+DELETE  http://localhost:3000/users/63a78cac0ea068ea093ce748
 
 
 ######
-PATCH   http://localhost:3000/kunden/63826b92186d9e109ea2fdce
+PATCH   http://localhost:3000/users/63a78a580ea068ea093ce746
 Content-Type: application/json
 
 {
-    "PLZ" : "36039"
+    "email" : "eddiej@gmail.com",
+    "PLZ" : "36037"
 }
 
-/////////////////////////////////////////////
+////////////////////// restaurant calls
 #####
 
 GET http://localhost:3000/restaurants
@@ -38,8 +51,59 @@ POST http://localhost:3000/restaurants
 Content-Type: application/json
 
 {
-    "name" : "Aiko Sushi",
-    "address" : "Rabanusstrasse 5",
+    "name" : "Kaptain Pizza",
+    "address" : "Aschernbergplatz 15",
+    "email" : "kaptainpizza@yahoo.com",
     "PLZ" : "36039",
-    "location" : ["-73.856077", "40.848447"]
+    "longitude" : "-80.5748348839",
+    "latitude" : "30.33487484834"
 }
+####
+DELETE http://localhost:3000/restaurants/63a8bc529cc87f0e078b531a
+
+#########
+GET http://localhost:3000/restaurants/638376f4905e75b1fd0a586c
+
+####### 
+PATCH   http://localhost:3000/restaurants/63837f64199eb8289afb1c42
+Content-Type: application/json
+
+{
+    "name" : "Mama Mia",
+    "email" : "mamamia@gmail.com"
+}
+
+
+////////////////// reservation calls
+####
+GET http://localhost:3000/reservations
+
+######
+POST http://localhost:3000/reservations
+Content-Type: application/json
+
+{
+    "restaurant_id" : "638376f4905e75b1fd0a586c",
+    "user_id" : "63a848f375225f0eaeff820a",
+    "table_id" : "CB78",
+    "reservation_date" : "2023-01-05",
+    "reservation_time" : "20:30"
+}
+
+######## Get reservation from a specific user
+GET http://localhost:3000/reservations/user/63a848f375225f0eaeff820a
+
+########
+GET http://localhost:3000/reservations/restaurant/638376f4905e75b1fd0a586c
+
+
+####
+DELETE http://localhost:3000/reservations/6382a4d10b770db9ebcbc28e
+
+/////////////////////// menu calls
+
+#########
+GET http://localhost:3000/menus/
+
+#############
+GET http://localhost:3000/menus/nachspeise/63837f64199eb8289afb1c42
