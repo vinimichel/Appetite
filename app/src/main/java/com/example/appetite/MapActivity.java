@@ -239,7 +239,7 @@ public class MapActivity extends AppCompatActivity implements
                 Intent intent = new PlaceAutocomplete.IntentBuilder()
                         .accessToken(Mapbox.getAccessToken() != null ? Mapbox.getAccessToken() : MAPBOX_TOKEN)
                         .placeOptions(PlaceOptions.builder()
-                                .backgroundColor(Color.parseColor("#EEEEEE"))
+                                .backgroundColor(Color.parseColor("#FFFFFF"))
                                 .limit(10)
                                 .build(PlaceOptions.MODE_CARDS))
                         .build(MapActivity.this);
