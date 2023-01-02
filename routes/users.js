@@ -60,7 +60,7 @@ router.delete('/:id',getUser, async (req, res)  => {
 async function getUser(req, res, next) {
     let userInfo
 try {
-    userInfo = await users.findById(req.params.id)
+    userInfo = await users.findOne(req.params.id)
     if(userInfo == null) {
         return res.status(404).json({message : 'Cannot find user'})
     }
@@ -73,10 +73,3 @@ next()
 }
 
 module.exports = router
-
-/**
- * z.B. kunden.find({PLZ: "36039"})
- * By applying a $near filter on the location field,
- *  we can find all points within 100km (100000 meters) of
- *  [-79.3832, 43.6532].
- */

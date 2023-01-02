@@ -5,6 +5,7 @@ const app = express()
 const mongoose = require('mongoose')
 const morgan = require("morgan")
 const createErrors = require("http-errors")
+const {verifyAccessToken} = require("./helpers/jwt_helper")
 
 mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true})
 const db = mongoose.connection
@@ -22,7 +23,10 @@ process.on("SIGINT", async() => {
 app.use(express.json())
 app.use(morgan('dev'))
 
-
+app.get("/",verifyAccessToken, async (req, res, next) => {
+    //console.log(req.headers.authorization)
+    res.send("Welcome to the appetite app!!")
+})
 const authRoute = require("./routes/auth.route")
 app.use('/auth', authRoute)
 const usersRouter = require('./routes/users')

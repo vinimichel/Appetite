@@ -1,13 +1,36 @@
 http://localhost:3000
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzI2ODg5OTIsImV4cCI6MTY3MjY4OTA1MiwiYXVkIjoiNjNiMmQ2NzE5N2RiZmRkYTdjOTcwZDZlIiwiaXNzIjoiYXBwZXRpdGUuY29tIn0.aAEiBrdL3LcXPJMiFYPMlNE4vG20c3kExpKALpLYtlo
 
 ###Login Route
 POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "email" : "sheldonC@gmail.com",
+    "password" : "sheldon4556+@//"
+}
 
 ###Register Route
 POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+    "firstname" : "Amy",
+    "lastname" : "Fowler",
+    "email" : "amyfowler@gmail.com",
+    "password" : "amyFowler837&%",
+    "address" : "Hamburgerstrasse 13",
+    "PLZ" : "36039"
+}
 
 ###Refresh token Route
 POST http://localhost:3000/auth/refresh-token
+Content-Type: application/json
+{
+    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzI2OTM2OTUsImV4cCI6MTcwNDI1MTI5NSwiYXVkIjoiNjNiMzQ3YmZhMzI1OWY3ZjNiNWI4ZjBjIiwiaXNzIjoiYXBwZXRpdGUuY29tIn0.zwn4NWRLJBAF5YaxgHu-ZR1tLYJzOZPihKHGnyZ8zqI"
+}
+
+//refresh tokens can be saved inside user defaults
 
 ###Logout Route
 DELETE http://localhost:3000/auth/logout
@@ -23,31 +46,6 @@ GET http://localhost:3000/users
 GET http://localhost:3000/k
 ###
 GET http://localhost:3000/users/63a78a580ea068ea093ce746
-
-
-#######
-POST http://localhost:3000/auth/register
-Content-Type: application/json
-
-{
-    "firstname" : "Rajesh",
-    "lastname" : "Koothrapali",
-    "email": "rajeshK@gmail.com",
-    "address" : "Fictionstrasse 12",
-    "password" : "raj23484@@",
-    "PLZ" : "36039"
-}
-
-
-####
-POST http://localhost:3000/users/auth/login
-Content-Type: application/json
-
-{
-    "email" : "rajeshK@gmail.com",
-    "password" : "raj23484@@"
-}
-
 
 ####
 DELETE  http://localhost:3000/users/63a78cac0ea068ea093ce748
