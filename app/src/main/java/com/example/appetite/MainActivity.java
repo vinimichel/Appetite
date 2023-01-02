@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         nearbyAdapter = new NearbyViewAdapter(this, nearbyRecyclerList);
         // Recycler ruft Methoden des Adapters auf
         nearbyRecycler.setAdapter(nearbyAdapter);
+    }
 
     private void initRecyclerView() {
         nearbyRecycler = findViewById(R.id.nearby_recycler);
