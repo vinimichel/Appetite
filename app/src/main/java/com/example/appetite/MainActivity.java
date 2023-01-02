@@ -91,7 +91,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void initRecyclerView() {
         nearbyRecycler = findViewById(R.id.nearby_recycler);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
+
+        // Recycler soll horizontal angeordnet sein
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        // layout Manager zuweisen
         nearbyRecycler.setLayoutManager(layoutManager);
     }
 
