@@ -1,18 +1,33 @@
 package com.example.appetite.dataModels;
 
-public class NearbyRestaurants {
+import static com.mapbox.turf.TurfConstants.UNIT_KILOMETERS;
+import static java.lang.Math.round;
+
+import com.example.appetite.R;
+import com.mapbox.geojson.Feature;
+import com.mapbox.geojson.Point;
+import com.mapbox.turf.TurfMeasurement;
+import java.io.Serializable;
+
+public class NearbyRestaurants implements Serializable {
     String restaurantName;
     String cityName;
+    String foodCategory;
     double distance;
     Integer imageUrl;
+    //public Feature restaurantFeature;
 
 
-
-    public NearbyRestaurants(String restaurantName, String cityName, double distance, Integer imageUrl) {
-        this.restaurantName = restaurantName;
-        this.cityName = cityName;
-        this.distance = distance;
-        this.imageUrl = imageUrl;
+    public NearbyRestaurants(Feature restaurantFeature, Point deviceLocation) {
+        //this.restaurantFeature = restaurantFeature;
+        this.restaurantName = restaurantFeature.getProperty("title").getAsString();
+        this.cityName = restaurantFeature.getProperty("city").getAsString();
+        this.foodCategory = restaurantFeature.getProperty("category").getAsString();
+        Point restaurantLngLat = (Point)restaurantFeature.geometry();
+        double distanceBetweenDeviceAndTarget = TurfMeasurement.distance(deviceLocation,
+                Point.fromLngLat(restaurantLngLat.longitude(), restaurantLngLat.latitude()), UNIT_KILOMETERS);
+        this.distance = round(distanceBetweenDeviceAndTarget*100.0)/100.0;
+        this.imageUrl = R.drawable.placeholder_img1;
     }
 
     public String getCityName() {

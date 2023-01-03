@@ -119,15 +119,12 @@ public class MainActivity extends AppCompatActivity {
         nearbyRecycler.setLayoutManager(layoutManager);
     }
 
-    private void setRecyclerViewData(List<Feature> features, Point deviceLocationPoint) {
+    private void setRecyclerViewData(List<Feature> features, Point deviceLocation) {
         // Nearby Restaurant Daten Felder initialisieren
         List<NearbyRestaurants> restaurantsDataList = new ArrayList<>();
         // Platzhalterdaten
         for (Feature feature : features) {
-            Point restaurantLngLat = (Point)feature.geometry();
-            double distanceBetweenDeviceAndTarget = TurfMeasurement.distance(deviceLocationPoint,
-                    Point.fromLngLat(restaurantLngLat.longitude(), restaurantLngLat.latitude()), UNIT_KILOMETERS);
-            restaurantsDataList.add(new NearbyRestaurants(feature.getProperty("title").getAsString(), feature.getProperty("city").getAsString(), round(distanceBetweenDeviceAndTarget*100.0)/100.0, R.drawable.placeholder_img1));
+            restaurantsDataList.add(new NearbyRestaurants(feature, deviceLocation));
         }
         nearbyAdapter = new NearbyViewAdapter(this, restaurantsDataList);
         // Adapter auf die Daten setzen

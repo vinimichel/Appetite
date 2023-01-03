@@ -38,7 +38,7 @@
         tools:layout_editor_absoluteX="-1dp" />
 
     <TextView
-        android:id="@+id/resName"
+        android:id="@+id/restaurant_name_in_description_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -55,8 +55,8 @@
         android:layout_width="19dp"
         android:layout_height="19dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="@+id/resName"
-        app:layout_constraintTop_toBottomOf="@+id/resName"
+        app:layout_constraintStart_toStartOf="@+id/restaurant_name_in_description_activity"
+        app:layout_constraintTop_toBottomOf="@+id/restaurant_name_in_description_activity"
         app:srcCompat="@drawable/mapbox_ic_place" />
 
     <TextView
@@ -110,13 +110,13 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/restaurant_description_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.     Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. sdddddddddddddddddddddddddddddddddddddddssssssdddddddd Lorem"
+        android:text="Lorem ipsum"
         app:layout_constraintBottom_toTopOf="@+id/beginReservation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
