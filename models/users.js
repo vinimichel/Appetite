@@ -22,7 +22,7 @@ const usersSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: false
+        required: true
     },
     PLZ: {
         type:Number,
@@ -36,7 +36,7 @@ const usersSchema = new mongoose.Schema({
 
 })
 
-/**
+
 usersSchema.pre("save", async function(next) {
     try {
         const salt = await bcrypt.genSalt(12)
@@ -48,6 +48,13 @@ usersSchema.pre("save", async function(next) {
     }
 })
 
-*/
+usersSchema.methods.isValidPassword = async function (password) {
+    try{
+        return await bcrypt.compare(password, this.password)
+
+    } catch(err) {
+        throw err
+    }
+}
 
 module.exports = mongoose.model('users', usersSchema)
