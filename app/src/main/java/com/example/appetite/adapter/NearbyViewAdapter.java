@@ -59,6 +59,7 @@ public class NearbyViewAdapter extends RecyclerView.Adapter<NearbyViewAdapter.Ne
             @Override
             public void onClick(View view) {
                 Intent descriptionIntent = new Intent(context, RestaurantDescription.class);
+                descriptionIntent.putExtra("restaurantData", nearbyRestaurantList.get(position));
                 context.startActivity(descriptionIntent);
             }
         });
