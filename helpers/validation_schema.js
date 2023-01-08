@@ -13,7 +13,16 @@ const loginSchema = Joi.object({
     password: Joi.string().min(8).required(),
 })
 
+const reservationSchema = Joi.object({
+    restaurant_id: Joi.string().required(),
+    user_id: Joi.string().required(),
+    no_of_people: Joi.number().integer().required(),
+    reservation_date: Joi.string().required(),
+    reservation_time: Joi.string().required(),
+})
+
 module.exports = {
     authSchema,
-    loginSchema
+    loginSchema,
+    reservationSchema
 }

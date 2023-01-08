@@ -12,7 +12,7 @@ const usersSchema = new mongoose.Schema({
     },
     address: {
         type: String,
-        required: true
+        required: false
     }, 
     email: {
         type: String,
@@ -26,11 +26,11 @@ const usersSchema = new mongoose.Schema({
     },
     PLZ: {
         type:Number,
-        required: true
+        required: false
     },
     Date: {
         type: Date,
-        required: true,
+        required: false,
         default:Date.now
     }
 

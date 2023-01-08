@@ -19,6 +19,15 @@ const restaurantSchema = new mongoose.Schema({
             type:Number,
             required: true
         },
+        tables: {
+            type: Number,
+            required: true,
+            default: 0
+        },
+        logo: {
+            type: String,
+            required: false
+        },
         /** 
         location: {
             type: String,
