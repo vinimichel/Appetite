@@ -1,13 +1,13 @@
 http://localhost:3000
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzI2ODg5OTIsImV4cCI6MTY3MjY4OTA1MiwiYXVkIjoiNjNiMmQ2NzE5N2RiZmRkYTdjOTcwZDZlIiwiaXNzIjoiYXBwZXRpdGUuY29tIn0.aAEiBrdL3LcXPJMiFYPMlNE4vG20c3kExpKALpLYtlo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzI5Mzc3OTQsImV4cCI6MTY3MjkzNzg1NCwiYXVkIjoiNjNiNmZjYTQ0NzFkYTk4ZjQ2YjAzMTlhIiwiaXNzIjoiYXBwZXRpdGUuY29tIn0.qlDPax0uOZ-_1Dts0PKh3TKL2y9gGh4txAwJjxenp98
 
 ###Login Route
 POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-    "email" : "sheldonC@gmail.com",
-    "password" : "sheldon4556+@//"
+    "email" : "eddj@gmail.com",
+    "password" : "dehidhcdshcdbscj892173232@"
 }
 
 ###Register Route
@@ -15,10 +15,10 @@ POST http://localhost:3000/auth/register
 Content-Type: application/json
 
 {
-    "firstname" : "Amy",
-    "lastname" : "Fowler",
-    "email" : "amyfowler@gmail.com",
-    "password" : "amyFowler837&%",
+    "firstname" : "Eddy",
+    "lastname" : "John",
+    "email" : "jeghewhf@gmail.com",
+    "password" : "dehidhcdshcdbscj892173232@",
     "address" : "Hamburgerstrasse 13",
     "PLZ" : "36039"
 }
@@ -26,8 +26,9 @@ Content-Type: application/json
 ###Refresh token Route
 POST http://localhost:3000/auth/refresh-token
 Content-Type: application/json
+
 {
-    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzI2OTM2OTUsImV4cCI6MTcwNDI1MTI5NSwiYXVkIjoiNjNiMzQ3YmZhMzI1OWY3ZjNiNWI4ZjBjIiwiaXNzIjoiYXBwZXRpdGUuY29tIn0.zwn4NWRLJBAF5YaxgHu-ZR1tLYJzOZPihKHGnyZ8zqI"
+    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzI5Mzc5MDgsImV4cCI6MTcwNDQ5NTUwOCwiYXVkIjoiNjNiNmZjYTQ0NzFkYTk4ZjQ2YjAzMTlhIiwiaXNzIjoiYXBwZXRpdGUuY29tIn0.yw13YTFWcIPxb9ENalDZBsqlAt7Tjx3oOeKGTtRar6Q"
 }
 
 //refresh tokens can be saved inside user defaults
@@ -52,7 +53,7 @@ DELETE  http://localhost:3000/users/63a78cac0ea068ea093ce748
 
 
 ######
-PATCH   http://localhost:3000/users/63a78a580ea068ea093ce746
+PATCH   http://localhost:3000/users/edit/63a78a580ea068ea093ce746
 Content-Type: application/json
 
 {
@@ -104,7 +105,7 @@ Content-Type: application/json
 {
     "restaurant_id" : "638376f4905e75b1fd0a586c",
     "user_id" : "63a848f375225f0eaeff820a",
-    "table_id" : "CB78",
+    "no_of_people" : 3,
     "reservation_date" : "2023-01-05",
     "reservation_time" : "20:30"
 }
