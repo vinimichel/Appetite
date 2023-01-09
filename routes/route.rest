@@ -2,7 +2,7 @@ http://localhost:3000
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzI5Mzc3OTQsImV4cCI6MTY3MjkzNzg1NCwiYXVkIjoiNjNiNmZjYTQ0NzFkYTk4ZjQ2YjAzMTlhIiwiaXNzIjoiYXBwZXRpdGUuY29tIn0.qlDPax0uOZ-_1Dts0PKh3TKL2y9gGh4txAwJjxenp98
 
 ###Login Route
-POST http://localhost:3000/auth/login
+POST http://localhost:3000/auth/user/login
 Content-Type: application/json
 
 {
@@ -11,7 +11,7 @@ Content-Type: application/json
 }
 
 ###Register Route
-POST http://localhost:3000/auth/register
+POST http://localhost:3000/auth/user/register
 Content-Type: application/json
 
 {
@@ -34,7 +34,18 @@ Content-Type: application/json
 //refresh tokens can be saved inside user defaults
 
 ###Logout Route
-DELETE http://localhost:3000/auth/logout
+DELETE http://localhost:3000/auth/user/logout
+
+
+
+#####
+POST http://localhost:3000/auth/restaurant/login
+
+Content-Type: application/json
+{
+    "email" : ,
+    "password" : 
+}
 
 
 
@@ -67,17 +78,30 @@ Content-Type: application/json
 GET http://localhost:3000/restaurants
 
 ######
-POST http://localhost:3000/restaurants
+POST http://localhost:3000/restaurants/register
 Content-Type: application/json
 
 {
-    "name" : "Kaptain Pizza",
-    "address" : "Aschernbergplatz 15",
-    "email" : "kaptainpizza@yahoo.com",
-    "PLZ" : "36039",
-    "longitude" : "-80.5748348839",
-    "latitude" : "30.33487484834"
+    "name" : "Alte Schule Fulda",
+    "email" : "tables@alteschule.de",
+    "password" : "dehidhcdshcdbscj892173232@",
+    "address" : "Jesuitenplatz 2, Fulda, Hessen Deutschland",
+    "PLZ" : "36037"
 }
+
+#####
+POST http://localhost:3000/restaurants/login
+Content-Type: application/json
+
+{
+    "email" : "tables@alteschule.de",
+    "password" : "dehidhcdshcdbscj892173232@"
+}
+
+
+
+
+
 ####
 DELETE http://localhost:3000/restaurants/63a8bc529cc87f0e078b531a
 
@@ -99,7 +123,7 @@ Content-Type: application/json
 GET http://localhost:3000/reservations
 
 ######
-POST http://localhost:3000/reservations
+POST http://localhost:3000/reservations/add
 Content-Type: application/json
 
 {
@@ -118,7 +142,7 @@ GET http://localhost:3000/reservations/restaurant/638376f4905e75b1fd0a586c
 
 
 ####
-DELETE http://localhost:3000/reservations/6382a4d10b770db9ebcbc28e
+DELETE http://localhost:3000/reservations/delete/63bad9f4066f6948866c72fe
 
 /////////////////////// menu calls
 

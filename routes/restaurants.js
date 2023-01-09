@@ -1,6 +1,10 @@
 const express = require('express')
 const restaurants = require('../models/restaurants')
 const router = express.Router()
+const {restaurantAuthSchema, 
+        restaurantLoginSchema} = require('../helpers/validation_schema')
+const {signAccessToken, signRefreshToken, verifyRefreshToken} = require("../helpers/jwt_helper")
+const createError = require("http-errors")
 
 
 router.get("/", async (req, res) => {
@@ -13,25 +17,43 @@ router.get("/", async (req, res) => {
 })
 
 
-router.post("/", async (req, res) => {
-    const Restaurant = new restaurants({
-        name: req.body.name,
-        address: req.body.address,
-        email: req.body.email,
-        PLZ: req.body.PLZ,
-        longitude: req.body.longitude,
-        latitude: req.body.latitude
+router.post("/register", async (req, res, next) => {
+    try {
+        const result = await restaurantAuthSchema.validateAsync(req.body)
+        //checks if restaurant already exists
+        const doesExist = await restaurants.findOne({email: result.email})
+        if(doesExist) throw createError.Conflict(`${result.email} is already registered`)
 
-    })
-
-    try{
-        const newRestaurant = await Restaurant.save()
-        res.status(201).json(newRestaurant)
-
+        const restaurant = new restaurants(result)
+        const newRestaurant = await restaurant.save()
+        const accessToken = await signAccessToken(newRestaurant.id)
+        const refreshToken = await signRefreshToken(newRestaurant.id)
+        res.json({accessToken, refreshToken})
+        
     } catch(err) {
-        res.status(400).json({message: err.message})
+        if(err.isJoi === true) err.status = 422
+        next(err)
+        
     }
 
+})
+
+router.post("/login", async (req, res, next) => {
+    try{
+        const result = await restaurantLoginSchema.validateAsync(req.body)
+        const restaurant = await restaurants.findOne({email: result.email})
+        if(!restaurant) throw createError.NotFound("Restaurant not found")
+
+        const isMatch = await restaurant.isValidPassword(result.password)
+        if(!isMatch) throw createError.Unauthorized("Invalid Email/Password")
+        //res.send({userId : user.id})
+        const accessToken = await signAccessToken(restaurant.id)
+        const refreshToken = await signRefreshToken(restaurant.id)
+        res.json({accessToken, refreshToken})
+    } catch(err) {
+        if(err.isJoi === true) return next(createError.BadRequest("Invalid Email/Password"))
+        next(err)
+    }
 })
 
 router.get("/:id", getRestaurant, async (req, res) => {
@@ -52,12 +74,6 @@ router.patch('/:id', getRestaurant, async (req, res)  => {
     }
     if(req.body.PLZ != null) {
         res.restaurant.PLZ = req.body.PLZ
-    }
-    if(req.body.longitude != null) {
-        res.restaurant.longitude = req.body.longitude
-    }
-    if(req.body.latitude != null) {
-        res.restaurant.latitude = req.body.latitude
     }
  
     try {
