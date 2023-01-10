@@ -82,10 +82,10 @@ POST http://localhost:3000/restaurants/register
 Content-Type: application/json
 
 {
-    "name" : "Alte Schule Fulda",
-    "email" : "tables@alteschule.de",
+    "name" : "Buena Vista",
+    "email" : "tables@buenavista.de",
     "password" : "dehidhcdshcdbscj892173232@",
-    "address" : "Jesuitenplatz 2, Fulda, Hessen Deutschland",
+    "address" : "Esperantoplatz, Fulda, Hessen Deutschland",
     "PLZ" : "36037"
 }
 
@@ -151,3 +151,13 @@ GET http://localhost:3000/menus/
 
 #############
 GET http://localhost:3000/menus/nachspeise/63837f64199eb8289afb1c42
+
+//////////// file upload
+###########
+POST http://localhost:3000/upload/images
+
+Content-Type: application/json
+
+{
+    "name" : ""
+}

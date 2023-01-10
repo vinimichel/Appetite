@@ -39,6 +39,8 @@ const menusRouter = require('./routes/menus')
 app.use('/menus', menusRouter)
 const tablesRouter = require('./routes/tables')
 app.use('/tables', tablesRouter)
+const imageUploadRouter = require('./routes/image_upload')
+app.use('/upload', imageUploadRouter)
 
 app.use(async(req, res, next) => {
     next(createErrors.NotFound("This page does not exist"))

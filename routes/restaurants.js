@@ -1,6 +1,7 @@
 const express = require('express')
 const restaurants = require('../models/restaurants')
 const router = express.Router()
+const multer = require('multer')
 const {restaurantAuthSchema, 
         restaurantLoginSchema} = require('../helpers/validation_schema')
 const {signAccessToken, signRefreshToken, verifyRefreshToken} = require("../helpers/jwt_helper")
@@ -61,7 +62,7 @@ router.get("/:id", getRestaurant, async (req, res) => {
 })
 
 //update resaurant information
-router.patch('/:id', getRestaurant, async (req, res)  => {
+router.patch('/update/:id', getRestaurant, async (req, res)  => {
 
     if(req.body.name != null) {
         res.restaurant.name = req.body.name
@@ -86,7 +87,7 @@ router.patch('/:id', getRestaurant, async (req, res)  => {
 })
 
 //delete restaurant 
-router.delete('/:id',getRestaurant, async (req, res)  => {
+router.delete('/delete/:id',getRestaurant, async (req, res)  => {
     try {
         await res.restaurant.remove()
         res.json({message : "Restaurant deleted"})

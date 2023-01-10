@@ -1,9 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const createError = require("http-errors")
-const bcrypt = require('bcrypt');
 const users = require('../models/users')
-const restaurants = require("../models/restaurants")
 const {authSchema, loginSchema} = require('../helpers/validation_schema')
 const {signAccessToken, signRefreshToken, verifyRefreshToken} = require("../helpers/jwt_helper")
 
