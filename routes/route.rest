@@ -72,7 +72,7 @@ Content-Type: application/json
     "PLZ" : "36037"
 }
 
-////////////////////// restaurant calls
+///////////////////restaurant calls
 #####
 
 GET http://localhost:3000/restaurants
@@ -156,8 +156,3 @@ GET http://localhost:3000/menus/nachspeise/63837f64199eb8289afb1c42
 ###########
 POST http://localhost:3000/upload/images
 
-Content-Type: application/json
-
-{
-    "name" : ""
-}
