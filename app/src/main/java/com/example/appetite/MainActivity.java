@@ -13,12 +13,14 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.mapbox.api.geocoding.v5.models.CarmenFeature;
+import com.mapbox.api.tilequery.TilequeryCriteria;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.Point;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.service.quicksettings.Tile;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +33,7 @@ import com.mapbox.api.tilequery.MapboxTilequery;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.plugins.places.autocomplete.PlaceAutocomplete;
 import com.mapbox.mapboxsdk.plugins.places.autocomplete.model.PlaceOptions;
+import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 import com.mapbox.turf.TurfMeasurement;
 import retrofit2.Call;
@@ -46,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     NearbyViewAdapter nearbyAdapter;
     private final static String MAPBOX_TOKEN = "pk.eyJ1IjoidmluaW1pY2hlbCIsImEiOiJjbGFqdWNvYmkwZmZhM3JuMzIxYzl2Z3h4In0.bmACrWyEcA6772uD758XPw";
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
+    String cultureCategory;
+    Point selectedPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setTitle("Home");
         initRecyclerView();
+        cultureCategory = "all";
         // Platzhalter Startposition
         Point testPoint = Point.fromLngLat(9.685242, 50.550657);
         // tilequery bauen
@@ -132,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void buildTilequeryRequest(Point position) {
+        //SymbolLayer layer = new SymbolLayer("restaurant-features","vinimichel.clcevvkko01bw23qh5gmszly4-9cpxg");
         // tilequery mit tilequery api bauen
         MapboxTilequery tilequery = MapboxTilequery.builder()
                 // Zugangstoken
@@ -152,10 +159,8 @@ public class MainActivity extends AppCompatActivity {
                 if (response.body() != null) {
                     // wenn Ergebnisse gefunden setzen wir FeatureCollection
                     FeatureCollection responseFeatureCollection = response.body();
-                    List<Feature> features  = responseFeatureCollection.features();
-                    // recyclerView mit Daten logen
-                    setRecyclerViewData(features, position);
-                    Log.d(TAG, "Tilequering " + features.toString());
+                    processTilequeryResults(responseFeatureCollection.features(), position);
+
                 }
             }
             @Override
@@ -165,8 +170,30 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void processTilequeryResults(List<Feature> features, Point position) {
+        if (cultureCategory.equals("all")) {
+            Log.d(TAG,"was here");
+            setRecyclerViewData(features, position);
+        } else {
+            List<Feature> selectedFeatures = new ArrayList<Feature>();
+            for (Feature feature : features) {
+                if (feature.getProperty("category").getAsString().equals(cultureCategory)) {
+                    selectedFeatures.add(feature);
+                }
+            }
+            setRecyclerViewData(selectedFeatures, position);
+        }
+    }
+
+    public void setFilter(View v) {
+        cultureCategory = (String)v.getTag();
+        buildTilequeryRequest(Point.fromLngLat(9.685242, 50.550657));
+    }
+
     // onClick Listener für Suchfeld aktivieren
     private void initSearchFab() {
+        Point testPoint = Point.fromLngLat(9.685242, 50.550657);
+        buildTilequeryRequest(testPoint);
         Mapbox.getInstance(this, MAPBOX_TOKEN); // Konfiguration des Mapbox Tokens
         findViewById(R.id.restaurant_search_field).setOnClickListener(new View.OnClickListener() {
             // neue Suchaktivität öffnen wenn Button gedrückt

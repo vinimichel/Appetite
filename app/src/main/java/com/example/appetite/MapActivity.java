@@ -6,6 +6,9 @@ import static android.content.ContentValues.TAG;
 import android.content.Intent;
 import android.graphics.PointF;
 
+import static com.mapbox.mapboxsdk.style.expressions.Expression.eq;
+import static com.mapbox.mapboxsdk.style.expressions.Expression.get;
+import static com.mapbox.mapboxsdk.style.expressions.Expression.literal;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconImage;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconOffset;
 
@@ -15,6 +18,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +29,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationBarView;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.geojson.Feature;
@@ -45,6 +50,7 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
 import java.util.List;
 import com.mapbox.mapboxsdk.plugins.places.autocomplete.model.PlaceOptions;
+import com.mapbox.mapboxsdk.style.layers.Layer;
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 import com.mapbox.mapboxsdk.plugins.places.autocomplete.PlaceAutocomplete;
@@ -82,8 +88,6 @@ public class MapActivity extends AppCompatActivity implements
         startActivity(i);
     }
 
-
-
     // wird aufgerufen wenn Map fertiggeladen hat
     // legt Mapstyle fest
     @Override
@@ -110,6 +114,23 @@ public class MapActivity extends AppCompatActivity implements
         // neues Layer wird in die Map eingebunden
         setupLayer(style);
         enableLocationComponent(style);
+
+    }
+
+    private void setFilter(View v) {
+        SymbolLayer restaurantLayer = (SymbolLayer) style.getLayer("restaurant-features");
+        String cultureCategory = (String) v.getTag();
+        if ( restaurantLayer != null) {
+            if (!cultureCategory.equals("all")) {
+                restaurantLayer.setFilter(eq(get("category"), cultureCategory);
+            } else {
+                restaurantLayer.setFilter(neq(literal(""), ""));
+            }
+
+        } else {
+            Log.d(TAG,"Layer not found");
+        }
+        //restaurantLayer.get
     }
 
     // Funktion zeigt Standort mithilfe des LocationComponents an
@@ -176,21 +197,17 @@ public class MapActivity extends AppCompatActivity implements
 
     @Override
     public boolean onMapClick(@NonNull LatLng point) {
-
         // LatLng in Bilschirmpixel umwandeln und nur  coordinates to screen pixel and only query the rendered features.
         final PointF pixel = mapboxMap.getProjection().toScreenLocation(point);
-
         // gerenderte Features auf Pixel abfragen (nur Features von "fulda-restaurants"-layer
         List<Feature> features = mapboxMap.queryRenderedFeatures(pixel, "fulda-restaurants");
         // Restaurant info Popup Layout herausgreifen
         ConstraintLayout popupLayout = findViewById(R.id.place_info_layout);
-
         // prüfen ob Restaurants an Punkt gefunden wurden
         if (features.size() > 0) {
             // Erstes Feature aus Feature Liste herausgreifen
             // Im Idealfall befindet sich auf einem Punkt nur ein Restaurant/Feature
             Feature feature = features.get(0);
-
             // Versichern das Feature/Restaurant Eigenschaften hat
             if (feature.properties() != null) {
                 // Textfeld auf dem Namen des Restaurants zu finden ist herausgreifen
@@ -252,12 +269,8 @@ public class MapActivity extends AppCompatActivity implements
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_AUTOCOMPLETE) {
-
             // CarmenFeature der ausgewählten Location wählen
             CarmenFeature selectedCarmenFeature = PlaceAutocomplete.getPlace(data);
-
-
-
             // Neue GeoJson FeatureCollection hinzufügen und neues Feature mit oben gewählten CarmenFeature einfügen
             // Danach springen wir zum neu hinzugefügten Feature
             if (mapboxMap != null) {
@@ -283,8 +296,6 @@ public class MapActivity extends AppCompatActivity implements
             }
         }
     }
-
-
 
     // Lifecycle Methoden der Karte
 
