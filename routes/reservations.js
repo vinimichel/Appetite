@@ -16,7 +16,7 @@ router.get('/', async(req, res, next) => {
 })
 
 //make a reservation
-router.post('/', async (req, res, next)  => {
+router.post('/add', async (req, res, next)  => {
     try{
         const result = await reservationSchema.validateAsync(req.body)
 
@@ -51,7 +51,7 @@ router.delete('/delete/:id',getReservation, async (req, res, next)  => {
     try {
         await res.reservation.remove()
         //increase number of tables at the restaurant by 1
-        const tables = updateTable("increase", res.reservation.restaurant_id)
+        const tables = await updateTable("increase", res.reservation.restaurant_id)
         console.log(tables);
         res.reservation.restaurant_id
         res.json({message : "Reservation deleted"})
@@ -113,7 +113,7 @@ async function updateTable(action, restaurant_id) {
         updateRestaurant = await restaurant_info.save()
 
     } catch(err) {
-
+        
     }
 
     return updateRestaurant
