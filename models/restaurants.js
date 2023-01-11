@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+const bcrypt = require('bcrypt');
 
 const restaurantSchema = new mongoose.Schema({
         name: {
@@ -14,6 +15,10 @@ const restaurantSchema = new mongoose.Schema({
             required: true,
             lowercase: true,
             unique: true
+        },
+        password: {
+            type: String,
+            required: true
         },
         PLZ: {
             type:Number,
@@ -34,15 +39,32 @@ const restaurantSchema = new mongoose.Schema({
             coordinates: []
       }
       */
-     longitude: {
-        type: String,
-        required: true
-     },
-     latitude: {
-        type: String,
-        requried: true
-     }
+      Date: {
+        type: Date,
+        required: false,
+        default:Date.now
+    }
 })
+
+restaurantSchema.pre("save", async function(next) {
+    try {
+        const salt = await bcrypt.genSalt(12)
+        const hashedPassword = await bcrypt.hash(this.password, salt)
+        this.password = hashedPassword
+        next()
+    } catch(err) {
+        next(err)
+    }
+})
+
+restaurantSchema.methods.isValidPassword = async function (password) {
+    try{
+        return await bcrypt.compare(password, this.password)
+
+    } catch(err) {
+        throw err
+    }
+}
 
 
 module.exports = mongoose.model('restaurants', restaurantSchema)
