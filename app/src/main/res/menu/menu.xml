@@ -2,13 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/home"
-        android:title="home"
+        android:title="Home"
         android:icon="@drawable/ic_baseline_info_24"
         ></item>
     <item
         android:id="@+id/find_restaurant"
         android:icon="@drawable/ic_baseline_search_24"
-        android:title="suchen"></item>
+        android:title="Suchen"></item>
     <item
         android:id="@+id/settings_tab"
         android:icon="@android:drawable/ic_menu_manage"
