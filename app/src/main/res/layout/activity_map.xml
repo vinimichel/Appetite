@@ -35,7 +35,7 @@
                 android:inputType="textPersonName"
                 android:padding="16dp"
                 android:text="Restaurant finden"
-                android:textColor="#62878F"
+                android:textColor="#919191"
                 app:layout_constraintEnd_toStartOf="@+id/imageView8"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -57,65 +57,67 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:scrollbars="none"
                 app:layout_constraintEnd_toEndOf="@+id/imageView8"
                 app:layout_constraintStart_toStartOf="@+id/PLZTextfield"
-                app:layout_constraintTop_toBottomOf="@+id/PLZTextfield"
-                android:scrollbars="none">
+                app:layout_constraintTop_toBottomOf="@+id/PLZTextfield">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout"
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/categoryChips"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    app:checkedChip="@id/allChip"
+                    app:selectionRequired="true"
+                    app:singleSelection="true"
+                    >
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginEnd="8dp"
+                        android:id="@+id/allChip"
+                        style="@style/FilterChip"
+                        android:clickable="true"
                         android:tag="all"
                         android:text="alles"
-                        android:theme="@style/FilterChip"
                         app:chipIcon="@drawable/cutlery"
+                        app:closeIconEnabled="false"
                         app:layout_constraintEnd_toStartOf="@+id/chip2"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"></com.google.android.material.chip.Chip>
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chip4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
+                        android:id="@+id/pizzaChip"
+                        style="@style/FilterChip"
+                        android:layout_marginStart="1dp"
                         android:tag="pizza"
                         android:text="Pizza"
+                        app:checkedIconEnabled="false"
                         app:chipIcon="@drawable/pizza"
+                        app:chipIconVisible="true"
+                        app:closeIconVisible="false"
                         app:layout_constraintStart_toEndOf="@+id/chip2"
                         app:layout_constraintTop_toTopOf="parent"></com.google.android.material.chip.Chip>
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginEnd="8dp"
-                        android:tag="Veggetarisch"
-                        android:text="veggie"
+                        style="@style/FilterChip"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:clickable="true"
+                        android:tag="veggie"
+                        android:text="Veggetarisch"
                         app:chipIcon="@drawable/veggie_icon"
-                        app:layout_constraintEnd_toStartOf="@+id/chip4"
-                        app:layout_constraintStart_toEndOf="@+id/chip"
+                        app:layout_constraintEnd_toStartOf="@+id/pizzaChip"
+                        app:layout_constraintStart_toEndOf="@+id/allChip"
                         app:layout_constraintTop_toTopOf="parent"></com.google.android.material.chip.Chip>
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
+                        style="@style/FilterChip"
                         android:tag="japanisch"
-                        android:text="japanisch"
+                        android:text="Japanisch"
                         app:chipIcon="@drawable/asian_food"
-                        app:layout_constraintStart_toEndOf="@+id/chip4"
+                        app:layout_constraintStart_toEndOf="@+id/pizzaChip"
                         app:layout_constraintTop_toTopOf="parent"></com.google.android.material.chip.Chip>
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.chip.ChipGroup>
             </HorizontalScrollView>
 
 

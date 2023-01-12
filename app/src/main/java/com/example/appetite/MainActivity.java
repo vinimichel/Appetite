@@ -24,6 +24,7 @@ import android.service.quicksettings.Tile;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
     String cultureCategory;
     Point selectedPosition;
+    Button focusedButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         setTitle("Home");
         initRecyclerView();
         cultureCategory = "all";
+        focusedButton = (Button)findViewById(R.id.button2);
         // Platzhalter Startposition
         Point testPoint = Point.fromLngLat(9.685242, 50.550657);
         // tilequery bauen
@@ -135,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
         nearbyAdapter = new NearbyViewAdapter(this, restaurantsDataList);
         // Adapter auf die Daten setzen
         nearbyRecycler.setAdapter(nearbyAdapter);
+
     }
 
     private void buildTilequeryRequest(Point position) {
@@ -150,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                 // Wie groß darf der Radius der Restaurants maximal sein
                 .radius(10000)
                 // wie viele Ergebnisse/Restaurants sollen angezeigt werden
-                .limit(10)
+                .limit(50)
                 .build();
         // Callback bei eintreffen der Ergebnisse festlegen
         tilequery.enqueueCall(new Callback<FeatureCollection>() {
@@ -172,7 +176,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void processTilequeryResults(List<Feature> features, Point position) {
         if (cultureCategory.equals("all")) {
-            Log.d(TAG,"was here");
             setRecyclerViewData(features, position);
         } else {
             List<Feature> selectedFeatures = new ArrayList<Feature>();
@@ -186,6 +189,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setFilter(View v) {
+        Log.d(TAG, "filter method was opened");
+        focusedButton.clearFocus();
+        focusedButton = (Button)v;
+        focusedButton.requestFocus();
         cultureCategory = (String)v.getTag();
         buildTilequeryRequest(Point.fromLngLat(9.685242, 50.550657));
     }

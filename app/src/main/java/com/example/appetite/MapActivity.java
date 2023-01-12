@@ -9,6 +9,7 @@ import android.graphics.PointF;
 import static com.mapbox.mapboxsdk.style.expressions.Expression.eq;
 import static com.mapbox.mapboxsdk.style.expressions.Expression.get;
 import static com.mapbox.mapboxsdk.style.expressions.Expression.literal;
+import static com.mapbox.mapboxsdk.style.expressions.Expression.neq;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconImage;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconOffset;
 
@@ -29,6 +30,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.navigation.NavigationBarView;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
@@ -62,6 +65,7 @@ public class MapActivity extends AppCompatActivity implements
     private MapboxMap mapboxMap;     // Schnittstelle zur Map
     private MapView mapView; // Zugriff auf Android Mapbox SDK Methoden
     Style style;     // Mapstyle
+    ChipGroup categoryChips;
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
 
     private String geojsonSourceLayerId = "geojsonSourceLayerId";
@@ -81,6 +85,11 @@ public class MapActivity extends AppCompatActivity implements
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this); // Callback Objekt wenn die Map geladen hat ist dieses Objekt
+        categoryChips = (ChipGroup) findViewById(R.id.categoryChips);
+        categoryChips.check(R.id.allChip);
+        categoryChips.setOnCheckedStateChangeListener((chipGroup, id) -> {
+            setFilter((View)findViewById(id.get(0)));
+        });
     }
 
     public void launchReservation(View v) {
@@ -122,7 +131,7 @@ public class MapActivity extends AppCompatActivity implements
         String cultureCategory = (String) v.getTag();
         if ( restaurantLayer != null) {
             if (!cultureCategory.equals("all")) {
-                restaurantLayer.setFilter(eq(get("category"), cultureCategory);
+                restaurantLayer.setFilter(eq(get("category"), cultureCategory));
             } else {
                 restaurantLayer.setFilter(neq(literal(""), ""));
             }

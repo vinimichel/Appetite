@@ -75,36 +75,31 @@
 
             <Button
                 android:id="@+id/button2"
-                style="@style/Button.Selected"
-                android:hapticFeedbackEnabled="false"
+                style="@style/Button.Basic"
+                android:focusedByDefault="true"
                 android:tag='all'
                 android:text="Alles"
-                android:theme="@style/Button.Selected"
                 app:icon="@drawable/cutlery"
-                app:iconTint="@null" />
+                app:iconTint="@null">
+
+                <requestFocus />
+            </Button>
 
             <Button
                 android:id="@+id/button1"
                 style="@style/Button.Basic"
                 android:tag="veggie"
                 android:text="Veggie"
-                android:textColor="#919191"
-                android:theme="@style/Button.Basic"
                 app:icon="@drawable/veggie_icon"
                 app:iconGravity="textTop" />
 
 
             <Button
                 android:id="@+id/button3"
-
                 style="@style/Button.Basic"
-                android:minWidth="0dip"
                 android:onClick="setFilter"
                 android:tag="pizza"
                 android:text="Pizza"
-                android:textColor="#919191"
-                android:textSize="12sp"
-                android:theme="@style/Button.Basic"
                 app:icon="@drawable/pizza" />
 
             <Button
@@ -115,7 +110,6 @@
                 android:paddingTop="18dp"
                 android:tag="japanisch"
                 android:text="Japanisch"
-                android:theme="@style/Button.Basic"
                 app:icon="@drawable/asian_food" />
         </LinearLayout>
     </HorizontalScrollView>
