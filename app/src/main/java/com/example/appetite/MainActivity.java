@@ -109,12 +109,11 @@ public class MainActivity extends AppCompatActivity {
     private void setRecyclerViewData(List<Feature> features, Point deviceLocation) {
         // initialize ArrayList of nearby restaurants
         List<NearbyRestaurants> restaurantsDataList = new ArrayList<>();
-        // placeholder data
         for (Feature feature : features) {
             restaurantsDataList.add(new NearbyRestaurants(feature, deviceLocation));
         }
         nearbyAdapter = new NearbyViewAdapter(this, restaurantsDataList);
-        // set adapter to data
+        // set adapter with restaurant data to recycler
         nearbyRecycler.setAdapter(nearbyAdapter);
     }
 
