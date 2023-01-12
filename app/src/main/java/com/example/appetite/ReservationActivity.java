@@ -19,4 +19,5 @@ public class ReservationActivity extends AppCompatActivity {
         Intent i = new Intent(this, FoodMenuActivity.class);
         startActivity(i);
     }
+
 }

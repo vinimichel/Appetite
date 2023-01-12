@@ -30,4 +30,5 @@ public class RestaurantDescription extends AppCompatActivity {
     public void goBack(View view) {
         finish();
     }
+
 }
