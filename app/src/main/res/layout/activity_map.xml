@@ -188,7 +188,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:menu="@menu/menu"
-            tools:layout_editor_absoluteX="10dp"></com.google.android.material.bottomnavigation.BottomNavigationView>
+            tools:layout_editor_absoluteX="10dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
