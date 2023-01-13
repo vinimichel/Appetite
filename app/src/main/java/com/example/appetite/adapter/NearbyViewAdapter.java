@@ -35,8 +35,8 @@ public class NearbyViewAdapter extends RecyclerView.Adapter<NearbyViewAdapter.Ne
             super(itemView);
             restaurantImage = itemView.findViewById(R.id.restaurant_image);
             restaurantName = itemView.findViewById(R.id.restaurant_name);
-            cityName = itemView.findViewById(R.id.city_of_restaurant);
-            distanceField = itemView.findViewById(R.id.distanceField);
+            cityName = itemView.findViewById(R.id.restaurant_address);
+            distanceField = itemView.findViewById(R.id.distance_field);
         }
     }
 
