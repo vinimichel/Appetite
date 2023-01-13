@@ -15,8 +15,8 @@
         <!-- Customize your theme here. -->
     </style>
     <style name="Button.Basic" parent="@style/TextAppearance.AppCompat.Button">
-        <item name="backgroundTint">@color/button_bg</item>
-        <item name="android:textColor">@color/text_color</item>
+        <item name="backgroundTint">@color/filter_button_background</item>
+        <item name="android:textColor">@color/filter_button_text_color</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/search_bg</item>
@@ -37,14 +37,14 @@
     </style>
 
     <style name="FilterChip" parent="@style/Widget.Material3.Chip.Input">
-        <item name="chipBackgroundColor">@color/bg_category_chip_state</item>
-        <item name="android:textColor">@color/text_color_chip_state_list</item>
+        <item name="chipBackgroundColor">@color/map_chips_background</item>
+        <item name="android:textColor">@color/map_chip_text_color</item>
         <item name="chipIcon">@drawable/pizza</item>
         <item name="chipIconEnabled">true</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:clickable">true</item>
-        <item name="chipStrokeColor">@color/chip_stroke_color</item>
+        <item name="chipStrokeColor">@color/map_chip_stroke</item>
         <item name="chipStrokeWidth">2dp</item>
         <item name="chipStartPadding">14dp</item>
         <item name="checkedIconEnabled">false</item>

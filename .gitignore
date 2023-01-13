@@ -1,3 +1,11 @@
 .env
 node_modules
 /local.properties
+/.gradle/7.4/executionHistory/executionHistory.lock
+/.gradle/buildOutputCleanup/buildOutputCleanup.lock
+/.gradle/7.4/executionHistory/executionHistory.bin
+/.gradle/7.4/fileHashes/fileHashes.bin
+/.gradle/7.4/fileHashes/resourceHashesCache.bin
+/.gradle/buildOutputCleanup/outputFiles.bin
+.gradle/buildOutputCleanup/cache.properties
+.gradle/7.4/fileHashes/fileHashes.lock
