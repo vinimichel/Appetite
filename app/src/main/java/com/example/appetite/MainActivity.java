@@ -189,11 +189,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setFilter(View v) {
-        Log.d(TAG, "filter method was opened");
-        focusedButton.clearFocus();
-        focusedButton = (Button)v;
-        focusedButton.requestFocus();
-        cultureCategory = (String)v.getTag();
+        // check if this button was pressed before
+        if ((Button)v != focusedButton) {
+            focusedButton.clearFocus();
+            // set focusoble must be turned off for previous button otherwise the onclick listener doesn't work
+            focusedButton.setFocusable(false);
+            //change focused button to new one
+            focusedButton = (Button)v;
+            focusedButton.setFocusableInTouchMode(true);
+            focusedButton.requestFocus();
+            // remember cultural category
+            cultureCategory = (String)v.getTag();
+        }
         buildTilequeryRequest(Point.fromLngLat(9.685242, 50.550657));
     }
 

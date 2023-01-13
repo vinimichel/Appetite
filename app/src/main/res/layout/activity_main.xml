@@ -76,6 +76,7 @@
             <Button
                 android:id="@+id/button2"
                 style="@style/Button.Basic"
+                android:focusableInTouchMode="true"
                 android:focusedByDefault="true"
                 android:tag='all'
                 android:text="Alles"
@@ -88,6 +89,8 @@
             <Button
                 android:id="@+id/button1"
                 style="@style/Button.Basic"
+                android:focusable="false"
+                android:focusableInTouchMode="true"
                 android:tag="veggie"
                 android:text="Veggie"
                 app:icon="@drawable/veggie_icon"
@@ -97,6 +100,8 @@
             <Button
                 android:id="@+id/button3"
                 style="@style/Button.Basic"
+                android:focusable="false"
+                android:focusableInTouchMode="true"
                 android:onClick="setFilter"
                 android:tag="pizza"
                 android:text="Pizza"
@@ -106,6 +111,8 @@
                 android:id="@+id/button4"
 
                 style="@style/Button.Basic"
+                android:focusable="false"
+                android:focusableInTouchMode="true"
                 android:onClick="setFilter"
                 android:paddingTop="18dp"
                 android:tag="japanisch"
