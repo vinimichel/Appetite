@@ -1,6 +1,7 @@
 package com.example.appetite;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PointF;
@@ -8,16 +9,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import com.example.appetite.dataModels.NearbyRestaurants;
+
 import com.google.android.material.navigation.NavigationBarView;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
@@ -59,14 +57,12 @@ public class MapActivity extends AppCompatActivity
 
     private String geojsonSourceLayerId = "geojsonSourceLayerId";
     private String symbolIconId = "symbolIconId";
-    NearbyRestaurants selectedRestaurant;
 
     private PermissionsManager permissionsManager;
-    ConstraintLayout popupLayout;
 
     // necessary to use Android SDK
     private final static String MAPBOX_TOKEN = "pk.eyJ1IjoidmluaW1pY2hlbCIsImEiOiJjbGFqdWNvYmkwZmZhM3JuMzIxYzl2Z3h4In0.bmACrWyEcA6772uD758XPw";
-    Point lastKnownLocation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,12 +70,17 @@ public class MapActivity extends AppCompatActivity
         Mapbox.getInstance(this, MAPBOX_TOKEN);
         setContentView(R.layout.activity_map);
         Intent i = getIntent();
-        popupLayout = findViewById(R.id.place_info_layout);
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         // callback object when map is loaded
         mapView.getMapAsync(this);
     }
+
+    public void launchReservation(View v) {
+        Intent i = new Intent(this, ReservationActivity.class);
+        startActivity(i);
+    }
+
     // called when map is done loading and sets map style
     @Override
     public void onMapReady(@NonNull final MapboxMap mapboxMap) {
@@ -112,13 +113,13 @@ public class MapActivity extends AppCompatActivity
         if (PermissionsManager.areLocationPermissionsGranted(this)) {
 
             LocationComponent locationComponent = mapboxMap.getLocationComponent();
+
             // activate location object with chosen style
             locationComponent.activateLocationComponent(
                     LocationComponentActivationOptions.builder(this, loadedMapStyle).build());
-            
+
             locationComponent.setLocationComponentEnabled(true);
 
-            lastKnownLocation = Point.fromLngLat(locationComponent.getLastKnownLocation().getLongitude(),locationComponent.getLastKnownLocation().getLongitude());
             locationComponent.setCameraMode( CameraMode.TRACKING,
                     2500L /*duration of zoom*/ ,
                     13.0 /*zoom*/,
@@ -164,14 +165,15 @@ public class MapActivity extends AppCompatActivity
 
     @Override
     public boolean onMapClick(@NonNull LatLng point) {
+
         // LatLng in Bilschirmpixel umwandeln und nur  coordinates to screen pixel and only query the rendered features.
         // I don't quite understand the above comment, signed S.M.
         final PointF pixel = mapboxMap.getProjection().toScreenLocation(point);
-        // gerenderte Features auf Pixel abfragen (nur Features von "fulda-restaurants"-layer
-        List<Feature> features = mapboxMap.queryRenderedFeatures(pixel, "restaurant-features");
-        // Restaurant info Popup Layout herausgreifen
 
-        Log.d(TAG, "I was here");
+        // query rendered features on pixels (only "fulda-restaurants" layer)
+        List<Feature> features = mapboxMap.queryRenderedFeatures(pixel, "fulda-restaurants");
+        // grab restaurant information popup layout
+        ConstraintLayout popupLayout = findViewById(R.id.place_info_layout);
 
         // checks whether restaurants have been found on coordinates
         if (features.size() > 0) {
@@ -180,44 +182,27 @@ public class MapActivity extends AppCompatActivity
 
             // making sure restaurant/restaurant has properties
             if (feature.properties() != null) {
-                NearbyRestaurants restaurant = new NearbyRestaurants(feature, lastKnownLocation);
-                setRestaurantPopUp(restaurant);
+                TextView restaurantNameField = findViewById(R.id.restaurant_name);
+                // convert json entry with name to string and display as field
+                restaurantNameField.setText(feature.getProperty("title").getAsString());
+                Log.d(TAG, String.format("restaurant title = %s", feature.getProperty("title").getAsString()));
+
+                // choose text field with description and print json data on field
+                TextView restaurantDescriptionField = findViewById(R.id.restaurant_description);
+                restaurantDescriptionField.setText(feature.getProperty("description").getAsString());
+                Log.d(TAG, String.format("restaurant_ description = %s", feature.getProperty("description").getAsString()));
+                
+                popupLayout.setVisibility(View.VISIBLE);
             } else {
                 Log.d(TAG, "Achtung, das Restaurant hat keine abrufbaren Eigenschaften!");
             }
         } else {
             // if no restaurant is found on pixels
             popupLayout.setVisibility(View.GONE);
-            selectedRestaurant = null;
-
         }
         return true;
     }
 
-    public void openRestaurantDescription(View v) {
-        if (selectedRestaurant != null) {
-            Intent descriptionIntent = new Intent(this, RestaurantDescription.class);
-            descriptionIntent.putExtra("restaurantData", selectedRestaurant);
-            startActivity(descriptionIntent);
-        }
-    }
-
-    private void setRestaurantPopUp(NearbyRestaurants restaurant) {
-        selectedRestaurant = restaurant;
-        // Textfeld auf dem Namen des Restaurants zu finden ist herausgreifen
-        TextView restaurantNameField = findViewById(R.id.restaurant_name_on_map);
-        // json Eintrag mit Namen in String konvertieren und in Feld darstellen
-        restaurantNameField.setText(restaurant.getRestaurantName());
-
-        TextView restaurantDescriptionField = findViewById(R.id.restaurant_address);
-        restaurantDescriptionField.setText(restaurant.getCityName() + ", " + restaurant.getAddress());
-
-        TextView distanceField = findViewById(R.id.distance_field);
-        distanceField.setText(Double.toString(restaurant.getDistance())+ "km");
-        // falls Popup mit Informationen sichtbar machen
-        popupLayout.setVisibility(View.VISIBLE);
-
-    }
     private void setUpSource(@NonNull Style loadedMapStyle) {
         loadedMapStyle.addSource(new GeoJsonSource(geojsonSourceLayerId));
     }
