@@ -89,11 +89,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.user:
                     case R.id.home:
                         return true;
                     case R.id.find_restaurant:
                         startActivity(new Intent(getApplicationContext(), MapActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.reservations_tab:
+                        startActivity(new Intent(getApplicationContext(), ReservationActivity.class));
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.settings_tab:

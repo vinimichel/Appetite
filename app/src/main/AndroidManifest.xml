@@ -19,13 +19,17 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
             android:name=".RegisterActivity"
-            android:exported="false">
+            android:exported="false"
+            android:label="Registrieren"
+            android:parentActivityName=".SettingsActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
             android:name=".FoodMenuActivity"
             android:exported="false"
@@ -56,7 +60,7 @@
         <activity
             android:name=".SettingsActivity"
             android:exported="false"
-            android:label="Einstellungen"
+            android:label="Login"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.app.lib_name"

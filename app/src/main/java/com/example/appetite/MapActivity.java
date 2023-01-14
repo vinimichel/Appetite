@@ -29,6 +29,8 @@ import com.google.android.material.navigation.NavigationBarView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.google.android.material.navigation.NavigationBarView;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.api.geocoding.v5.models.CarmenFeature;
@@ -340,6 +342,33 @@ public class MapActivity extends AppCompatActivity
     public void onLowMemory() {
         super.onLowMemory();
         mapView.onLowMemory();
+    }
+
+    private void setBottomNavigationItem() {
+        NavigationBarView bottomNavigationView = (NavigationBarView)findViewById(R.id.bottom_navigator);
+        bottomNavigationView.setSelectedItemId(R.id.find_restaurant);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.find_restaurant:
+                        return true;
+                    case R.id.reservations_tab:
+                        startActivity(new Intent(getApplicationContext(), ReservationActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.settings_tab:
+                        startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                }
+                return false;
+            }
+        });
     }
 
 }
