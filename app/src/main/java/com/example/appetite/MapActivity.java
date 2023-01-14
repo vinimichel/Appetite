@@ -1,6 +1,7 @@
 package com.example.appetite;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PointF;
