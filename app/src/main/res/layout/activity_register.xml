@@ -31,7 +31,9 @@
         android:background="@drawable/input_b"
         android:ems="10"
         android:hint="password"
-        android:inputType="textPersonName"
+
+        android:inputType="textPassword"
+
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
         android:textColor="#E1D9D9"
@@ -40,7 +42,8 @@
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="@+id/inputName"
         app:layout_constraintStart_toStartOf="@+id/inputName"
-        app:layout_constraintTop_toBottomOf="@+id/inputName" />
+        app:layout_constraintTop_toBottomOf="@+id/inputName"
+        />
 
     <EditText
         android:id="@+id/inputName"
@@ -71,7 +74,7 @@
         android:background="@drawable/input_b"
         android:ems="10"
         android:hint="confirm password"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
         android:textColor="@color/white"
@@ -83,7 +86,7 @@
         app:layout_constraintTop_toBottomOf="@+id/inputPassword" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnRegister"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -99,7 +102,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Already Have an Account"
-        app:layout_constraintEnd_toEndOf="@+id/button2"
-        app:layout_constraintStart_toStartOf="@+id/button2"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintEnd_toEndOf="@+id/btnRegister"
+        app:layout_constraintStart_toStartOf="@+id/btnRegister"
+        app:layout_constraintTop_toBottomOf="@+id/btnRegister" />
       </androidx.constraintlayout.widget.ConstraintLayout>
