@@ -17,15 +17,13 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        TextView btn =findViewById(R.id.textSignUp);
+        TextView btn = findViewById(R.id.textSignUp);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                startActivity(new Intent(SettingsActivity.this,RegisterActivity.class));
+            public void onClick (View v){
+                startActivity(new Intent(SettingsActivity.this, RegisterActivity.class));
             }
         });
-
-        Intent i = getIntent();
     }
 
     private void setBottomNavigationItem() {
