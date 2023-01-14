@@ -19,7 +19,7 @@ router.get('/:id', getUser, (req, res)  => {
 
 
 //update one user
-router.patch('/:id',getUser, async (req, res)  => {
+router.patch('/edit/:id',getUser, async (req, res)  => {
 
     if(req.body.firstname != null) {
         res.user.firstname = req.body.firstname
@@ -60,7 +60,7 @@ router.delete('/:id',getUser, async (req, res)  => {
 async function getUser(req, res, next) {
     let userInfo
 try {
-    userInfo = await users.findOne(req.params.id)
+    userInfo = await users.findOne({id : req.params.id})
     if(userInfo == null) {
         return res.status(404).json({message : 'Cannot find user'})
     }

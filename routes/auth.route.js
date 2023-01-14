@@ -1,12 +1,11 @@
 const express = require("express")
 const router = express.Router()
 const createError = require("http-errors")
-const bcrypt = require('bcrypt');
 const users = require('../models/users')
 const {authSchema, loginSchema} = require('../helpers/validation_schema')
 const {signAccessToken, signRefreshToken, verifyRefreshToken} = require("../helpers/jwt_helper")
 
-router.post("/register", async (req, res, next) => {
+router.post("/user/register", async (req, res, next) => {
     try{
         //use Joi to perform validations
         const result = await authSchema.validateAsync(req.body)
@@ -26,7 +25,7 @@ router.post("/register", async (req, res, next) => {
     }
 })
 
-router.post("/login", async (req, res, next) => {
+router.post("/user/login", async (req, res, next) => {
     try{
         const result = await loginSchema.validateAsync(req.body)
         const user = await users.findOne({email: result.email})
@@ -61,9 +60,10 @@ try {
 }
 })
 
-router.delete("/logout", async (req, res, next) => {
+router.delete("/user/logout", async (req, res, next) => {
 
 })
+
 
 
 module.exports = router 

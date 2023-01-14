@@ -1,23 +1,13 @@
 package com.example.appetite;
 
-
 import static android.content.ContentValues.TAG;
-import static com.mapbox.turf.TurfConstants.UNIT_KILOMETERS;
-import static java.lang.Math.round;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Activity;
 import android.content.Intent;
-
 import com.mapbox.api.geocoding.v5.models.CarmenFeature;
 import com.mapbox.api.tilequery.TilequeryCriteria;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.Point;
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.service.quicksettings.Tile;
@@ -27,22 +17,29 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.example.appetite.adapter.NearbyViewAdapter;
 import com.example.appetite.dataModels.NearbyRestaurants;
+import com.google.android.material.navigation.NavigationBarView;
+import com.mapbox.api.geocoding.v5.models.CarmenFeature;
 import com.mapbox.api.tilequery.MapboxTilequery;
+import com.mapbox.geojson.Feature;
+import com.mapbox.geojson.FeatureCollection;
+import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.Mapbox;
-import com.mapbox.mapboxsdk.plugins.places.autocomplete.PlaceAutocomplete;
 import com.mapbox.mapboxsdk.plugins.places.autocomplete.model.PlaceOptions;
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 import com.mapbox.turf.TurfMeasurement;
+import com.mapbox.mapboxsdk.plugins.places.autocomplete.PlaceAutocomplete;
+import java.util.ArrayList;
+import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import com.google.android.material.navigation.NavigationBarView;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
         cultureCategory = "all";
         focusedButton = (Button)findViewById(R.id.button2);
         // Platzhalter Startposition
+        // placeholder starting position
         Point testPoint = Point.fromLngLat(9.685242, 50.550657);
-        // tilequery bauen
         buildTilequeryRequest(testPoint);
         setBottomNavigationItem();
         initSearchFab();
@@ -74,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(this, SettingsActivity.class);
         startActivity(i);
     }
+
     public void launchRegister(View v) {
         Intent i = new Intent(this, RegisterActivity.class);
         startActivity(i);
@@ -92,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.user:
+                    case R.id.home:
                         return true;
                     case R.id.find_restaurant:
                         startActivity(new Intent(getApplicationContext(), MapActivity.class));
@@ -101,8 +100,6 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                         overridePendingTransition(0,0);
                         return true;
-                    case R.id.home:
-                        return true;
                 }
                 return false;
             }
@@ -110,15 +107,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setRecyclerView(List<NearbyRestaurants> nearbyRecyclerList) {
-        // Initialisierung des recycler der Daten über Restaurants in der nähe bereitstellt
+        // initialize recycler providing data about nearby restaurants
         nearbyRecycler = findViewById(R.id.nearby_recycler);
-        // Recycler soll horizontal angeordnet sein
+        // set recyclerView to horizontal
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
-        // layout Manager zuweisen
         nearbyRecycler.setLayoutManager(layoutManager);
-        // Durch Adapter werden Restaurant Daten an Views gebunden
+        // bind restaurant data to views using adapter
         nearbyAdapter = new NearbyViewAdapter(this, nearbyRecyclerList);
-        // Recycler ruft Methoden des Adapters auf
+        // call adapter methods using recycler
         nearbyRecycler.setAdapter(nearbyAdapter);
     }
 
@@ -129,47 +125,43 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setRecyclerViewData(List<Feature> features, Point deviceLocation) {
-        // Nearby Restaurant Daten Felder initialisieren
+        // initialize ArrayList of nearby restaurants
         List<NearbyRestaurants> restaurantsDataList = new ArrayList<>();
-        // Platzhalterdaten
         for (Feature feature : features) {
             restaurantsDataList.add(new NearbyRestaurants(feature, deviceLocation));
         }
         nearbyAdapter = new NearbyViewAdapter(this, restaurantsDataList);
-        // Adapter auf die Daten setzen
+        // set adapter with restaurant data to recycler
         nearbyRecycler.setAdapter(nearbyAdapter);
 
     }
 
     private void buildTilequeryRequest(Point position) {
-        //SymbolLayer layer = new SymbolLayer("restaurant-features","vinimichel.clcevvkko01bw23qh5gmszly4-9cpxg");
-        // tilequery mit tilequery api bauen
+        // build tile query with tile query API
         MapboxTilequery tilequery = MapboxTilequery.builder()
-                // Zugangstoken
-                .accessToken(MAPBOX_TOKEN)
-                // Id des Restaurant-Tileset
-                .tilesetIds("vinimichel.clcevvkko01bw23qh5gmszly4-9cpxg")
-                // Punkt von dem Abgefragt werden soll
-                .query(Point.fromLngLat(position.longitude(), position.latitude()))
-                // Wie groß darf der Radius der Restaurants maximal sein
-                .radius(10000)
-                // wie viele Ergebnisse/Restaurants sollen angezeigt werden
-                .limit(50)
-                .build();
-        // Callback bei eintreffen der Ergebnisse festlegen
+            .accessToken(MAPBOX_TOKEN)
+            .tilesetIds("vinimichel.clcevvkko01bw23qh5gmszly4-9cpxg")
+            // point of query
+            .query(Point.fromLngLat(position.longitude(), position.latitude()))
+            // MAX radius of restaurants
+            .radius(10000)
+            // how many results/restaurants are shown
+            .limit(50)
+            .build();
+        // callback on results
         tilequery.enqueueCall(new Callback<FeatureCollection>() {
             @Override
             public void onResponse(Call<FeatureCollection> call, Response<FeatureCollection> response) {
                 if (response.body() != null) {
-                    // wenn Ergebnisse gefunden setzen wir FeatureCollection
+                    // if results found, set FeatureCollection
                     FeatureCollection responseFeatureCollection = response.body();
                     processTilequeryResults(responseFeatureCollection.features(), position);
-
                 }
             }
+
             @Override
             public void onFailure(Call<FeatureCollection> call, Throwable throwable) {
-                Log.d(TAG, " Tilequering: Could not retrieve data from api");
+                Log.d(TAG, "Tilequering: Could not retrieve data from API");
             }
         });
     }
@@ -204,23 +196,23 @@ public class MainActivity extends AppCompatActivity {
         buildTilequeryRequest(Point.fromLngLat(9.685242, 50.550657));
     }
 
-    // onClick Listener für Suchfeld aktivieren
+
+    // activate onClickListener for search
     private void initSearchFab() {
-        Point testPoint = Point.fromLngLat(9.685242, 50.550657);
-        buildTilequeryRequest(testPoint);
-        Mapbox.getInstance(this, MAPBOX_TOKEN); // Konfiguration des Mapbox Tokens
+        // configuration of mapbox token
+        Mapbox.getInstance(this, MAPBOX_TOKEN);
         findViewById(R.id.restaurant_search_field).setOnClickListener(new View.OnClickListener() {
-            // neue Suchaktivität öffnen wenn Button gedrückt
+            // open new search activity when button pressed
             @Override
             public void onClick(View view) {
                 Intent intent = new PlaceAutocomplete.IntentBuilder()
-                        .accessToken(Mapbox.getAccessToken() != null ? Mapbox.getAccessToken() : MAPBOX_TOKEN)
-                        .placeOptions(PlaceOptions.builder()
-                                .backgroundColor(Color.parseColor("#FFFFFF"))
-                                .limit(10)
-                                .build(PlaceOptions.MODE_CARDS))
-                        .build(MainActivity.this);
-                // Activity öffnen von der man nach dem öffnen ein Resultat wünscht welches mit onActivityResult behandelt wird
+                    .accessToken(Mapbox.getAccessToken() != null ? Mapbox.getAccessToken() : MAPBOX_TOKEN)
+                    .placeOptions(PlaceOptions.builder()
+                    .backgroundColor(Color.parseColor("#FFFFFF"))
+                    .limit(10)
+                    .build(PlaceOptions.MODE_CARDS))
+                    .build(MainActivity.this);
+                // open activity of which you want a result to be handled with onActivityResult
                 startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
             }
         });
@@ -230,9 +222,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_AUTOCOMPLETE) {
-
-            // CarmenFeature der ausgewählten Location wählen
+            // select CarmenFeature of chosen location
             CarmenFeature selectedCarmenFeature = PlaceAutocomplete.getPlace(data);
         }
     }
+
 }
