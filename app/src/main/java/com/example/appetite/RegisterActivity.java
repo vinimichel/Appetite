@@ -12,11 +12,11 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        TextView btn = findViewById(R.id.readyAccount);
+        TextView btn = findViewById(R.id.textSignUp);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
-            startActivity(new Intent(RegisterActivity.this, SettingsActivity.class));
+                startActivity(new Intent(RegisterActivity.this, SettingsActivity.class));
             }
         });
     }
