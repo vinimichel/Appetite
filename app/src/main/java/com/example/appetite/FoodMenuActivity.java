@@ -2,7 +2,6 @@ package com.example.appetite;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 public class FoodMenuActivity extends AppCompatActivity {
@@ -13,4 +12,5 @@ public class FoodMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_foodmenu);
         Intent i = getIntent();
     }
+
 }

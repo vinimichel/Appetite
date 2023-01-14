@@ -1,3 +1,4 @@
+const { number } = require("@hapi/joi")
 const mongoose = require("mongoose")
 
 const reservationsSchema = new mongoose.Schema({
@@ -9,10 +10,14 @@ const reservationsSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    table_id : {
+    no_of_people : {
+        type: Number,
+        require: true
+    },
+    /**table_id : {
         type: String,
         required: true
-    },
+    },*/
     reservation_date : {
         type: Date,
         require: true

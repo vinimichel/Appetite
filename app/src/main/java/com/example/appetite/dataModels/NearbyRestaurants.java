@@ -10,6 +10,7 @@ import com.mapbox.turf.TurfMeasurement;
 import java.io.Serializable;
 
 public class NearbyRestaurants implements Serializable {
+
     String restaurantName;
     String cityName;
     String foodCultureCategory;
@@ -26,12 +27,13 @@ public class NearbyRestaurants implements Serializable {
         this.address = restaurantFeature.getProperty("address").getAsString();
         Point restaurantLngLat = (Point)restaurantFeature.geometry();
         double distanceBetweenDeviceAndTarget = TurfMeasurement.distance(deviceLocation,
-                Point.fromLngLat(restaurantLngLat.longitude(), restaurantLngLat.latitude()), UNIT_KILOMETERS);
+            Point.fromLngLat(restaurantLngLat.longitude(), restaurantLngLat.latitude()), UNIT_KILOMETERS);
         this.distance = round(distanceBetweenDeviceAndTarget*100.0)/100.0;
         this.imageUrl = R.drawable.placeholder_img1;
         this.plz = restaurantFeature.getProperty("PLZ").getAsInt();
         this.aboutUsText = restaurantFeature.getProperty("description").getAsString();
     }
+
     public String getAddress() {
         return address;
     }
@@ -95,4 +97,5 @@ public class NearbyRestaurants implements Serializable {
     public void setAboutUsText(String aboutUsText) {
         this.aboutUsText = aboutUsText;
     }
+
 }

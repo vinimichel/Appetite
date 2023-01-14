@@ -5,7 +5,8 @@ const tablesSchema = mongoose.Schema({
         type: String
     },
     table_id : {
-        type: String
+        type: String,
+        unique: true,
     },
     no_of_sits : {
         type: Number,

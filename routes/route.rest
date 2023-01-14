@@ -1,24 +1,24 @@
 http://localhost:3000
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzI2ODg5OTIsImV4cCI6MTY3MjY4OTA1MiwiYXVkIjoiNjNiMmQ2NzE5N2RiZmRkYTdjOTcwZDZlIiwiaXNzIjoiYXBwZXRpdGUuY29tIn0.aAEiBrdL3LcXPJMiFYPMlNE4vG20c3kExpKALpLYtlo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzI5Mzc3OTQsImV4cCI6MTY3MjkzNzg1NCwiYXVkIjoiNjNiNmZjYTQ0NzFkYTk4ZjQ2YjAzMTlhIiwiaXNzIjoiYXBwZXRpdGUuY29tIn0.qlDPax0uOZ-_1Dts0PKh3TKL2y9gGh4txAwJjxenp98
 
 ###Login Route
-POST http://localhost:3000/auth/login
+POST http://localhost:3000/auth/user/login
 Content-Type: application/json
 
 {
-    "email" : "sheldonC@gmail.com",
-    "password" : "sheldon4556+@//"
+    "email" : "eddj@gmail.com",
+    "password" : "dehidhcdshcdbscj892173232@"
 }
 
 ###Register Route
-POST http://localhost:3000/auth/register
+POST http://localhost:3000/auth/user/register
 Content-Type: application/json
 
 {
-    "firstname" : "Amy",
-    "lastname" : "Fowler",
-    "email" : "amyfowler@gmail.com",
-    "password" : "amyFowler837&%",
+    "firstname" : "Eddy",
+    "lastname" : "John",
+    "email" : "jeghewhf@gmail.com",
+    "password" : "dehidhcdshcdbscj892173232@",
     "address" : "Hamburgerstrasse 13",
     "PLZ" : "36039"
 }
@@ -26,14 +26,26 @@ Content-Type: application/json
 ###Refresh token Route
 POST http://localhost:3000/auth/refresh-token
 Content-Type: application/json
+
 {
-    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzI2OTM2OTUsImV4cCI6MTcwNDI1MTI5NSwiYXVkIjoiNjNiMzQ3YmZhMzI1OWY3ZjNiNWI4ZjBjIiwiaXNzIjoiYXBwZXRpdGUuY29tIn0.zwn4NWRLJBAF5YaxgHu-ZR1tLYJzOZPihKHGnyZ8zqI"
+    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzI5Mzc5MDgsImV4cCI6MTcwNDQ5NTUwOCwiYXVkIjoiNjNiNmZjYTQ0NzFkYTk4ZjQ2YjAzMTlhIiwiaXNzIjoiYXBwZXRpdGUuY29tIn0.yw13YTFWcIPxb9ENalDZBsqlAt7Tjx3oOeKGTtRar6Q"
 }
 
 //refresh tokens can be saved inside user defaults
 
 ###Logout Route
-DELETE http://localhost:3000/auth/logout
+DELETE http://localhost:3000/auth/user/logout
+
+
+
+#####
+POST http://localhost:3000/auth/restaurant/login
+
+Content-Type: application/json
+{
+    "email" : ,
+    "password" : 
+}
 
 
 
@@ -52,7 +64,7 @@ DELETE  http://localhost:3000/users/63a78cac0ea068ea093ce748
 
 
 ######
-PATCH   http://localhost:3000/users/63a78a580ea068ea093ce746
+PATCH   http://localhost:3000/users/edit/63a78a580ea068ea093ce746
 Content-Type: application/json
 
 {
@@ -60,23 +72,36 @@ Content-Type: application/json
     "PLZ" : "36037"
 }
 
-////////////////////// restaurant calls
+///////////////////restaurant calls
 #####
 
 GET http://localhost:3000/restaurants
 
 ######
-POST http://localhost:3000/restaurants
+POST http://localhost:3000/restaurants/register
 Content-Type: application/json
 
 {
-    "name" : "Kaptain Pizza",
-    "address" : "Aschernbergplatz 15",
-    "email" : "kaptainpizza@yahoo.com",
-    "PLZ" : "36039",
-    "longitude" : "-80.5748348839",
-    "latitude" : "30.33487484834"
+    "name" : "Buena Vista",
+    "email" : "tables@buenavista.de",
+    "password" : "dehidhcdshcdbscj892173232@",
+    "address" : "Esperantoplatz, Fulda, Hessen Deutschland",
+    "PLZ" : "36037"
 }
+
+#####
+POST http://localhost:3000/restaurants/login
+Content-Type: application/json
+
+{
+    "email" : "tables@alteschule.de",
+    "password" : "dehidhcdshcdbscj892173232@"
+}
+
+
+
+
+
 ####
 DELETE http://localhost:3000/restaurants/63a8bc529cc87f0e078b531a
 
@@ -98,13 +123,13 @@ Content-Type: application/json
 GET http://localhost:3000/reservations
 
 ######
-POST http://localhost:3000/reservations
+POST http://localhost:3000/reservations/add
 Content-Type: application/json
 
 {
     "restaurant_id" : "638376f4905e75b1fd0a586c",
     "user_id" : "63a848f375225f0eaeff820a",
-    "table_id" : "CB78",
+    "no_of_people" : 3,
     "reservation_date" : "2023-01-05",
     "reservation_time" : "20:30"
 }
@@ -117,7 +142,7 @@ GET http://localhost:3000/reservations/restaurant/638376f4905e75b1fd0a586c
 
 
 ####
-DELETE http://localhost:3000/reservations/6382a4d10b770db9ebcbc28e
+DELETE http://localhost:3000/reservations/delete/63bad9f4066f6948866c72fe
 
 /////////////////////// menu calls
 
@@ -126,3 +151,8 @@ GET http://localhost:3000/menus/
 
 #############
 GET http://localhost:3000/menus/nachspeise/63837f64199eb8289afb1c42
+
+//////////// file upload
+###########
+POST http://localhost:3000/upload/images
+
