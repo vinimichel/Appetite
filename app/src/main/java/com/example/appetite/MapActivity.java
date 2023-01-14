@@ -94,12 +94,13 @@ public class MapActivity extends AppCompatActivity
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         // callback object when map is loaded
-        mapView.getMapAsync(this); 
+        mapView.getMapAsync(this);
         categoryChips = (ChipGroup) findViewById(R.id.categoryChips);
         categoryChips.check(R.id.allChip);
         categoryChips.setOnCheckedStateChangeListener((chipGroup, id) -> {
-            setFilter((View)findViewById(id.get(0)));
+            setFilter((View) findViewById(id.get(0)));
         });
+    }
 
     public void launchReservation(View v) {
         Intent i = new Intent(this, ReservationActivity.class);
