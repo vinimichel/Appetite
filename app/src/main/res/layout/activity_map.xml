@@ -69,13 +69,13 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="38dp"
                     android:background="@drawable/search_bg"
-                    android:onClick="launchReservation"
+                    android:onClick="openRestaurantDescription"
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     tools:layout_editor_absoluteX="0dp">
 
                     <TextView
-                        android:id="@+id/restaurant_description"
+                        android:id="@+id/restaurant_name_on_map"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -89,7 +89,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/city_of_restaurant"
+                        android:id="@+id/restaurant_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
@@ -103,6 +103,16 @@
                         app:layout_constraintTop_toTopOf="@+id/imageView"
                         app:layout_constraintVertical_bias="1.0" />
 
+                    <TextView
+                        android:id="@+id/distance_field"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="0"
+                        app:layout_constraintBottom_toBottomOf="@+id/restaurant_address"
+                        app:layout_constraintEnd_toEndOf="@+id/imageView4"
+                        app:layout_constraintTop_toTopOf="@+id/restaurant_address" />
+
                     <ImageView
                         android:id="@+id/imageView"
                         android:layout_width="14dp"
@@ -110,8 +120,8 @@
                         android:layout_marginTop="2dp"
                         android:layout_marginBottom="15dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/restaurant_description"
-                        app:layout_constraintTop_toBottomOf="@+id/restaurant_description"
+                        app:layout_constraintStart_toStartOf="@+id/restaurant_name_on_map"
+                        app:layout_constraintTop_toBottomOf="@+id/restaurant_name_on_map"
                         app:srcCompat="@drawable/pin" />
 
                     <ImageView
@@ -119,7 +129,7 @@
                         android:layout_width="17dp"
                         android:layout_height="17dp"
                         android:layout_marginEnd="16dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/restaurant_description"
+                        app:layout_constraintBottom_toBottomOf="@+id/restaurant_name_on_map"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:srcCompat="@drawable/star" />
 

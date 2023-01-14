@@ -49,21 +49,6 @@ public class MainActivity extends AppCompatActivity {
         initSearchFab();
     }
 
-    public void launchSettings(View v) {
-        Intent i = new Intent(this, SettingsActivity.class);
-        startActivity(i);
-    }
-
-    public void launchRegister(View v) {
-        Intent i = new Intent(this, RegisterActivity.class);
-        startActivity(i);
-    }
-
-    public void launchMap(View v) {
-        Intent i = new Intent(this, MapActivity.class);
-        startActivity(i);
-    }
-
     private void setBottomNavigationItem() {
         NavigationBarView bottomNavigationView = (NavigationBarView)findViewById(R.id.bottom_navigator);
         bottomNavigationView.setSelectedItemId(R.id.home);
