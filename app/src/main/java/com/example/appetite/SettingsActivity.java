@@ -24,11 +24,12 @@ public class SettingsActivity extends AppCompatActivity {
                 startActivity(new Intent(SettingsActivity.this, RegisterActivity.class));
             }
         });
+        setBottomNavigationItem();
     }
 
     private void setBottomNavigationItem() {
         NavigationBarView bottomNavigationView = (NavigationBarView)findViewById(R.id.bottom_navigator);
-        bottomNavigationView.setSelectedItemId(R.id.home);
+        bottomNavigationView.setSelectedItemId(R.id.settings_tab);
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

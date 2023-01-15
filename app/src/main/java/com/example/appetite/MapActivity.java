@@ -80,6 +80,7 @@ public class MapActivity extends AppCompatActivity
         mapView.onCreate(savedInstanceState);
         // callback object when map is loaded
         mapView.getMapAsync(this);
+        setBottomNavigationItem();
     }
     // called when map is done loading and sets map style
     @Override
