@@ -12,6 +12,7 @@ import static com.mapbox.mapboxsdk.style.expressions.Expression.neq;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconImage;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconOffset;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PointF;
@@ -95,16 +96,7 @@ public class MapActivity extends AppCompatActivity
         mapView.onCreate(savedInstanceState);
         // callback object when map is loaded
         mapView.getMapAsync(this);
-        categoryChips = (ChipGroup) findViewById(R.id.categoryChips);
-        categoryChips.check(R.id.allChip);
-        categoryChips.setOnCheckedStateChangeListener((chipGroup, id) -> {
-            setFilter((View) findViewById(id.get(0)));
-        });
-    }
-
-    public void launchReservation(View v) {
-        Intent i = new Intent(this, ReservationActivity.class);
-        startActivity(i);
+        setBottomNavigationItem();
     }
 
     // called when map is done loading and sets map style
