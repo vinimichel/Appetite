@@ -6,8 +6,8 @@ POST http://localhost:3000/auth/user/login
 Content-Type: application/json
 
 {
-    "email" : "eddj@gmail.com",
-    "password" : "dehidhcdshcdbscj892173232@"
+    "email" : "mdahi@gmail.com",
+    "password" : "kjefwhjefksb122334@@"
 }
 
 ###Register Route
@@ -15,10 +15,10 @@ POST http://localhost:3000/auth/user/register
 Content-Type: application/json
 
 {
-    "firstname" : "Eddy",
-    "lastname" : "John",
-    "email" : "jeghewhf@gmail.com",
-    "password" : "dehidhcdshcdbscj892173232@",
+    "firstname" : "Mohammed",
+    "lastname" : "Dahi",
+    "email" : "mdahi@gmail.com",
+    "password" : "kjefwhjefksb122334@@",
     "address" : "Hamburgerstrasse 13",
     "PLZ" : "36039"
 }
@@ -57,7 +57,7 @@ GET http://localhost:3000/users
 //testing our error handling
 GET http://localhost:3000/k
 ###
-GET http://localhost:3000/users/63a78a580ea068ea093ce746
+GET http://localhost:3000/users/63b347bfa3259f7f3b5b8f0c
 
 ####
 DELETE  http://localhost:3000/users/63a78cac0ea068ea093ce748
