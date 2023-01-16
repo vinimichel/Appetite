@@ -17,6 +17,7 @@ public class ReservationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation);
         Intent i = getIntent();
+        setBottomNavigationItem();
     }
 
     public void launchFoodMenu(View v) {
@@ -26,20 +27,20 @@ public class ReservationActivity extends AppCompatActivity {
 
     private void setBottomNavigationItem() {
         NavigationBarView bottomNavigationView = (NavigationBarView)findViewById(R.id.bottom_navigator);
-        bottomNavigationView.setSelectedItemId(R.id.home);
+        bottomNavigationView.setSelectedItemId(R.id.reservations_tab);
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.home:
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        overridePendingTransition(0,0);
                         return true;
                     case R.id.find_restaurant:
                         startActivity(new Intent(getApplicationContext(), MapActivity.class));
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.reservations_tab:
-                        startActivity(new Intent(getApplicationContext(), ReservationActivity.class));
-                        overridePendingTransition(0,0);
                         return true;
                     case R.id.settings_tab:
                         startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
