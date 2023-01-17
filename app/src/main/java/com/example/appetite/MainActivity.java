@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,11 +25,17 @@ import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.plugins.places.autocomplete.model.PlaceOptions;
 import com.mapbox.mapboxsdk.plugins.places.autocomplete.PlaceAutocomplete;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import okhttp3.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
     NearbyViewAdapter nearbyAdapter;
     private final static String MAPBOX_TOKEN = "pk.eyJ1IjoidmluaW1pY2hlbCIsImEiOiJjbGFqdWNvYmkwZmZhM3JuMzIxYzl2Z3h4In0.bmACrWyEcA6772uD758XPw";
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
+
+    OkHttpClient client = new OkHttpClient();
+    TextView txtString;
+
+
+    public String url= "http://192.168.0.30:3000/users/63c596968ab9bd5f4ffb6a52";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +61,59 @@ public class MainActivity extends AppCompatActivity {
         buildTilequeryRequest(testPoint);
         setBottomNavigationItem();
         initSearchFab();
+
+        //testing API call
+         txtString = (TextView)findViewById(R.id.textView6);
+
+        try {
+            run();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+    void run() throws IOException {
+
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        client.newCall(request).enqueue(new okhttp3.Callback() {
+            @Override
+            public void onResponse(@NonNull okhttp3.Call call, @NonNull okhttp3.Response response) throws IOException {
+                if(response.isSuccessful()) {
+                final String myResponse = response.body().string();
+                String firstname;
+                    try {
+                        JSONObject json = new JSONObject(myResponse);
+                        firstname = json.getString("firstname");
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    MainActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        txtString.setText(firstname);
+                    }
+                });
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull okhttp3.Call call, @NonNull IOException e) {
+                e.printStackTrace();
+                call.cancel();
+            }
+
+        });
+    }
+
+
+
+
 
     private void setBottomNavigationItem() {
         NavigationBarView bottomNavigationView = (NavigationBarView)findViewById(R.id.bottom_navigator);
