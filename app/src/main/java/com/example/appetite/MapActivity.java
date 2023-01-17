@@ -81,6 +81,8 @@ public class MapActivity extends AppCompatActivity
         // callback object when map is loaded
         mapView.getMapAsync(this);
         setBottomNavigationItem();
+        // default location when user doesn't want to share his position
+        lastKnownLocation = Point.fromLngLat(8.661864, 50.129085);
     }
     // called when map is done loading and sets map style
     @Override
@@ -119,8 +121,11 @@ public class MapActivity extends AppCompatActivity
                     LocationComponentActivationOptions.builder(this, loadedMapStyle).build());
             
             locationComponent.setLocationComponentEnabled(true);
+            // check if exact location is accessible
+            if (locationComponent.getLastKnownLocation() != null) {
+                lastKnownLocation = Point.fromLngLat(locationComponent.getLastKnownLocation().getLongitude(),locationComponent.getLastKnownLocation().getLongitude());
+            }
 
-            lastKnownLocation = Point.fromLngLat(locationComponent.getLastKnownLocation().getLongitude(),locationComponent.getLastKnownLocation().getLongitude());
             locationComponent.setCameraMode( CameraMode.TRACKING,
                     2500L /*duration of zoom*/ ,
                     13.0 /*zoom*/,
