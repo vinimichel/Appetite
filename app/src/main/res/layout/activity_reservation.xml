@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ReservationActivity">
 
     <TextView
@@ -17,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tischReservierenTextfield"
+        android:id="@+id/reserveTableTextfield"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
@@ -28,31 +29,34 @@
         app:layout_constraintTop_toBottomOf="@+id/restaurantNameTextfield" />
 
     <Spinner
-        android:id="@+id/personenanzahlSpinner"
+        android:id="@+id/numberOfPeopleSpinner"
         android:layout_width="219dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
+        android:backgroundTint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tischReservierenTextfield" />
+        app:layout_constraintTop_toBottomOf="@+id/reserveTableTextfield" />
 
     <Spinner
-        android:id="@+id/datumSpinner"
+        android:id="@+id/dateSpinner"
         android:layout_width="219dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:backgroundTint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/personenanzahlSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/numberOfPeopleSpinner" />
 
     <Spinner
-        android:id="@+id/zeitSpinner"
+        android:id="@+id/timeSpinner"
         android:layout_width="219dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:backgroundTint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/datumSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/dateSpinner" />
 
     <Button
         android:id="@+id/findTableButton"
@@ -63,7 +67,7 @@
         android:text="Tisch finden"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/zeitSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/timeSpinner" />
 
     <!-- temporary background color for testing purposes -->
     <com.google.android.material.bottomnavigation.BottomNavigationView

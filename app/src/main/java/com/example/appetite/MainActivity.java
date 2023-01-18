@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setTitle("Home");
         initRecyclerView();
         // placeholder starting position
         Point testPoint = Point.fromLngLat(9.685242, 50.550657);
@@ -67,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.settings_tab:
-                        startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                         overridePendingTransition(0,0);
                         return true;
                 }

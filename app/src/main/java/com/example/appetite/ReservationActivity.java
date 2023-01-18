@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class ReservationActivity extends AppCompatActivity {
+
+    Integer[] numberOfPeopleArray = {1,2,3,4,5,6,7,8};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +47,7 @@ public class ReservationActivity extends AppCompatActivity {
                     case R.id.reservations_tab:
                         return true;
                     case R.id.settings_tab:
-                        startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                         overridePendingTransition(0,0);
                         return true;
                 }

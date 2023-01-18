@@ -11,17 +11,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.navigation.NavigationBarView;
 
-public class SettingsActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_login);
         TextView btn = findViewById(R.id.textSignUp);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v){
-                startActivity(new Intent(SettingsActivity.this, RegisterActivity.class));
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
         setBottomNavigationItem();
