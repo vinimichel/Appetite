@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,15 +37,20 @@ public class MainActivity extends AppCompatActivity {
     NearbyViewAdapter nearbyAdapter;
     private final static String MAPBOX_TOKEN = "pk.eyJ1IjoidmluaW1pY2hlbCIsImEiOiJjbGFqdWNvYmkwZmZhM3JuMzIxYzl2Z3h4In0.bmACrWyEcA6772uD758XPw";
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
+    String cultureCategory;
+    Point selectedPosition;
+    Button focusedButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initRecyclerView();
-        // placeholder starting position
-        Point testPoint = Point.fromLngLat(9.685242, 50.550657);
-        buildTilequeryRequest(testPoint);
+        cultureCategory = "all";
+        focusedButton = (Button)findViewById(R.id.allCategories);
+        // placeholder starting position -> somewhere in Berlin
+        selectedPosition = Point.fromLngLat(8.661864, 50.129085);
+        buildTilequeryRequest(selectedPosition);
         setBottomNavigationItem();
         initSearchFab();
     }
@@ -114,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             // MAX radius of restaurants
             .radius(10000)
             // how many results/restaurants are shown
-            .limit(10)
+            .limit(50)
             .build();
         // callback on results
         tilequery.enqueueCall(new Callback<FeatureCollection>() {
@@ -123,10 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 if (response.body() != null) {
                     // if results found, set FeatureCollection
                     FeatureCollection responseFeatureCollection = response.body();
-                    List<Feature> features  = responseFeatureCollection.features();
-                    // log recyclerView with data
-                    setRecyclerViewData(features, position);
-                    Log.d(TAG, "Tilequering " + features);
+                    processTilequeryResults(responseFeatureCollection.features(), position);
                 }
             }
 
@@ -135,6 +139,36 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "Tilequering: Could not retrieve data from API");
             }
         });
+    }
+
+    private void processTilequeryResults(List<Feature> features, Point position) {
+        if (cultureCategory.equals("all")) {
+            setRecyclerViewData(features, position);
+        } else {
+            List<Feature> selectedFeatures = new ArrayList<Feature>();
+            for (Feature feature : features) {
+                if (feature.getProperty("category").getAsString().equals(cultureCategory)) {
+                    selectedFeatures.add(feature);
+                }
+            }
+            setRecyclerViewData(selectedFeatures, position);
+        }
+    }
+
+    public void setFilter(View v) {
+        // check if this button was pressed before
+        if ((Button)v != focusedButton) {
+            focusedButton.clearFocus();
+            // set focusoble must be turned off for previous button otherwise the onclick listener doesn't work
+            focusedButton.setFocusable(false);
+            //change focused button to new one
+            focusedButton = (Button)v;
+            focusedButton.setFocusableInTouchMode(true);
+            focusedButton.requestFocus();
+            // remember cultural category
+            cultureCategory = (String)v.getTag();
+        }
+        buildTilequeryRequest(Point.fromLngLat(9.685242, 50.550657));
     }
 
     // activate onClickListener for search

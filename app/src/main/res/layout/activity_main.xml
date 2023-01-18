@@ -66,7 +66,8 @@
         app:layout_constraintEnd_toEndOf="@+id/imageView8"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/restaurant_search_field"
-        app:layout_constraintTop_toBottomOf="@+id/restaurant_search_field">
+        app:layout_constraintTop_toBottomOf="@+id/restaurant_search_field"
+        android:scrollbars="none">
 
 
         <LinearLayout
@@ -74,51 +75,47 @@
             android:layout_height="wrap_content">
 
             <Button
-                android:id="@+id/button2"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
-                android:background="@drawable/search_bg"
-                android:drawableTop="@drawable/resized_cutlery"
-                android:minWidth="0dip"
-                android:paddingLeft="20dp"
-                android:paddingTop="18dp"
-                android:paddingRight="20dp"
-                android:paddingBottom="16dp"
-                android:text="Alles"
-                android:textColor="#000000"
-                android:textSize="14sp" />
+                android:id="@+id/allCategories"
+                style="@style/Button.Basic"
+                android:focusableInTouchMode="true"
+                android:focusedByDefault="true"
+                android:text="alles"
+                android:tag='all'
+                app:icon="@drawable/cutlery"
+                app:iconTint="@null" >
+                <requestFocus />
+            </Button>
 
             <Button
-                android:id="@+id/button1"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
-                android:background="@drawable/search_bg"
-                android:drawableTop="@drawable/resized_veggie_icon"
-                android:minWidth="0dip"
-                android:paddingLeft="16dp"
-                android:paddingTop="18dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="16dp"
-                android:text="Veggie"
-                android:textColor="#000000" />
+                android:id="@+id/veggieButton"
+                style="@style/Button.Basic"
+                android:focusable="false"
+                android:focusableInTouchMode="true"
+                android:text="Vegetarisch"
+                android:tag="veggie"
+                app:icon="@drawable/veggie_icon"
+                app:iconGravity="textTop"/>
 
 
             <Button
-                android:id="@+id/button3"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/search_bg"
-                android:backgroundTint="#f6f6f6"
-                android:drawableTop="@drawable/resized_pizza_icon"
-                android:minWidth="0dip"
-                android:paddingLeft="20dp"
-                android:paddingTop="18dp"
-                android:paddingRight="20dp"
-                android:paddingBottom="16dp"
+                android:id="@+id/pizzaButton"
+                style="@style/Button.Basic"
+                android:focusable="false"
+                android:focusableInTouchMode="true"
+                android:onClick="setFilter"
                 android:text="Pizza"
-                android:textColor="#000000" />
+                android:tag="pizza"
+                app:icon="@drawable/pizza"/>
+            <Button
+                android:id="@+id/asianButton"
+                style="@style/Button.Basic"
+                android:focusable="false"
+                android:focusableInTouchMode="true"
+                android:onClick="setFilter"
+                android:paddingTop="18dp"
+                android:tag="japanisch"
+                android:text="Japanisch"
+                app:icon="@drawable/asian_food" />
         </LinearLayout>
     </HorizontalScrollView>
 

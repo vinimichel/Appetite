@@ -53,6 +53,69 @@
                 app:layout_constraintTop_toTopOf="@+id/PLZTextfield"
                 app:srcCompat="@drawable/filter" />
 
+            <HorizontalScrollView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:scrollbars="none"
+                app:layout_constraintEnd_toEndOf="@+id/imageView8"
+                app:layout_constraintStart_toStartOf="@+id/PLZTextfield"
+                app:layout_constraintTop_toBottomOf="@+id/PLZTextfield">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/categoryChips"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:checkedChip="@id/allChip"
+                    app:selectionRequired="true"
+                    app:singleSelection="true"
+                    >
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/allChip"
+                        style="@style/FilterChip"
+                        android:clickable="true"
+                        android:tag="all"
+                        android:text="alles"
+                        app:chipIcon="@drawable/cutlery"
+                        app:layout_constraintEnd_toStartOf="@+id/chip2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"></com.google.android.material.chip.Chip>
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/pizzaChip"
+                        style="@style/FilterChip"
+                        android:layout_marginStart="1dp"
+                        android:tag="pizza"
+                        android:text="Pizza"
+                        app:chipIcon="@drawable/pizza"
+                        app:layout_constraintStart_toEndOf="@+id/chip2"
+                        app:layout_constraintTop_toTopOf="parent"></com.google.android.material.chip.Chip>
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip2"
+                        style="@style/FilterChip"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:clickable="true"
+                        android:tag="veggie"
+                        android:text="Veggie"
+                        app:chipIcon="@drawable/veggie_icon"
+                        app:layout_constraintEnd_toStartOf="@+id/pizzaChip"
+                        app:layout_constraintStart_toEndOf="@+id/allChip"
+                        app:layout_constraintTop_toTopOf="parent"></com.google.android.material.chip.Chip>
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip3"
+                        style="@style/FilterChip"
+                        android:tag="japanisch"
+                        android:text="Japanisch"
+                        app:chipIcon="@drawable/asian_food"
+                        app:layout_constraintStart_toEndOf="@+id/pizzaChip"
+                        app:layout_constraintTop_toTopOf="parent"></com.google.android.material.chip.Chip>
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
+
             <RelativeLayout
                 android:id="@+id/relativeLayout"
                 android:layout_width="match_parent"

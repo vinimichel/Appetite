@@ -15,7 +15,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.appetite.dataModels.NearbyRestaurants;
 import com.google.android.material.navigation.NavigationBarView;
 import com.mapbox.android.core.permissions.PermissionsListener;
@@ -63,7 +65,7 @@ public class MapActivity extends AppCompatActivity
     private PermissionsManager permissionsManager;
     ConstraintLayout popupLayout;
 
-    // necessary to use Android SDK
+    // necessary to use Mapbox SDK
     private final static String MAPBOX_TOKEN = "pk.eyJ1IjoidmluaW1pY2hlbCIsImEiOiJjbGFqdWNvYmkwZmZhM3JuMzIxYzl2Z3h4In0.bmACrWyEcA6772uD758XPw";
     Point lastKnownLocation;
     @Override
