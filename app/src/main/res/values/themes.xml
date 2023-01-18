@@ -2,7 +2,6 @@
     <!-- Base application theme. -->
     <style name="Theme.Appetite" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorPrimary">@color/white</item>
-        <item name="android:textColor">@color/black</item>
     </style>
     <style name="Button.Basic" parent="@style/TextAppearance.AppCompat.Button">
         <item name="backgroundTint">@color/filter_button_background</item>
@@ -41,5 +40,8 @@
         <item name="checkedIconVisible">false</item>
         <item name="closeIconEnabled">false</item>
         <item name="closeIconVisible">false</item>
+
+
+
     </style>
 </resources>
