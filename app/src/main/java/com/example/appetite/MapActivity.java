@@ -100,6 +100,7 @@ public class MapActivity extends AppCompatActivity
         categoryChips.setOnCheckedStateChangeListener((chipGroup, id) -> {
             setFilter((View) findViewById(id.get(0)));
         });
+        setBottomNavigationItem();
     }
 
     public void launchReservation(View v) {
@@ -214,7 +215,7 @@ public class MapActivity extends AppCompatActivity
         // I don't quite understand the above comment, signed S.M.
         final PointF pixel = mapboxMap.getProjection().toScreenLocation(point);
         // query rendered features on pixels (only "fulda-restaurants" layer)
-        List<Feature> features = mapboxMap.queryRenderedFeatures(pixel, "fulda-restaurants");
+        List<Feature> features = mapboxMap.queryRenderedFeatures(pixel, "restaurant-features");
         // grab restaurant information popup layout
         ConstraintLayout popupLayout = findViewById(R.id.place_info_layout);
         // checks whether restaurants have been found on coordinates

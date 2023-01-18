@@ -48,11 +48,11 @@ public class MainActivity extends AppCompatActivity {
         initRecyclerView();
         cultureCategory = "all";
         focusedButton = (Button)findViewById(R.id.allCategories);
-        // placeholder starting position -> somewhere in Berlin
-        selectedPosition = Point.fromLngLat(8.661864, 50.129085);
-        buildTilequeryRequest(selectedPosition);
+        // placeholder starting position (if user doesn't want to share his position) -> somewhere in Fulda, the center of the universe
+        selectedPosition = Point.fromLngLat(9.685242, 50.550657);
         setBottomNavigationItem();
         initSearchFab();
+        buildTilequeryRequest(selectedPosition);
     }
 
     private void setBottomNavigationItem() {
@@ -143,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void processTilequeryResults(List<Feature> features, Point position) {
         if (cultureCategory.equals("all")) {
+            Log.d(TAG, "I was here");
             setRecyclerViewData(features, position);
         } else {
             List<Feature> selectedFeatures = new ArrayList<Feature>();

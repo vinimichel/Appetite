@@ -79,10 +79,11 @@
                 style="@style/Button.Basic"
                 android:focusableInTouchMode="true"
                 android:focusedByDefault="true"
-                android:text="alles"
                 android:tag='all'
+                android:text="alles"
                 app:icon="@drawable/cutlery"
-                app:iconTint="@null" >
+                app:iconTint="@null">
+
                 <requestFocus />
             </Button>
 
@@ -91,7 +92,7 @@
                 style="@style/Button.Basic"
                 android:focusable="false"
                 android:focusableInTouchMode="true"
-                android:text="Vegetarisch"
+                android:text="Veggie"
                 android:tag="veggie"
                 app:icon="@drawable/veggie_icon"
                 app:iconGravity="textTop"/>
