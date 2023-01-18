@@ -15,9 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.example.appetite.dataModels.NearbyRestaurants;
 import com.google.android.material.navigation.NavigationBarView;
 import com.mapbox.android.core.permissions.PermissionsListener;
@@ -352,7 +350,7 @@ public class MapActivity extends AppCompatActivity
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.settings_tab:
-                        startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                         overridePendingTransition(0,0);
                         return true;
                 }
