@@ -76,6 +76,7 @@ public class MapActivity extends AppCompatActivity
     private String geojsonSourceLayerId = "geojsonSourceLayerId";
     private String symbolIconId = "symbolIconId";
     NearbyRestaurants selectedRestaurant;
+    boolean sourceFileCreated;
 
     private PermissionsManager permissionsManager;
     ConstraintLayout popupLayout;
@@ -100,6 +101,7 @@ public class MapActivity extends AppCompatActivity
         categoryChips.setOnCheckedStateChangeListener((chipGroup, id) -> {
             setFilter((View) findViewById(id.get(0)));
         });
+        sourceFileCreated = false;
         setBottomNavigationItem();
         // default location when user doesn't want to share his position
         lastKnownLocation = Point.fromLngLat(8.661864, 50.129085);
@@ -128,10 +130,12 @@ public class MapActivity extends AppCompatActivity
                 MapActivity.this.getResources(), R.drawable.blue_marker_view));
 
         // adding new, empty GeoJson source
-        setUpSource(style);
+        if (!sourceFileCreated) {
+            setUpSource(style);
+            // setting new layer to map
+            setupLayer(style);
+        }
 
-        // setting new layer to map
-        setupLayer(style);
         enableLocationComponent(style);
 
     }
@@ -265,6 +269,7 @@ public class MapActivity extends AppCompatActivity
 
     }
     private void setUpSource(@NonNull Style loadedMapStyle) {
+        sourceFileCreated = true;
         loadedMapStyle.addSource(new GeoJsonSource(geojsonSourceLayerId));
     }
 
