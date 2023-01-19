@@ -29,16 +29,17 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="12dp"
                 android:background="@drawable/search_bg"
-                android:drawableLeft="@drawable/ic_baseline_search_24"
+                android:drawableStart="@drawable/ic_baseline_search_24"
                 android:drawablePadding="16dp"
                 android:focusable="false"
                 android:inputType="textPersonName"
                 android:padding="16dp"
-                android:text="Restaurant finden"
+                android:text="@string/hierEingebenString"
                 android:textColor="#919191"
                 app:layout_constraintEnd_toStartOf="@+id/imageView8"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="Autofill,LabelFor" />
 
 
             <ImageView
@@ -51,7 +52,8 @@
                 android:padding="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/PLZTextfield"
-                app:srcCompat="@drawable/filter" />
+                app:srcCompat="@drawable/filter"
+                tools:ignore="ContentDescription" />
 
             <HorizontalScrollView
                 android:layout_width="0dp"
@@ -74,49 +76,47 @@
                     <com.google.android.material.chip.Chip
                         android:id="@+id/allChip"
                         style="@style/FilterChip"
-                        android:clickable="true"
                         android:tag="all"
-                        android:text="alles"
+                        android:text="@string/allesString"
                         app:chipIcon="@drawable/cutlery"
                         app:closeIconEnabled="false"
                         app:layout_constraintEnd_toStartOf="@+id/chip2"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"></com.google.android.material.chip.Chip>
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/pizzaChip"
                         style="@style/FilterChip"
                         android:layout_marginStart="1dp"
                         android:tag="pizza"
-                        android:text="Pizza"
+                        android:text="@string/pizzaString"
                         app:checkedIconEnabled="false"
                         app:chipIcon="@drawable/pizza"
                         app:chipIconVisible="true"
                         app:closeIconVisible="false"
                         app:layout_constraintStart_toEndOf="@+id/chip2"
-                        app:layout_constraintTop_toTopOf="parent"></com.google.android.material.chip.Chip>
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip2"
                         style="@style/FilterChip"
                         android:layout_marginStart="1dp"
                         android:layout_marginEnd="1dp"
-                        android:clickable="true"
                         android:tag="veggie"
-                        android:text="Veggie"
+                        android:text="@string/veggieString"
                         app:chipIcon="@drawable/veggie_icon"
                         app:layout_constraintEnd_toStartOf="@+id/pizzaChip"
                         app:layout_constraintStart_toEndOf="@+id/allChip"
-                        app:layout_constraintTop_toTopOf="parent"></com.google.android.material.chip.Chip>
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip3"
                         style="@style/FilterChip"
                         android:tag="japanisch"
-                        android:text="Japanisch"
+                        android:text="@string/japaneseText"
                         app:chipIcon="@drawable/asian_food"
                         app:layout_constraintStart_toEndOf="@+id/pizzaChip"
-                        app:layout_constraintTop_toTopOf="parent"></com.google.android.material.chip.Chip>
+                        app:layout_constraintTop_toTopOf="parent"/>
                 </com.google.android.material.chip.ChipGroup>
             </HorizontalScrollView>
 
@@ -152,7 +152,7 @@
                         android:layout_marginTop="14dp"
                         android:fontFamily="@font/butler_bold"
                         android:includeFontPadding="false"
-                        android:text="Alaska Kyiv"
+                        android:text="@string/restaurantNamePlaceholder"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -165,7 +165,7 @@
                         android:layout_marginStart="6dp"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/poppins_regular"
-                        android:text="Fulda, Leipziger Str. 25"
+                        android:text="@string/addressPlaceholder"
                         android:textColor="@color/black"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/imageView"
@@ -178,7 +178,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_regular"
-                        android:text="0"
+                        android:text="@string/distancePlaceholder"
                         app:layout_constraintBottom_toBottomOf="@+id/restaurant_address"
                         app:layout_constraintEnd_toEndOf="@+id/imageView4"
                         app:layout_constraintTop_toTopOf="@+id/restaurant_address" />
@@ -192,7 +192,8 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/restaurant_name_on_map"
                         app:layout_constraintTop_toBottomOf="@+id/restaurant_name_on_map"
-                        app:srcCompat="@drawable/pin" />
+                        app:srcCompat="@drawable/pin"
+                        tools:ignore="ContentDescription" />
 
                     <ImageView
                         android:id="@+id/imageView4"
@@ -201,7 +202,8 @@
                         android:layout_marginEnd="16dp"
                         app:layout_constraintBottom_toBottomOf="@+id/restaurant_name_on_map"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:srcCompat="@drawable/star" />
+                        app:srcCompat="@drawable/star"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
                         android:id="@+id/textView4"
@@ -211,7 +213,7 @@
                         android:layout_marginBottom="-1dp"
                         android:fontFamily="@font/poppins_bold"
                         android:includeFontPadding="false"
-                        android:text="3.2"
+                        android:text="@string/review_placeholder"
                         android:textColor="#000000"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/imageView4"
@@ -223,7 +225,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_regular"
                         android:includeFontPadding="false"
-                        android:text="(12)"
+                        android:text="@string/ratings_placeholder"
                         android:textColor="#898989"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/textView4"
@@ -237,13 +239,14 @@
                 android:id="@+id/back_to_camera_tracking_mode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="24dp"
                 android:onClick="recenterLocation"
                 app:backgroundTint="#f9f9f9"
                 app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@drawable/recenter_location" />
+                app:srcCompat="@drawable/recenter_location"
+                tools:ignore="ContentDescription" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -163,7 +163,7 @@ public class MapActivity extends AppCompatActivity
             locationComponent.setLocationComponentEnabled(true);
             // check if exact location is accessible
             if (locationComponent.getLastKnownLocation() != null) {
-                lastKnownLocation = Point.fromLngLat(locationComponent.getLastKnownLocation().getLongitude(),locationComponent.getLastKnownLocation().getLongitude());
+                lastKnownLocation = Point.fromLngLat(locationComponent.getLastKnownLocation().getLongitude(),locationComponent.getLastKnownLocation().getLatitude());
             }
 
             locationComponent.setCameraMode( CameraMode.TRACKING,
