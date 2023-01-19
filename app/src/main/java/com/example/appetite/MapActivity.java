@@ -101,6 +101,8 @@ public class MapActivity extends AppCompatActivity
             setFilter((View) findViewById(id.get(0)));
         });
         setBottomNavigationItem();
+        // default location when user doesn't want to share his position
+        lastKnownLocation = Point.fromLngLat(8.661864, 50.129085);
     }
 
     public void launchReservation(View v) {
