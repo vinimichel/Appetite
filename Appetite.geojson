@@ -1,0 +1,145 @@
+{
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Restaurant Vegeta",
+        "description": "Hier bekommen Sie vegetarische Delikatessen direkt vom Planeten Sadala.",
+        "city": "West City",
+        "PLZ": 28,
+        "address": "WST 3338926 K",
+        "category": "veggie",
+		"url": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Boeddha%27s_Delight.jpg"
+      },
+      "geometry": {
+        "coordinates": [
+          133.02476,
+          -14.41634
+        ],
+        "type": "Point"
+      },
+      "id": "ipse5l4btwl1389kcejlbvrixiz5xho6"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Orange Die Burgermanufaktur",
+        "description": "Für unsere Burger verwenden wir Brötchen aus handwerklichen Backstuben und zertifiziertes Muskelfleisch von irischen Rindern aus Weidehaltung, ergänzt durch knackiges Gemüse und selbst kreierte Burgersaucen. Bei uns findet Ihr auch eine vielseitige Auswahl an liebevoll entwickelten vegetarischen und veganen Burgern.",
+        "city": "Fulda",
+        "PLZ": 36037,
+        "address": "Bahnhofstraße 27",
+        "category": "burger",
+		"url": "https://orange-burgermanufaktur.de/wp-content/uploads/2019/02/IMG_4298.jpg"
+      },
+      "geometry": {
+        "coordinates": [
+          9.682889900122474,
+          50.55452900874366
+        ],
+        "type": "Point"
+      },
+      "id": "85oixgy397ajowxbwditnsp0c6j8p0x5"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "DAVIS Pizza & Wine",
+        "description": "Wir erstellen gerade Inhalte für diese Seite. Um unseren eigenen hohen Qualitätsansprüchen gerecht zu werden benötigen wir hierfür noch etwas Zeit. Bitte besuchen Sie diese Seite bald wieder. Vielen Dank für ihr Interesse!",
+        "city": "Fulda",
+        "PLZ": 36041,
+        "address": "Kothenbachweg 2",
+        "category": "pizza",
+		"url": "https://davis-pizza.de/.cm4all/mediadb/SPEISEKARTE/Titelbild-Speisekarte.jpg"
+      },
+      "geometry": {
+        "coordinates": [
+          9.674472595564525,
+          50.54609053162353
+        ],
+        "type": "Point"
+      },
+      "id": "5lg3rju7zhrdjmaw2ljct3h1lrqix8qt"
+    },
+	{
+      "type": "Feature",
+      "properties": {
+        "title": "Takara Sushi & Grill",
+        "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+        "city": "Fulda",
+        "PLZ": 36037,
+        "address": "Löherstraße 39",
+        "category": "japanisch",
+		"url": "https://www.takara-fulda.de/images/sushi-restaurant/20221031164218.jpg"
+      },
+      "geometry": {
+        "coordinates": [
+          9.674804342451779,
+          50.54705401924184
+        ],
+        "type": "Point"
+      },
+      "id": "2lab9thuluwz4dqewe59tokbyuh13zb0"
+    },
+	{
+      "type": "Feature",
+      "properties": {
+        "title": "China Buffet Town Fulda",
+        "description": "Herzlich Willkommen! In unserem Restaurant in der Heinrichstraße in Fulda, finden mehr als 250 Gäste Platz. Dank unseres großen Gastraumes, und einem abgetrennten Nebenzimmer findet jeder Gast, ob lieber etwas abseits oder mitten im Geschehen seinen Platz.",
+        "city": "Fulda",
+        "PLZ": 36043,
+        "address": "Heinrichstraße 85",
+        "category": "chinesisch",
+		"url": "https://static.wixstatic.com/media/6215a6_52f8f28ffc8d4a5fb49a8cb53ba79681~mv2_d_2016_1512_s_2.jpg/v1/fit/w_718,h_926,q_90/6215a6_52f8f28ffc8d4a5fb49a8cb53ba79681~mv2_d_2016_1512_s_2.jpg"
+      },
+      "geometry": {
+        "coordinates": [
+          9.687543469440339,
+          50.54907622924293
+        ],
+        "type": "Point"
+      },
+      "id": "avc6xfy8cdq171ps8575lzz1e295cors"
+    },
+	{
+      "type": "Feature",
+      "properties": {
+        "title": "Maharaja",
+        "description": "Herzlich Willkommen ! Wir bieten Ihnen  frische und exotische Indische Spezialitäten . Sprechen Sie uns auf ihre Wünsche an !  Wir freuen uns auf Ihren Besuch",
+        "city": "Fulda",
+        "PLZ": 36037,
+        "address": "Bahnhofstraße 19",
+        "category": "indisch",
+		"url": "https://lh3.googleusercontent.com/p/AF1QipPCiut7XRLzrarcUCdI6UwacTDWlQU8TQdcnIum=w960-h960-n-o-v1"
+      },
+      "geometry": {
+        "coordinates": [
+          9.68193367116474,
+          50.55402182330631
+        ],
+        "type": "Point"
+      },
+      "id": "z5hcjrboebpckdiz2wqgoup07sh8ecaf"
+    },
+	{
+      "type": "Feature",
+      "properties": {
+        "title": "Captain Kebap",
+        "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+        "city": "Fulda",
+        "PLZ": 36041,
+        "address": "Andreasberg 1A",
+        "category": "döner",
+		"url": "https://upload.wikimedia.org/wikipedia/commons/a/ad/D%C3%B6ner_kebab_slicing.jpg"
+      },
+      "geometry": {
+        "coordinates": [
+          9.663305257670514,
+          50.55407330608334
+        ],
+        "type": "Point"
+      },
+      "id": "vos911b4v8d72zy58p7ahoj72fozurbg"
+    }
+  ],
+  "type": "FeatureCollection"
+}
