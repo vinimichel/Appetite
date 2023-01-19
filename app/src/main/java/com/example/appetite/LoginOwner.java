@@ -14,17 +14,13 @@ public class LoginOwner extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_owner);
-    }
-
-    public void openRegisterAct(View v) {
-        TextView txt = (TextView) findViewById(R.id.signinTextOwner);
+        TextView txt = findViewById(R.id.signinTextOwner);
         txt.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginOwner.this, RegisterOwner.class));
+            public void onClick (View v) {
+                startActivity(new Intent(LoginOwner.this, LoginActivity.class));
             }
         });
+
     }
-
-
 }
