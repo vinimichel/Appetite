@@ -79,7 +79,6 @@
                         android:tag="all"
                         android:text="@string/allesString"
                         app:chipIcon="@drawable/cutlery"
-                        app:closeIconEnabled="false"
                         app:layout_constraintEnd_toStartOf="@+id/chip2"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"/>
@@ -93,7 +92,6 @@
                         app:checkedIconEnabled="false"
                         app:chipIcon="@drawable/pizza"
                         app:chipIconVisible="true"
-                        app:closeIconVisible="false"
                         app:layout_constraintStart_toEndOf="@+id/chip2"
                         app:layout_constraintTop_toTopOf="parent"/>
 

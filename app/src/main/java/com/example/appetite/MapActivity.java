@@ -77,6 +77,7 @@ public class MapActivity extends AppCompatActivity
     private String symbolIconId = "symbolIconId";
     NearbyRestaurants selectedRestaurant;
     boolean sourceFileCreated;
+    SymbolLayer restaurantLayer;
 
     private PermissionsManager permissionsManager;
     ConstraintLayout popupLayout;
@@ -91,25 +92,24 @@ public class MapActivity extends AppCompatActivity
         Mapbox.getInstance(this, MAPBOX_TOKEN);
         setContentView(R.layout.activity_map);
         Intent i = getIntent();
+        sourceFileCreated = false;
         popupLayout = findViewById(R.id.place_info_layout);
-        mapView = findViewById(R.id.mapView);
-        mapView.onCreate(savedInstanceState);
-        // callback object when map is loaded
-        mapView.getMapAsync(this);
+
         categoryChips = (ChipGroup) findViewById(R.id.categoryChips);
         categoryChips.check(R.id.allChip);
         categoryChips.setOnCheckedStateChangeListener((chipGroup, id) -> {
-            setFilter((View) findViewById(id.get(0)));
+            setFilter(findViewById(id.get(0)));
         });
-        sourceFileCreated = false;
+
+
         setBottomNavigationItem();
         // default location when user doesn't want to share his position
         lastKnownLocation = Point.fromLngLat(8.661864, 50.129085);
-    }
+        mapView = findViewById(R.id.mapView);
+        mapView.onCreate(savedInstanceState);
 
-    public void launchReservation(View v) {
-        Intent i = new Intent(this, ReservationActivity.class);
-        startActivity(i);
+        // callback object when map is loaded
+        mapView.getMapAsync(this);
     }
 
     // called when map is done loading and sets map style
@@ -137,15 +137,16 @@ public class MapActivity extends AppCompatActivity
         }
 
         enableLocationComponent(style);
+        restaurantLayer = (SymbolLayer) style.getLayer("restaurant-features");
 
     }
 
     private void setFilter(View v) {
-        SymbolLayer restaurantLayer = (SymbolLayer) style.getLayer("restaurant-features");
         String cultureCategory = (String) v.getTag();
         if ( restaurantLayer != null) {
             if (!cultureCategory.equals("all")) {
                 restaurantLayer.setFilter(eq(get("category"), cultureCategory));
+
             } else {
                 restaurantLayer.setFilter(neq(literal(""), ""));
             }
@@ -222,8 +223,6 @@ public class MapActivity extends AppCompatActivity
         final PointF pixel = mapboxMap.getProjection().toScreenLocation(point);
         // query rendered features on pixels (only "fulda-restaurants" layer)
         List<Feature> features = mapboxMap.queryRenderedFeatures(pixel, "restaurant-features");
-        // grab restaurant information popup layout
-        ConstraintLayout popupLayout = findViewById(R.id.place_info_layout);
         // checks whether restaurants have been found on coordinates
         if (features.size() > 0) {
             // ideal case: only one restaurant/feature on coordinate
@@ -233,7 +232,7 @@ public class MapActivity extends AppCompatActivity
                 NearbyRestaurants restaurant = new NearbyRestaurants(feature, lastKnownLocation);
                 setRestaurantPopUp(restaurant);
             } else {
-                Log.d(TAG, "Achtung, das Restaurant hat keine abrufbaren Eigenschaften!");
+                Log.d(TAG, "Attention the restaurant has no properties!");
             }
         } else {
             // if no restaurant is found on pixels
