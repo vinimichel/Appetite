@@ -99,8 +99,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Description"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:text="Description" />
 
             <View
                 android:id="@+id/divider10"
@@ -172,7 +172,8 @@
             <TextView
                 android:id="@+id/textView31"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="Adresse" />
 
             <EditText
                 android:id="@+id/editTextTextPersonName6"
@@ -180,7 +181,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Name" />
+                android:text="Adresse" />
 
             <View
                 android:id="@+id/divider15"
