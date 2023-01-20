@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         // build tile query with tile query API
         MapboxTilequery tilequery = MapboxTilequery.builder()
             .accessToken(MAPBOX_TOKEN)
-            .tilesetIds("vinimichel.clcevvkko01bw23qh5gmszly4-9cpxg")
+            .tilesetIds("vinimichel.cld3ltbqk03ey28pjyn11qzc6-9201q")
             // point of query
             .query(Point.fromLngLat(position.longitude(), position.latitude()))
             // MAX radius of restaurants
