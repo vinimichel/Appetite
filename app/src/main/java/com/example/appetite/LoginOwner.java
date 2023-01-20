@@ -18,7 +18,7 @@ public class LoginOwner extends AppCompatActivity {
         txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
-                startActivity(new Intent(LoginOwner.this, LoginActivity.class));
+                startActivity(new Intent(LoginOwner.this, RegisterOwner.class));
             }
         });
 
