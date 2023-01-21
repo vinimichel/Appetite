@@ -202,12 +202,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp" />
 
-            <Button
-                android:id="@+id/submitBtn"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Submit Changes"
-                android:textColor="@color/black" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/discardBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Discard"
+                    android:textColor="@color/black"
+                    android:visibility="visible" />
+
+                <Button
+                    android:id="@+id/submitBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Submit"
+                    android:textColor="@color/black"
+                    android:visibility="visible" />
+
+            </LinearLayout>
 
             <View
                 android:id="@+id/divider9"
