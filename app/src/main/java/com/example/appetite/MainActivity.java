@@ -46,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
         buildTilequeryRequest(testPoint);
         setBottomNavigationItem();
         initSearchFab();
+
+        //User Info von LoginActivity
+        Intent intent = getIntent();
+        UserInfoActivity User = intent.getParcelableExtra("User");
     }
 
     private void setBottomNavigationItem() {
