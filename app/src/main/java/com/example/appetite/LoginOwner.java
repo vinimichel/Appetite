@@ -21,13 +21,5 @@ public class LoginOwner extends AppCompatActivity {
                 startActivity(new Intent(LoginOwner.this, RegisterOwner.class));
             }
         });
-
-        Button btn = findViewById(R.id.btnLogOwner);
-        btn.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick (View v) {
-                startActivity(new Intent(LoginOwner.this, MainOwner.class));
-            }
-        });
     }
 }

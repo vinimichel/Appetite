@@ -36,7 +36,8 @@ router.post("/user/login", async (req, res, next) => {
         //res.send({userId : user.id})
         const accessToken = await signAccessToken(user.id)
         const refreshToken = await signRefreshToken(user.id)
-        res.json({accessToken, refreshToken})
+        //res.json({accessToken, refreshToken})
+        res.json(user);
     } catch(err) {
         if(err.isJoi === true) return next(createError.BadRequest("Invalid Email/Password"))
         next(err)
