@@ -31,7 +31,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginTop="16dp"
-                android:text="My Restaurant"
+                android:text="Mein Restaurant"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="32sp"
@@ -54,7 +54,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Edit"
+                    android:text="Bearbeiten"
                     android:textColor="@color/black"
                     android:visibility="visible" />
 
@@ -63,7 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Save"
+                    android:text="Speichern"
                     android:textColor="@color/black"
                     android:visibility="visible" />
 
@@ -73,7 +73,7 @@
                 android:id="@+id/textView16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Name of my restaurant" />
+                android:text="Name des Restaurants" />
 
             <EditText
                 android:id="@+id/editRestName"
@@ -92,7 +92,7 @@
                 android:id="@+id/textView20"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Description" />
+                android:text="Beschreibung" />
 
             <EditText
                 android:id="@+id/editDescription"
@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Description" />
+                android:text="Beschreibung" />
 
             <View
                 android:id="@+id/divider10"
@@ -110,8 +110,7 @@
             <TextView
                 android:id="@+id/textView21"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Longitude" />
+                android:layout_height="wrap_content" />
 
             <EditText
                 android:id="@+id/editLongitude"
@@ -119,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="number"
-                android:text="Longitude" />
+                android:text="Längengrad" />
 
             <View
                 android:id="@+id/divider11"
@@ -130,7 +129,7 @@
                 android:id="@+id/textView23"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Latitude" />
+                android:text="Breitengrad" />
 
             <EditText
                 android:id="@+id/editLatitude"
@@ -138,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="number"
-                android:text="Latitude" />
+                android:text="Breitengrad" />
 
             <View
                 android:id="@+id/divider13"
@@ -195,10 +194,29 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Name" />
+                android:text="PLZ" />
 
             <View
                 android:id="@+id/divider16"
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+            <TextView
+                android:id="@+id/textView33"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Kategorie" />
+
+            <EditText
+                android:id="@+id/editCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Kategorie" />
+
+            <View
+                android:id="@+id/divider12"
                 android:layout_width="match_parent"
                 android:layout_height="50dp" />
 
@@ -212,7 +230,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Discard"
+                    android:text="Verwerfen"
                     android:textColor="@color/black"
                     android:visibility="visible" />
 
@@ -221,7 +239,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Submit"
+                    android:text="Abschicken"
                     android:textColor="@color/black"
                     android:visibility="visible" />
 

@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.google.android.material.navigation.NavigationBarView;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -22,9 +23,9 @@ import java.io.InputStreamReader;
 
 public class MyRestaurant extends AppCompatActivity {
     private static final String FILE_NAME = "rest_details.txt";
-
-    public static TextView[] txt = new TextView[7];
-    private final int [] ids = {R.id.editRestName, R.id.editDescription, R.id.editLongitude, R.id.editLatitude, R.id.editCity, R.id.editAddress, R.id.editZip};
+    private static final String FILE_NAME_JSON = "rest_geo.json";
+    public static TextView[] txt = new TextView[8];
+    private final int [] ids = {R.id.editRestName, R.id.editDescription, R.id.editLongitude, R.id.editLatitude, R.id.editCity, R.id.editAddress, R.id.editZip, R.id.editCategory};
 
 
     Button editButton, saveButton, discardButton, submitButton;
@@ -58,6 +59,7 @@ public class MyRestaurant extends AppCompatActivity {
 
         submitButton.setOnClickListener(view -> {
             submit();
+            createGeoJSON();
             for (int i = 0; i < txt.length; i++) txt[i].setEnabled(false);
             discardButton.setEnabled(false);
             submitButton.setEnabled(false);
@@ -147,5 +149,41 @@ public class MyRestaurant extends AppCompatActivity {
             throw new RuntimeException(e);
         }
     }
+
+    public void createGeoJSON () {
+        FileOutputStream fos = null;
+        String[] text = new String[8];
+        for (int i = 0; i < txt.length; i++) text[i] += txt[i].getText().toString();
+        String strToJSON =
+                "[{\"type\":\"Feature\",\"properties\":{\"title\":\"" + text[0]
+                + "\",\"description\":\"" + text[1]
+                + "\",\"city\":\"" + text[2]
+                + "\",\"PLZ\":\"" + text[3]
+                + "\",\"address\":\"" + text[4]
+                + "\",\"category\":\"" + text[5]
+                + "\"},\"geometry\":{\"coordinates\":[" +  text[6] + "," + text[7]
+                + "],\"type\":\"Point\"},\"id\":\"\"}";
+
+        try {
+            fos = openFileOutput(FILE_NAME_JSON, MODE_PRIVATE);
+            fos.write(strToJSON.getBytes());
+            Toast.makeText(this, "Saves JSON File to " + getFilesDir() + "/" + FILE_NAME_JSON, Toast.LENGTH_LONG).show();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
+    }
+
+
 
 }
