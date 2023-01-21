@@ -26,6 +26,7 @@
     </style>
 
     <style name="FilterChip" parent="@style/Widget.Material3.Chip.Input">
+        <item name="android:theme">@style/Theme.MaterialComponents.Light</item>
         <item name="chipBackgroundColor">@color/map_chips_background</item>
         <item name="android:textColor">@color/map_chip_text_color</item>
         <item name="chipIconEnabled">true</item>
