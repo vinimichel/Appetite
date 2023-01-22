@@ -37,7 +37,9 @@ public class MyRestaurant extends AppCompatActivity {
         setBottomNavigationItem();
 
         for (int i = 0; i < txt.length; i++) txt[i] = findViewById(ids[i]);
-        load();
+
+        if (fileExists(FILE_NAME)) load();
+
         discardButton = findViewById(R.id.discardBtn);
         discardButton.setEnabled(false);
         submitButton = findViewById(R.id.submitBtn);
@@ -66,7 +68,7 @@ public class MyRestaurant extends AppCompatActivity {
         });
 
         discardButton.setOnClickListener(view -> {
-            load();
+            if (fileExists(FILE_NAME)) load();
             for (int i = 0; i < txt.length; i++) txt[i].setEnabled(false);
             discardButton.setEnabled(false);
             submitButton.setEnabled(false);
@@ -184,6 +186,10 @@ public class MyRestaurant extends AppCompatActivity {
 
     }
 
+    public boolean fileExists(String fname) {
+        File file = getBaseContext().getFileStreamPath(fname);
+        return file.exists();
+    }
 
 
 }
