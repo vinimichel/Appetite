@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity  {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
-        setBottomNavigationItem();
+        //setBottomNavigationItem();
 
         // Login ApI
         email=(EditText)findViewById(R.id.inputEmail);
@@ -159,8 +159,9 @@ public class LoginActivity extends AppCompatActivity  {
         startActivity(intent);
     }
 
-
+/**
     private void setBottomNavigationItem() {
+
         NavigationBarView bottomNavigationView = (NavigationBarView)findViewById(R.id.bottom_navigator);
         bottomNavigationView.setSelectedItemId(R.id.settings_tab);
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -186,5 +187,6 @@ public class LoginActivity extends AppCompatActivity  {
             }
         });
     }
+ */
 
 }
