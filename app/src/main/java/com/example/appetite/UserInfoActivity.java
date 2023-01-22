@@ -4,6 +4,18 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class UserInfoActivity implements Parcelable {
+
+    public static final Creator<UserInfoActivity> CREATOR = new Creator<UserInfoActivity>() {
+        @Override
+        public UserInfoActivity createFromParcel(Parcel in) {
+            return new UserInfoActivity(in);
+        }
+
+        @Override
+        public UserInfoActivity[] newArray(int size) {
+            return new UserInfoActivity[size];
+        }
+    };
     private  String firstName;
     private  String lastName;
     private String email;
@@ -38,15 +50,9 @@ public class UserInfoActivity implements Parcelable {
         return 0;
     }
 
-    public static final Creator<UserInfoActivity> CREATOR = new Creator<UserInfoActivity>() {
-        @Override
-        public UserInfoActivity createFromParcel(Parcel in) {
-            return new UserInfoActivity(in);
-        }
+    public String getFirstName() { return firstName; }
+    public String getLastName() { return lastName; }
+    public String getEmail() { return email; }
+    public String getUserID() { return userID; }
 
-        @Override
-        public UserInfoActivity[] newArray(int size) {
-            return new UserInfoActivity[size];
-        }
-    };
 }

@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private final static String MAPBOX_TOKEN = "pk.eyJ1IjoidmluaW1pY2hlbCIsImEiOiJjbGFqdWNvYmkwZmZhM3JuMzIxYzl2Z3h4In0.bmACrWyEcA6772uD758XPw";
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
 
+    private TextView firstname;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +52,13 @@ public class MainActivity extends AppCompatActivity {
         initSearchFab();
 
         //User Info von LoginActivity
-        Intent intent = getIntent();
-        UserInfoActivity User = intent.getParcelableExtra("User");
+        firstname = (TextView) findViewById(R.id.textView6);
+        //Intent intent = getIntent();
+       // UserInfoActivity User = intent.getParcelableExtra("User");
+        //firstname.setText(User.getFirstName());
+        //Bundle data = getIntent().getExtras();
+        //UserInfoActivity user = (UserInfoActivity) data.getParcelable("User");
+        //firstname.setText(user.getFirstName());
     }
 
     private void setBottomNavigationItem() {
