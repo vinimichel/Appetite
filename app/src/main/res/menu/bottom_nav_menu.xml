@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homeBtn"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="Home" />
+    <item
+        android:id="@+id/my_restaurant"
+        android:icon="@drawable/ic_baseline_restaurant_24"
+        android:title="My Restaurant" />
+    <item
+        android:title="Tables"
+        android:id="@+id/tables"
+        android:icon="@drawable/ic_baseline_table_restaurant_24"
+        />
+    <item
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:id="@+id/settingsBtn"
+        android:title="Settings" />
+</menu>
