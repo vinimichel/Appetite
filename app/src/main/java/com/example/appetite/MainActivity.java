@@ -53,12 +53,9 @@ public class MainActivity extends AppCompatActivity {
 
         //User Info von LoginActivity
         firstname = (TextView) findViewById(R.id.textView6);
-        //Intent intent = getIntent();
-       // UserInfoActivity User = intent.getParcelableExtra("User");
-        //firstname.setText(User.getFirstName());
-        //Bundle data = getIntent().getExtras();
-        //UserInfoActivity user = (UserInfoActivity) data.getParcelable("User");
-        //firstname.setText(user.getFirstName());
+        Intent intent = getIntent();
+        UserInfoActivity User = intent.getParcelableExtra("User");
+        firstname.setText(User.getFirstName());
     }
 
     private void setBottomNavigationItem() {
