@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     Point selectedPosition;
     Button focusedButton;
 
+    private TextView firstname;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +55,12 @@ public class MainActivity extends AppCompatActivity {
         setBottomNavigationItem();
         initSearchFab();
         buildTilequeryRequest(selectedPosition);
+
+        //User Info von LoginActivity
+        firstname = (TextView) findViewById(R.id.textView6);
+        Intent intent = getIntent();
+        UserInfoActivity User = intent.getParcelableExtra("User");
+        firstname.setText(User.getFirstName());
     }
 
     private void setBottomNavigationItem() {

@@ -26,6 +26,7 @@ router.post("/user/register", async (req, res, next) => {
 })
 
 router.post("/user/login", async (req, res, next) => {
+    console.log(req.body);
     try{
         const result = await loginSchema.validateAsync(req.body)
         const user = await users.findOne({email: result.email})
@@ -36,9 +37,10 @@ router.post("/user/login", async (req, res, next) => {
         //res.send({userId : user.id})
         const accessToken = await signAccessToken(user.id)
         const refreshToken = await signRefreshToken(user.id)
-        res.json({accessToken, refreshToken})
+        //res.json({accessToken, refreshToken})
+        res.json(user);
     } catch(err) {
-        if(err.isJoi === true) return next(createError.BadRequest("Invalid Email/Password"))
+        if(err.isJoi === true) return next(createError.BadRequest("Joi"))
         next(err)
     }
 
