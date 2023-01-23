@@ -26,9 +26,13 @@ public class NearbyRestaurants implements Serializable {
         this.foodCultureCategory = restaurantFeature.getProperty("category").getAsString();
         this.address = restaurantFeature.getProperty("address").getAsString();
         Point restaurantLngLat = (Point)restaurantFeature.geometry();
-        double distanceBetweenDeviceAndTarget = TurfMeasurement.distance(deviceLocation,
-            Point.fromLngLat(restaurantLngLat.longitude(), restaurantLngLat.latitude()), UNIT_KILOMETERS);
-        this.distance = round(distanceBetweenDeviceAndTarget*100.0)/100.0;
+        if (deviceLocation != null) {
+            double distanceBetweenDeviceAndTarget = TurfMeasurement.distance(deviceLocation,
+                    Point.fromLngLat(restaurantLngLat.longitude(), restaurantLngLat.latitude()), UNIT_KILOMETERS);
+            this.distance = round(distanceBetweenDeviceAndTarget*100.0)/100.0;
+        } else {
+            this.distance = -1.0;
+        }
         this.imageUrl = R.drawable.placeholder_img1;
         this.plz = restaurantFeature.getProperty("PLZ").getAsInt();
         this.aboutUsText = restaurantFeature.getProperty("description").getAsString();
