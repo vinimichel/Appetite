@@ -60,7 +60,7 @@ router.delete('/:id',getUser, async (req, res)  => {
 async function getUser(req, res, next) {
     let userInfo
 try {
-    userInfo = await users.findOne({id : req.params.id})
+    userInfo = await users.findOne({"_id" : req.params.id})
     if(userInfo == null) {
         return res.status(404).json({message : 'Cannot find user'})
     }

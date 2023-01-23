@@ -17,7 +17,8 @@ router.post("/user/register", async (req, res, next) => {
         const newUser = await user.save()
         const accessToken = await signAccessToken(newUser.id)
         const refreshToken = await signRefreshToken(newUser.id)
-        res.json({accessToken, refreshToken})
+        //res.json({accessToken, refreshToken})
+        res.json(user);
 
     } catch(err) {
         if(err.isJoi === true) err.status = 422

@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private final static String MAPBOX_TOKEN = "pk.eyJ1IjoidmluaW1pY2hlbCIsImEiOiJjbGFqdWNvYmkwZmZhM3JuMzIxYzl2Z3h4In0.bmACrWyEcA6772uD758XPw";
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
 
-    private TextView firstname;
+    public TextView firstname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +53,11 @@ public class MainActivity extends AppCompatActivity {
 
         //User Info von LoginActivity
         firstname = (TextView) findViewById(R.id.textView6);
-        Intent intent = getIntent();
-        UserInfoActivity User = intent.getParcelableExtra("User");
-        firstname.setText(User.getFirstName());
+        //UserInfoActivity User = getIntent().getParcelableExtra("com.example.appetite.User");
+        //Intent intent = getIntent();
+        //String fName = intent.getStringExtra("userFirstName");
+        //String userId = intent.getStringExtra("userID");
+        firstname.setText(getIntent().getStringExtra("userFirstName"));
     }
 
     private void setBottomNavigationItem() {

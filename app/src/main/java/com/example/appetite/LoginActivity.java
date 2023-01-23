@@ -28,6 +28,7 @@ public class LoginActivity extends AppCompatActivity  {
 
     EditText email,password;
     Button loginButton;
+    String myResponse;
 
 
     @Override
@@ -54,16 +55,18 @@ public class LoginActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view)  {
                 if (TextUtils.isEmpty(email.getText().toString()) || TextUtils.isEmpty(password.getText().toString())){
-                    Toast.makeText(LoginActivity.this, "Emptyfields not allowed!",
+                    Toast.makeText(LoginActivity.this, "leeres Eingabefeld",
                     Toast.LENGTH_SHORT).show();
+                    return;
                 }else {
                     try {
                         run();
                     }
                     catch (IOException e){
-                        Toast.makeText(LoginActivity.this, "An error occurred",
+                        Toast.makeText(LoginActivity.this, "Fehler!!",
                                 Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
+                        return;
                     }
                 }
 
@@ -84,6 +87,7 @@ public class LoginActivity extends AppCompatActivity  {
             jsonObject.put("password", password.getText().toString());
         } catch (JSONException e) {
             e.printStackTrace();
+            return;
         }
 
 
@@ -100,7 +104,7 @@ public class LoginActivity extends AppCompatActivity  {
             @Override
             public void onResponse(@NonNull okhttp3.Call call, @NonNull okhttp3.Response response) throws IOException {
                 if(response.isSuccessful()) {
-                    final String myResponse = response.body().string();
+                    myResponse = response.body().string();
                   String ResFirstName,ResLastName,ResEmail,ResUserID;
 
                     try {
@@ -111,25 +115,28 @@ public class LoginActivity extends AppCompatActivity  {
                         ResEmail= json.getString("email");
                         ResUserID = json.getString("_id");
                         //Log.d("json", "firstname : "+ ResUserID);
-                        UserInfoActivity user = new UserInfoActivity(ResFirstName,ResLastName,ResEmail,ResUserID);
+                        //UserInfoActivity user = new UserInfoActivity(ResFirstName,ResLastName,ResEmail,ResUserID);
 
-                        Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-                        intent.putExtra("User", user);
+                        Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                        intent.putExtra("userFirstName", ResFirstName);
+                        intent.putExtra("userID", ResUserID);
                         startActivity(intent);
+                        // Wechslen zu MAinActivity
+                        //sendUserToNextActivity();
 
                     } catch (JSONException e) {
-                        Toast.makeText(LoginActivity.this, "An error occurred",
+                        Toast.makeText(LoginActivity.this, "Fehler!!",
                                 Toast.LENGTH_SHORT).show();
-                        throw new RuntimeException(e);
+                        return;
 
                     }
-                    // Wechslen zu MAinActivity
-                      sendUserToNextActivity();
+
 
                 } else {
-                    String errorBodyString = response.body().string(), errmsg;
-                    Toast.makeText(LoginActivity.this, "An error occurred",
+                    String errorBodyString = myResponse, errmsg;
+                    Toast.makeText(LoginActivity.this, "Fehler!!",
                             Toast.LENGTH_SHORT).show();
+                    return;
                     /**try {
                         JSONObject err = new JSONObject(errorBodyString);
                         errmsg = err.getString("message");
@@ -146,17 +153,12 @@ public class LoginActivity extends AppCompatActivity  {
             public void onFailure(@NonNull okhttp3.Call call, @NonNull IOException e) {
                 e.printStackTrace();
                 call.cancel();
-                Toast.makeText(LoginActivity.this, "An error occurred",
+                Toast.makeText(LoginActivity.this, "Fehler!!",
                         Toast.LENGTH_SHORT).show();
+                return;
             }
 
         });
-    }
-
-    private void sendUserToNextActivity() {
-        Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
     }
 
 /**
