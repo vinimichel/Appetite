@@ -1,7 +1,17 @@
 package com.example.appetite;
 
-import android.app.Activity;
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
+import android.graphics.PointF;
+
+import static com.mapbox.mapboxsdk.style.expressions.Expression.eq;
+import static com.mapbox.mapboxsdk.style.expressions.Expression.get;
+import static com.mapbox.mapboxsdk.style.expressions.Expression.literal;
+import static com.mapbox.mapboxsdk.style.expressions.Expression.neq;
+import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconImage;
+import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconOffset;
+import android.app.Activity;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PointF;
@@ -15,7 +25,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.navigation.NavigationBarView;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.appetite.dataModels.NearbyRestaurants;
 import com.google.android.material.navigation.NavigationBarView;
 import com.mapbox.android.core.permissions.PermissionsListener;
@@ -37,6 +52,7 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
 import com.mapbox.mapboxsdk.plugins.places.autocomplete.model.PlaceOptions;
+import com.mapbox.mapboxsdk.style.layers.Layer;
 import com.mapbox.mapboxsdk.plugins.places.autocomplete.PlaceAutocomplete;
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
@@ -49,16 +65,19 @@ public class MapActivity extends AppCompatActivity
         implements OnMapReadyCallback, PermissionsListener, MapboxMap.OnMapClickListener {
 
     // interface to map
-    private MapboxMap mapboxMap;
+    private MapboxMap mapboxMap;     
     // accessing Android Mapbox SDK methods
-    private MapView mapView;
+    private MapView mapView; 
     // map style
-    Style style;
+    Style style;     
+    ChipGroup categoryChips;
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
 
     private String geojsonSourceLayerId = "geojsonSourceLayerId";
     private String symbolIconId = "symbolIconId";
     NearbyRestaurants selectedRestaurant;
+    boolean sourceFileCreated;
+    SymbolLayer restaurantLayer;
 
     private PermissionsManager permissionsManager;
     ConstraintLayout popupLayout;
@@ -73,20 +92,39 @@ public class MapActivity extends AppCompatActivity
         Mapbox.getInstance(this, MAPBOX_TOKEN);
         setContentView(R.layout.activity_map);
         Intent i = getIntent();
+        sourceFileCreated = false;
         popupLayout = findViewById(R.id.place_info_layout);
+
+        categoryChips = (ChipGroup) findViewById(R.id.categoryChips);
+        categoryChips.check(R.id.allChip);
+        categoryChips.setOnCheckedStateChangeListener((chipGroup, id) -> {
+            setFilter(findViewById(id.get(0)));
+        });
+
+
+        setBottomNavigationItem();
+        // default location when user doesn't want to share his position
+        lastKnownLocation = null;
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
+
         // callback object when map is loaded
         mapView.getMapAsync(this);
         setBottomNavigationItem();
         // default location when user doesn't want to share his position
-        lastKnownLocation = Point.fromLngLat(8.661864, 50.129085);
+        lastKnownLocation = null;
     }
+
     // called when map is done loading and sets map style
     @Override
     public void onMapReady(@NonNull final MapboxMap mapboxMap) {
         this.mapboxMap = mapboxMap;
         mapboxMap.setStyle(new Style.Builder().fromUri("mapbox://styles/vinimichel/clap8w2r0002614ktc3lxzitn"), style -> onStyleLoaded(style));
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();  //your choice, thought not needed as super.onBackPressed(); is called if nothing is assigned here
     }
 
     // called when style is loaded
@@ -100,11 +138,30 @@ public class MapActivity extends AppCompatActivity
                 MapActivity.this.getResources(), R.drawable.blue_marker_view));
 
         // adding new, empty GeoJson source
-        setUpSource(style);
+        if (!sourceFileCreated) {
+            setUpSource(style);
+            // setting new layer to map
+            setupLayer(style);
+        }
 
-        // setting new layer to map
-        setupLayer(style);
         enableLocationComponent(style);
+        restaurantLayer = (SymbolLayer) style.getLayer("Appetite");
+
+    }
+
+    private void setFilter(View v) {
+        String cultureCategory = (String) v.getTag();
+        if ( restaurantLayer != null) {
+            if (!cultureCategory.equals("all")) {
+                restaurantLayer.setFilter(eq(get("category"), cultureCategory));
+
+            } else {
+                restaurantLayer.setFilter(neq(literal(""), ""));
+            }
+
+        } else {
+            Log.d(TAG,"Layer not found");
+        }
     }
 
     // shows location with LocationComponents
@@ -121,7 +178,7 @@ public class MapActivity extends AppCompatActivity
             locationComponent.setLocationComponentEnabled(true);
             // check if exact location is accessible
             if (locationComponent.getLastKnownLocation() != null) {
-                lastKnownLocation = Point.fromLngLat(locationComponent.getLastKnownLocation().getLongitude(),locationComponent.getLastKnownLocation().getLongitude());
+                lastKnownLocation = Point.fromLngLat(locationComponent.getLastKnownLocation().getLongitude(),locationComponent.getLastKnownLocation().getLatitude());
             }
 
             locationComponent.setCameraMode( CameraMode.TRACKING,
@@ -162,8 +219,7 @@ public class MapActivity extends AppCompatActivity
         if (granted) {
             mapboxMap.getStyle(style -> onStyleLoaded(style));
         } else {
-            Toast.makeText(this, "Could not grant permissions", Toast.LENGTH_LONG).show();
-            finish();
+            Toast.makeText(this, "Dein Standort wird nicht ermittelt", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -172,23 +228,18 @@ public class MapActivity extends AppCompatActivity
         // LatLng in Bilschirmpixel umwandeln und nur  coordinates to screen pixel and only query the rendered features.
         // I don't quite understand the above comment, signed S.M.
         final PointF pixel = mapboxMap.getProjection().toScreenLocation(point);
-        // gerenderte Features auf Pixel abfragen (nur Features von "fulda-restaurants"-layer
-        List<Feature> features = mapboxMap.queryRenderedFeatures(pixel, "restaurant-features");
-        // Restaurant info Popup Layout herausgreifen
-
-        Log.d(TAG, "I was here");
-
+        // query rendered features on pixels (only "fulda-restaurants" layer)
+        List<Feature> features = mapboxMap.queryRenderedFeatures(pixel, "appetite");
         // checks whether restaurants have been found on coordinates
         if (features.size() > 0) {
-            Feature feature = features.get(0);
             // ideal case: only one restaurant/feature on coordinate
-
+            Feature feature = features.get(0);
             // making sure restaurant/restaurant has properties
             if (feature.properties() != null) {
                 NearbyRestaurants restaurant = new NearbyRestaurants(feature, lastKnownLocation);
                 setRestaurantPopUp(restaurant);
             } else {
-                Log.d(TAG, "Achtung, das Restaurant hat keine abrufbaren Eigenschaften!");
+                Log.d(TAG, "Attention the restaurant has no properties!");
             }
         } else {
             // if no restaurant is found on pixels
@@ -224,6 +275,7 @@ public class MapActivity extends AppCompatActivity
 
     }
     private void setUpSource(@NonNull Style loadedMapStyle) {
+        sourceFileCreated = true;
         loadedMapStyle.addSource(new GeoJsonSource(geojsonSourceLayerId));
     }
 
@@ -243,10 +295,11 @@ public class MapActivity extends AppCompatActivity
             public void onClick(View view) {
                 Intent intent = new PlaceAutocomplete.IntentBuilder()
                         .accessToken(Mapbox.getAccessToken() != null ? Mapbox.getAccessToken() : MAPBOX_TOKEN)
-                        .placeOptions(PlaceOptions.builder()
-                        .backgroundColor(Color.parseColor("#FFFFFF"))
-                        .limit(10)
-                        .build(PlaceOptions.MODE_CARDS))
+                            .placeOptions(PlaceOptions.builder()
+                                .language("de")
+                                .backgroundColor(Color.parseColor("#FFFFFF"))
+                                .limit(10)
+                                .build(PlaceOptions.MODE_CARDS))
                         .build(MapActivity.this);
                 // open activity of which you want a result to be handled with onActivityResult
                 startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
@@ -262,7 +315,7 @@ public class MapActivity extends AppCompatActivity
             CarmenFeature selectedCarmenFeature = PlaceAutocomplete.getPlace(data);
 
             /* adding new GeoJson FeatureCollection and feature with CarmenFeature chosen above,
-            then jump to newly added feature */
+            then jump to newly added feature on the map */
             if (mapboxMap != null) {
                 Style style = mapboxMap.getStyle();
                 if (style != null) {
@@ -288,7 +341,6 @@ public class MapActivity extends AppCompatActivity
     }
 
     // lifecycle methods of map
-
     @Override
     @SuppressWarnings( {"MissingPermission"})
     protected void onStart() {

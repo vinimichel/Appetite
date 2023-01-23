@@ -2,6 +2,44 @@
     <!-- Base application theme. -->
     <style name="Theme.Appetite" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorPrimary">@color/white</item>
-        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="Button.Basic" parent="@style/TextAppearance.AppCompat.Button">
+        <item name="backgroundTint">@color/filter_button_background</item>
+        <item name="android:textColor">@color/filter_button_text_color</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/search_bg</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="iconGravity">textTop</item>
+        <item name="iconTint">@null</item>
+        <item name="iconSize">26dp</item>
+        <item name="iconPadding">12dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:onClick">setFilter</item>
+        <item name="android:paddingLeft">2dp</item>
+        <item name="android:paddingRight">2dp</item>
+        <item name="android:paddingTop">18dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="font">@font/poppins_bold</item>
+
+    </style>
+
+    <style name="FilterChip" parent="@style/Widget.Material3.Chip.Input">
+        <item name="android:theme">@style/Theme.MaterialComponents.Light</item>
+        <item name="chipBackgroundColor">@color/map_chips_background</item>
+        <item name="android:textColor">@color/map_chip_text_color</item>
+        <item name="chipIconEnabled">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:clickable">true</item>
+        <item name="chipStrokeColor">@color/map_chip_stroke</item>
+        <item name="chipStrokeWidth">2dp</item>
+        <item name="chipStartPadding">14dp</item>
+        <item name="checkedIconEnabled">false</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="closeIconEnabled">false</item>
+        <item name="closeIconVisible">false</item>
+        <item name="android:focusable">true</item>
     </style>
 </resources>

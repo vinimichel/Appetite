@@ -96,7 +96,7 @@ public class MyRestaurant extends AppCompatActivity {
                     case R.id.my_restaurant:
                         return true;
                     case R.id.tables:
-                        //startActivity(new Intent(getApplicationContext(), ReservationActivity.class));
+                        startActivity(new Intent(getApplicationContext(), Tables.class));
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.settingsBtn:
