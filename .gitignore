@@ -8,3 +8,4 @@ node_modules
 /.gradle/7.4/fileHashes/fileHashes.bin
 /.gradle/buildOutputCleanup/outputFiles.bin
 /.gradle/7.4/fileHashes/resourceHashesCache.bin
+build.gradle
