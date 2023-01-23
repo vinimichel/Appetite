@@ -288,10 +288,11 @@ public class MapActivity extends AppCompatActivity
             public void onClick(View view) {
                 Intent intent = new PlaceAutocomplete.IntentBuilder()
                         .accessToken(Mapbox.getAccessToken() != null ? Mapbox.getAccessToken() : MAPBOX_TOKEN)
-                        .placeOptions(PlaceOptions.builder()
-                        .backgroundColor(Color.parseColor("#FFFFFF"))
-                        .limit(10)
-                        .build(PlaceOptions.MODE_CARDS))
+                            .placeOptions(PlaceOptions.builder()
+                                .language("de")
+                                .backgroundColor(Color.parseColor("#FFFFFF"))
+                                .limit(10)
+                                .build(PlaceOptions.MODE_CARDS))
                         .build(MapActivity.this);
                 // open activity of which you want a result to be handled with onActivityResult
                 startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
