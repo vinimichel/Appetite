@@ -154,14 +154,7 @@ public class RegisterActivity extends AppCompatActivity {
                     String errorBodyString = response.body().string(), errmsg;
                     Toast.makeText(RegisterActivity.this, "An error occurred",
                             Toast.LENGTH_SHORT).show();
-                    /**try {
-                     JSONObject err = new JSONObject(errorBodyString);
-                     errmsg = err.getString("message");
-                     Log.d("error", response.code()+","+errmsg);
-                     } catch(JSONException e) {
-
-                     }
-                     */
+                
 
                 }
             }

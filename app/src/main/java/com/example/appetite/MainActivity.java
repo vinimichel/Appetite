@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     Point selectedPosition;
     Button focusedButton;
 
-    private TextView firstname;
+    public TextView firstname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +59,11 @@ public class MainActivity extends AppCompatActivity {
 
         //User Info von LoginActivity
         firstname = (TextView) findViewById(R.id.textView6);
-        Intent intent = getIntent();
-        UserInfo User = intent.getParcelableExtra("User");
-        if (User!= null) {
-            firstname.setText(User.getFirstName());
-        }
+        //UserInfoActivity User = getIntent().getParcelableExtra("com.example.appetite.User");
+        //Intent intent = getIntent();
+        //String fName = intent.getStringExtra("userFirstName");
+        String userId = intent.getStringExtra("userID");
+        firstname.setText(getIntent().getStringExtra("userFirstName"));
 
     }
 
