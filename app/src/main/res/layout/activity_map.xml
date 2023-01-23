@@ -27,7 +27,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="12dp"
+                android:layout_marginEnd="16dp"
                 android:background="@drawable/search_bg"
                 android:drawableStart="@drawable/ic_baseline_search_24"
                 android:drawablePadding="16dp"
@@ -36,31 +36,17 @@
                 android:padding="16dp"
                 android:text="@string/hierEingebenString"
                 android:textColor="#919191"
-                app:layout_constraintEnd_toStartOf="@+id/imageView8"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="Autofill,LabelFor" />
-
-
-            <ImageView
-                android:id="@+id/imageView8"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/filter_bg"
-                android:padding="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/PLZTextfield"
-                app:srcCompat="@drawable/filter"
-                tools:ignore="ContentDescription" />
 
             <HorizontalScrollView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:scrollbars="none"
-                app:layout_constraintEnd_toEndOf="@+id/imageView8"
+                app:layout_constraintEnd_toEndOf="@+id/PLZTextfield"
                 app:layout_constraintStart_toStartOf="@+id/PLZTextfield"
                 app:layout_constraintTop_toBottomOf="@+id/PLZTextfield">
 
@@ -117,10 +103,6 @@
                         app:layout_constraintTop_toTopOf="parent"/>
                 </com.google.android.material.chip.ChipGroup>
             </HorizontalScrollView>
-
-
-
-
             <RelativeLayout
                 android:id="@+id/relativeLayout"
                 android:layout_width="match_parent"
