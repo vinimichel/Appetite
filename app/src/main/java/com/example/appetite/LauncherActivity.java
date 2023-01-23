@@ -29,12 +29,5 @@ public class LauncherActivity extends AppCompatActivity {
                 startActivity(new Intent(LauncherActivity.this, LoginOwner.class));
             }
         });
-        Button btnSkip = (Button)findViewById(R.id.btnSkip);
-        btnSkip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LauncherActivity.this, MapActivity.class));
-            }
-        });
     }
 }

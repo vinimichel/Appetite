@@ -7,31 +7,22 @@
     android:layout_marginBottom="10dp"
     android:background="@drawable/restaurant_item_bg">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/imageCard"
+    <ImageView
+        android:id="@+id/restaurant_image"
         android:layout_width="match_parent"
-        android:layout_height="135dp"
-        android:layout_margin="5dp"
+        android:layout_height="120dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="4dp"
-        app:cardCornerRadius="17dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/restaurant_image_bg"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toTopOf="@+id/restaurant_name"
         app:layout_constraintEnd_toEndOf="@id/restaurant_name"
         app:layout_constraintStart_toStartOf="@+id/restaurant_name"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/restaurant_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:background="@drawable/restaurant_image_bg"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/facebook" />
-    </androidx.cardview.widget.CardView>
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/facebook" />
 
     <TextView
         android:id="@+id/restaurant_name"
@@ -45,7 +36,7 @@
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageCard" />
+        app:layout_constraintTop_toBottomOf="@+id/restaurant_image" />
 
     <TextView
         android:id="@+id/restaurant_address"
@@ -81,7 +72,7 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/restaurant_name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageCard"
+        app:layout_constraintTop_toBottomOf="@+id/restaurant_image"
         app:layout_constraintVertical_bias="0.923"
         app:srcCompat="@drawable/star" />
 

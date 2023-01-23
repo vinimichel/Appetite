@@ -22,11 +22,6 @@ public class ReservationActivity extends AppCompatActivity {
         setBottomNavigationItem();
     }
 
-    @Override
-    public void onBackPressed() {
-        finish();  //your choice, thought not needed as super.onBackPressed(); is called if nothing is assigned here
-    }
-
     public void launchFoodMenu(View v) {
         Intent i = new Intent(this, FoodMenuActivity.class);
         startActivity(i);

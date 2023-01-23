@@ -90,11 +90,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        finish();
-    }
-
     private void setRecyclerView(List<NearbyRestaurants> nearbyRecyclerList) {
         // initialize recycler providing data about nearby restaurants
         nearbyRecycler = findViewById(R.id.nearby_recycler);
