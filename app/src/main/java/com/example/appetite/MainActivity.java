@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     String cultureCategory;
     Point selectedPosition;
     Button focusedButton;
+    String fName, userId;
 
     public TextView firstname;
 
@@ -61,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
         firstname = (TextView) findViewById(R.id.textView6);
         //UserInfoActivity User = getIntent().getParcelableExtra("com.example.appetite.User");
         Intent intent = getIntent();
-        String fName = intent.getStringExtra("userFirstName");
-        String userId = intent.getStringExtra("userID");
+        fName = intent.getStringExtra("userFirstName");
+        userId = intent.getStringExtra("userID");
         if(fName == null) {
             fName = "Guest";
         }
