@@ -145,7 +145,7 @@ public class MapActivity extends AppCompatActivity
         }
 
         enableLocationComponent(style);
-        restaurantLayer = (SymbolLayer) style.getLayer("Appetite");
+        restaurantLayer = (SymbolLayer) style.getLayer("appetite");
 
     }
 
