@@ -44,9 +44,11 @@ public class Table {
         this.seatCount = newSeatCount;
     }
 
-    public void deleteTable (int tableSeatCount){
+    public void deleteTable (){
         tableCount--;
-        freeSeats -= tableSeatCount;
+        if (!this.getStatus()) {
+            freeSeats -= this.seatCount;
+        }
     }
 
     public int getFreeSeats() {

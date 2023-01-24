@@ -12,8 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appetite.R;
+import com.example.appetite.Tables;
 import com.example.appetite.dataModels.Table;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class Adapter_Table extends RecyclerView.Adapter<Adapter_Table.MyViewHolder> {
@@ -48,6 +51,13 @@ public class Adapter_Table extends RecyclerView.Adapter<Adapter_Table.MyViewHold
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // Trying to call Tables.saveTableData using Reflection... failed though
+                /*try {
+                    saveTableData();
+                } catch (ClassNotFoundException | IllegalAccessException | InstantiationException |
+                         NoSuchMethodException | InvocationTargetException e) {
+                    throw new RuntimeException(e);
+                }*/
                 if (isChecked) {
                     holder.checkBox.setText("Tisch besetzt");
                     tables.get(holder.getAdapterPosition()).changeOccupiedStatus();
@@ -57,6 +67,16 @@ public class Adapter_Table extends RecyclerView.Adapter<Adapter_Table.MyViewHold
                 }
             }
         });
+    }
+
+    public void saveTableData() throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+        Tables obj = new Tables();
+        Class c = obj.getClass();
+        Object o= c.newInstance();
+        Method m =c.getDeclaredMethod("saveTableData");
+        m.setAccessible(true);
+        m.invoke(o, null);
+
     }
 
     @Override

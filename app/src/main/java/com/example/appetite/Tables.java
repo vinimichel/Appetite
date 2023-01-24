@@ -31,6 +31,7 @@ public class Tables extends AppCompatActivity {
 
     private static final String FILE_NAME = "table_data.txt";
     ArrayList<Table> tables = new ArrayList<Table>();
+    TextView freeSeats;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,9 +40,7 @@ public class Tables extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.myRecyclerView);
         Button addBtn = findViewById(R.id.addBtn);
         Button deleteBtn = findViewById(R.id.deleteBtn);
-        //ConstraintLayout myLayout = findViewById(R.id.myLayout);
-        TextView freeSeats = findViewById(R.id.freeSeats);
-
+        freeSeats = findViewById(R.id.freeSeats);
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,8 +66,14 @@ public class Tables extends AppCompatActivity {
         if (fileExists(FILE_NAME)) {
             loadTableData(); // load Table Data;
         }
-        if (tables.size() > 0) freeSeats.setText("Freie sitze: " + tables.get(0).getFreeSeats());
+        updateFreeSeats();
         updateView(recyclerView);
+    }
+
+    public void updateFreeSeats() {
+        if (tables.size() > 0) {
+            freeSeats.setText("Freie sitze: " + tables.get(0).getFreeSeats());
+        } else freeSeats.setText("Freie sitze: 0");
     }
 
     public void updateView(RecyclerView recyclerView) {
@@ -83,7 +88,7 @@ public class Tables extends AppCompatActivity {
     public void deleteTable() {
         if (tables.size() > 0) {
             Table toDelete = tables.get(tables.size() - 1);
-            toDelete.deleteTable(toDelete.getSeatCount());
+            toDelete.deleteTable();
             tables.remove(tables.size() - 1);
         }
     }
