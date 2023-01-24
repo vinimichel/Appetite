@@ -3,6 +3,7 @@ package com.example.appetite;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -126,8 +127,7 @@ public class LoginActivity extends AppCompatActivity  {
 
                 } else {
                     String errorBodyString = myResponse, errmsg;
-                    Toast.makeText(LoginActivity.this, "Fehler!!",
-                            Toast.LENGTH_SHORT).show();
+                    Log.d("Login Error", errorBodyString);
                     return;
                     /**try {
                         JSONObject err = new JSONObject(errorBodyString);
@@ -145,8 +145,6 @@ public class LoginActivity extends AppCompatActivity  {
             public void onFailure(@NonNull okhttp3.Call call, @NonNull IOException e) {
                 e.printStackTrace();
                 call.cancel();
-                Toast.makeText(LoginActivity.this, "Fehler!!",
-                        Toast.LENGTH_SHORT).show();
                 return;
             }
 
