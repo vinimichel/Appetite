@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import  android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -39,6 +40,23 @@ public class Adapter_Table extends RecyclerView.Adapter<Adapter_Table.MyViewHold
     public void onBindViewHolder(@NonNull Adapter_Table.MyViewHolder holder, int position) {
         holder.tvCount.setText("Tischnummer: " + tables.get(position).getID());
         holder.tvNumber.setText("Sitze: " + tables.get(position).getSeatCount());
+
+        if (tables.get(position).getStatus()) {
+            holder.checkBox.setChecked(true);
+            holder.checkBox.setText("Tisch besetzt");
+        } else holder.checkBox.setText("Tisch frei");
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    holder.checkBox.setText("Tisch besetzt");
+                    tables.get(holder.getAdapterPosition()).changeOccupiedStatus();
+                } else {
+                    holder.checkBox.setText("Tisch frei");
+                    tables.get(holder.getAdapterPosition()).changeOccupiedStatus();
+                }
+            }
+        });
     }
 
     @Override

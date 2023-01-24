@@ -140,7 +140,7 @@ public class MyRestaurant extends AppCompatActivity {
             fis = openFileInput(FILE_NAME);
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader br = new BufferedReader(isr);
-            StringBuilder sb = new StringBuilder();
+            //StringBuilder sb = new StringBuilder();
 
             for (int i = 0; i < txt.length; i++) txt[i].setText(br.readLine());
             System.out.println("Line read successfully");

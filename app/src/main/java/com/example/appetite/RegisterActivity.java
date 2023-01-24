@@ -135,10 +135,10 @@ public class RegisterActivity extends AppCompatActivity {
                         ResEmail= json.getString("email");
                         ResUserID = json.getString("_id");
                         //Log.d("json", "firstname : "+ ResUserID);
-                        UserInfoActivity user = new UserInfoActivity(ResFirstName,ResLastName,ResEmail,ResUserID);
+                        //UserInfoActivity user = new UserInfoActivity(ResFirstName,ResLastName,ResEmail,ResUserID);
 
                         Intent intent=new Intent(RegisterActivity.this,MainActivity.class);
-                        intent.putExtra("User", user);
+                        //intent.putExtra("User", user);
                         startActivity(intent);
 
                     } catch (JSONException e) {

@@ -9,7 +9,6 @@ public class Table {
     private int id;
     private int seatCount;
     private boolean occupied;
-    //public static ArrayList<Table> tables = new ArrayList<Table>();
 
     public Table(int seatCount) {
         tableCount ++;
@@ -17,7 +16,6 @@ public class Table {
         this.id = tableCount;
         this.seatCount = seatCount;
         this.occupied = false;
-        //tables.add(this);
     }
 
     public boolean getStatus() {
@@ -46,8 +44,12 @@ public class Table {
         this.seatCount = newSeatCount;
     }
 
-    public void deleteTable (){
+    public void deleteTable (int tableSeatCount){
         tableCount--;
+        freeSeats -= tableSeatCount;
     }
 
+    public int getFreeSeats() {
+        return this.freeSeats;
+    }
 }
