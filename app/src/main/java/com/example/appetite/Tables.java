@@ -70,6 +70,21 @@ public class Tables extends AppCompatActivity {
         updateView(recyclerView);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        RecyclerView recyclerView = findViewById(R.id.myRecyclerView);
+        if (tables.size() > 0) {
+            tables.get(0).resetTables();
+        }
+        tables.clear();
+        if (fileExists(FILE_NAME)) {
+            loadTableData(); // load Table Data;
+        }
+        updateFreeSeats();
+        updateView(recyclerView);
+    }
+
     public void updateFreeSeats() {
         if (tables.size() > 0) {
             freeSeats.setText("Freie sitze: " + tables.get(0).getFreeSeats());
