@@ -3,17 +3,17 @@ package com.example.appetite;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class UserInfoActivity implements Parcelable {
+public class UserInfo implements Parcelable {
 
-    public static final Creator<UserInfoActivity> CREATOR = new Creator<UserInfoActivity>() {
+    public static final Creator<UserInfo> CREATOR = new Creator<UserInfo>() {
         @Override
-        public UserInfoActivity createFromParcel(Parcel in) {
-            return new UserInfoActivity(in);
+        public UserInfo createFromParcel(Parcel in) {
+            return new UserInfo(in);
         }
 
         @Override
-        public UserInfoActivity[] newArray(int size) {
-            return new UserInfoActivity[size];
+        public UserInfo[] newArray(int size) {
+            return new UserInfo[size];
         }
     };
     private  String firstName;
@@ -22,14 +22,14 @@ public class UserInfoActivity implements Parcelable {
     private String userID;
 
 
-    protected UserInfoActivity(String firstName,String lastName,String email,String userID) {
+    protected UserInfo(String firstName, String lastName, String email, String userID) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.userID = userID;
     }
 
-    public UserInfoActivity(Parcel in) {
+    public UserInfo(Parcel in) {
         firstName= in.readString();
         lastName=  in.readString();
         email= in.readString();

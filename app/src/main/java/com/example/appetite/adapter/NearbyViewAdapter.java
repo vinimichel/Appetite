@@ -52,7 +52,12 @@ public class NearbyViewAdapter extends RecyclerView.Adapter<NearbyViewAdapter.Ne
         // define expressions of values in ViewHolder
         holder.restaurantName.setText(nearbyRestaurantList.get(position).getRestaurantName());
         holder.cityName.setText(nearbyRestaurantList.get(position).getCityName());
-        holder.distanceField.setText(String.valueOf(nearbyRestaurantList.get(position).getDistance()));
+        if (nearbyRestaurantList.get(position).getDistance() >= 0.0) {
+            holder.distanceField.setText(String.valueOf(nearbyRestaurantList.get(position).getDistance()));
+        } else {
+            holder.distanceField.setText("");
+        }
+
         holder.restaurantImage.setImageResource(nearbyRestaurantList.get(position).getImageUrl());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

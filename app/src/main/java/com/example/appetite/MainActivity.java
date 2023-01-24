@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     Point selectedPosition;
     Button focusedButton;
 
-    private TextView firstname;
+    public TextView firstname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         initRecyclerView();
         cultureCategory = "all";
         focusedButton = (Button)findViewById(R.id.allCategories);
-        // placeholder starting position (if user doesn't want to share his position) -> somewhere in Fulda, the center of the universe
+        // placeholder starting position -> somewhere in Fulda, the center of the universe
         selectedPosition = Point.fromLngLat(9.685242, 50.550657);
         setBottomNavigationItem();
         initSearchFab();
@@ -58,9 +59,15 @@ public class MainActivity extends AppCompatActivity {
 
         //User Info von LoginActivity
         firstname = (TextView) findViewById(R.id.textView6);
+        //UserInfoActivity User = getIntent().getParcelableExtra("com.example.appetite.User");
         Intent intent = getIntent();
-        UserInfoActivity User = intent.getParcelableExtra("User");
-        firstname.setText(User.getFirstName());
+        String fName = intent.getStringExtra("userFirstName");
+        String userId = intent.getStringExtra("userID");
+        if(fName == null) {
+            fName = "Guest";
+        }
+        firstname.setText(fName);
+
     }
 
     private void setBottomNavigationItem() {
@@ -88,6 +95,11 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 
     private void setRecyclerView(List<NearbyRestaurants> nearbyRecyclerList) {
@@ -151,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void processTilequeryResults(List<Feature> features, Point position) {
         if (cultureCategory.equals("all")) {
-            Log.d(TAG, "I was here");
             setRecyclerViewData(features, position);
         } else {
             List<Feature> selectedFeatures = new ArrayList<Feature>();
@@ -177,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
             // remember cultural category
             cultureCategory = (String)v.getTag();
         }
-        buildTilequeryRequest(Point.fromLngLat(9.685242, 50.550657));
+        buildTilequeryRequest(selectedPosition);
     }
 
     // activate onClickListener for search
@@ -193,12 +204,14 @@ public class MainActivity extends AppCompatActivity {
                     .placeOptions(PlaceOptions.builder()
                     .backgroundColor(Color.parseColor("#FFFFFF"))
                     .limit(10)
+                    .language("de")
                     .build(PlaceOptions.MODE_CARDS))
                     .build(MainActivity.this);
                 // open activity of which you want a result to be handled with onActivityResult
                 startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
             }
         });
+
     }
 
     @Override
@@ -207,6 +220,9 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_AUTOCOMPLETE) {
             // select CarmenFeature of chosen location
             CarmenFeature selectedCarmenFeature = PlaceAutocomplete.getPlace(data);
+            selectedPosition = (Point)selectedCarmenFeature.geometry();
+            buildTilequeryRequest(selectedPosition);
+            ((TextView)findViewById(R.id.restaurant_search_field)).setText(selectedCarmenFeature.placeName());
         }
     }
 
