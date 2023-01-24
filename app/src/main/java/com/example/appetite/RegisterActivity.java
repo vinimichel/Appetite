@@ -44,7 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
 
-        registerButton=(Button) findViewById(R.id.btnLog);
+        registerButton=(Button) findViewById(R.id.btnRegister);
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,10 +135,10 @@ public class RegisterActivity extends AppCompatActivity {
                         ResEmail= json.getString("email");
                         ResUserID = json.getString("_id");
                         //Log.d("json", "firstname : "+ ResUserID);
-                        UserInfoActivity user = new UserInfoActivity(ResFirstName,ResLastName,ResEmail,ResUserID);
 
-                        Intent intent=new Intent(RegisterActivity.this,MainActivity.class);
-                        intent.putExtra("User", user);
+                        Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                        intent.putExtra("userFirstName", ResFirstName);
+                        intent.putExtra("userID", ResUserID);
                         startActivity(intent);
 
                     } catch (JSONException e) {

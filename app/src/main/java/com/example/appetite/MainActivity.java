@@ -60,10 +60,13 @@ public class MainActivity extends AppCompatActivity {
         //User Info von LoginActivity
         firstname = (TextView) findViewById(R.id.textView6);
         //UserInfoActivity User = getIntent().getParcelableExtra("com.example.appetite.User");
-        //Intent intent = getIntent();
-        //String fName = intent.getStringExtra("userFirstName");
+        Intent intent = getIntent();
+        String fName = intent.getStringExtra("userFirstName");
         String userId = intent.getStringExtra("userID");
-        firstname.setText(getIntent().getStringExtra("userFirstName"));
+        if(fName == null) {
+            fName = "Guest";
+        }
+        firstname.setText(fName);
 
     }
 

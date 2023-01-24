@@ -115,8 +115,6 @@ public class LoginActivity extends AppCompatActivity  {
                         intent.putExtra("userFirstName", ResFirstName);
                         intent.putExtra("userID", ResUserID);
                         startActivity(intent);
-                        // Wechslen zu MAinActivity
-                        //sendUserToNextActivity();
 
                     } catch (JSONException e) {
                         Toast.makeText(LoginActivity.this, "Fehler!!",
