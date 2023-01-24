@@ -73,11 +73,16 @@ public class Tables extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        RecyclerView recyclerView = findViewById(R.id.myRecyclerView);
         if (tables.size() > 0) {
             tables.get(0).resetTables();
-            tables.clear();
         }
-        loadTableData();
+        tables.clear();
+        if (fileExists(FILE_NAME)) {
+            loadTableData(); // load Table Data;
+        }
+        updateFreeSeats();
+        updateView(recyclerView);
     }
 
     public void updateFreeSeats() {

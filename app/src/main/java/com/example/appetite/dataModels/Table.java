@@ -53,6 +53,7 @@ public class Table {
 
     public void resetTables() {
         tableCount = 0;
+        freeSeats = 0;
     }
     public int getFreeSeats() {
         return this.freeSeats;
