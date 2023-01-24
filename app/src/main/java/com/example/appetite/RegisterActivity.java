@@ -3,6 +3,7 @@ package com.example.appetite;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +21,7 @@ import java.io.*;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private final String url="http://172.29.48.1:3000/auth/user/register";
+    private final String url="http://192.168.0.30:3000/auth/user/register";
 
     EditText firstName,lastName,email,password,confirmPassword;
     Button registerButton;
@@ -148,12 +149,12 @@ public class RegisterActivity extends AppCompatActivity {
 
                     }
                     // Wechslen zu MAinActivity
-                     sendUserToNextActivity();
+                     //sendUserToNextActivity();
 
                 } else {
+
                     String errorBodyString = response.body().string(), errmsg;
-                    Toast.makeText(RegisterActivity.this, "An error occurred",
-                            Toast.LENGTH_SHORT).show();
+                    Log.d("Error", "Error on API Call");
                 
 
                 }
@@ -163,6 +164,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onFailure(@NonNull okhttp3.Call call, @NonNull IOException e) {
                 e.printStackTrace();
                 call.cancel();
+
                 Toast.makeText(RegisterActivity.this, "An error occurred",
                         Toast.LENGTH_SHORT).show();
             }
