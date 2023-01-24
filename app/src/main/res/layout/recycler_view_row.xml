@@ -24,7 +24,7 @@
                 android:layout_height="30dp"
                 android:layout_marginStart="20dp"
                 android:buttonTint="@color/black"
-                android:text="Tisch besetzt"
+                android:text="Tisch frei"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
