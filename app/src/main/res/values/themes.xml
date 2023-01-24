@@ -41,8 +41,5 @@
         <item name="closeIconEnabled">false</item>
         <item name="closeIconVisible">false</item>
         <item name="android:focusable">true</item>
-
-
-
     </style>
 </resources>

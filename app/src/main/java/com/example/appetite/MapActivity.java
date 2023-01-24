@@ -104,12 +104,15 @@ public class MapActivity extends AppCompatActivity
 
         setBottomNavigationItem();
         // default location when user doesn't want to share his position
-        lastKnownLocation = Point.fromLngLat(8.661864, 50.129085);
+        lastKnownLocation = null;
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
 
         // callback object when map is loaded
         mapView.getMapAsync(this);
+        setBottomNavigationItem();
+        // default location when user doesn't want to share his position
+        lastKnownLocation = null;
     }
 
     // called when map is done loading and sets map style
@@ -117,6 +120,11 @@ public class MapActivity extends AppCompatActivity
     public void onMapReady(@NonNull final MapboxMap mapboxMap) {
         this.mapboxMap = mapboxMap;
         mapboxMap.setStyle(new Style.Builder().fromUri("mapbox://styles/vinimichel/clap8w2r0002614ktc3lxzitn"), style -> onStyleLoaded(style));
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();  //your choice, thought not needed as super.onBackPressed(); is called if nothing is assigned here
     }
 
     // called when style is loaded
@@ -137,7 +145,7 @@ public class MapActivity extends AppCompatActivity
         }
 
         enableLocationComponent(style);
-        restaurantLayer = (SymbolLayer) style.getLayer("restaurant-features");
+        restaurantLayer = (SymbolLayer) style.getLayer("Appetite");
 
     }
 
@@ -211,8 +219,7 @@ public class MapActivity extends AppCompatActivity
         if (granted) {
             mapboxMap.getStyle(style -> onStyleLoaded(style));
         } else {
-            Toast.makeText(this, "Could not grant permissions", Toast.LENGTH_LONG).show();
-            finish();
+            Toast.makeText(this, "Dein Standort wird nicht ermittelt", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -222,7 +229,7 @@ public class MapActivity extends AppCompatActivity
         // I don't quite understand the above comment, signed S.M.
         final PointF pixel = mapboxMap.getProjection().toScreenLocation(point);
         // query rendered features on pixels (only "fulda-restaurants" layer)
-        List<Feature> features = mapboxMap.queryRenderedFeatures(pixel, "restaurant-features");
+        List<Feature> features = mapboxMap.queryRenderedFeatures(pixel, "appetite");
         // checks whether restaurants have been found on coordinates
         if (features.size() > 0) {
             // ideal case: only one restaurant/feature on coordinate
@@ -288,10 +295,11 @@ public class MapActivity extends AppCompatActivity
             public void onClick(View view) {
                 Intent intent = new PlaceAutocomplete.IntentBuilder()
                         .accessToken(Mapbox.getAccessToken() != null ? Mapbox.getAccessToken() : MAPBOX_TOKEN)
-                        .placeOptions(PlaceOptions.builder()
-                        .backgroundColor(Color.parseColor("#FFFFFF"))
-                        .limit(10)
-                        .build(PlaceOptions.MODE_CARDS))
+                            .placeOptions(PlaceOptions.builder()
+                                .language("de")
+                                .backgroundColor(Color.parseColor("#FFFFFF"))
+                                .limit(10)
+                                .build(PlaceOptions.MODE_CARDS))
                         .build(MapActivity.this);
                 // open activity of which you want a result to be handled with onActivityResult
                 startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
